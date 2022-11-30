@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load eztables %}
+
+
+{% block content %}
+{% datatables_bootstrap_js %}
+{% datatables_bootstrap_css %}
+<script type="text/javascript">
+$(function(){
+    $('#thedatatable').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": "{% url 'status_list_try2' %}"
+    });
+});
+</script>
+<table id="thedatatable" class="table table-striped table-boardered table-hover dataTable" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Good?</th>
+            </tr>
+        </thead>
+    </table>
+
+
+
+ {% endblock content %}

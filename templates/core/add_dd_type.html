@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block js %}
+<script type="text/javascript">
+$(document).ready(function() {
+
+    hide_all();
+    show();
+
+    $("#types").change(function() 
+    { 
+        hide_all();
+        handle_select_click();
+
+     });
+
+    function handle_select_click()
+    {
+        var type_id = $('#types').find('option:selected').val();
+        if(type_id > 0)
+        {
+            show_div(type_id);
+        }
+    }
+
+    function show()
+    {
+        var type_id = $('#types').find('option:selected').val();
+        if(type_id > 0)
+        {
+            show_div(type_id);
+        }
+    }
+
+    function show_div(id)
+    {
+        if(id == 1)
+        {
+            $('#HR').show()
+        }
+        else if(id == 2)
+        {
+            $('#Investigative').show();
+        }
+        else if(id == 3)
+        {
+            $('#RegComp').show();
+        }
+        else if(id == 4)
+        {
+            $('#BusIn').show();
+        }
+    }
+
+    function hide_all()
+    {
+        $('#HR').hide();
+        $('#Investigative').hide();
+        $('#RegComp').hide();
+        $('#BusIn').hide();
+    }
+});
+</script>
+{% endblock %}
+
+{% block sidebar %}
+{% include 'core/_manager_sidebar.html'%}
+{% endblock %}
+
+{% block content %}
+<div class="page-content-wrapper">
+<div class="page-content" style="min-height:800px">
+<div class="row">
+<div class="col-md-12">
+
+<h4 class="page-title">Create Due Diligence Type for {{ company_name }}:</h4><br>
+<div class="form-group">
+    <label class="col-md-3 control-label">Select a due diligence type:</label>
+    <div class="col-md-7">
+        <select id="types" class="form-control">
+            <option value="0">-----</option>
+            {% for type in types %}
+            <option value="{{ type.id }}" {% if selection_id == type.id %} selected="selected" {% endif %}>{{ type.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="col-md-2"></div>
+<div id="HR" class="col-md-8 panel panel-primary" style="padding:10px 20px 10px 20px;margin:30px;display: none;" >
+    <div class="panel-body">
+        {% crispy hr_form %}
+    </div>
+</div>
+<div id="Investigative" class="col-md-8 panel panel-primary" style="padding:10px 20px 10px 20px;margin:30px;display: none;">
+    <div class="panel-body">
+        {% crispy investigative_form %}
+    </div>
+</div>
+<div id="RegComp" class="col-md-8 panel panel-primary" style="padding:10px 20px 10px 20px;margin:30px;display: none;">
+    <div class="panel-body">
+        {% crispy regulatory_form %}
+    </div>
+</div>
+<div id="BusIn" class="col-md-8 panel panel-primary" style="padding:10px 20px 10px 20px;margin:30px;display: none;">
+    <div class="panel-body">
+        {% crispy business_investment_form %}
+    </div>
+</div>
+<div class="col-md-2"></div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

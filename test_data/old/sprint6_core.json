@@ -1,0 +1,386 @@
+[
+{
+  "pk": 3, 
+  "model": "core.company", 
+  "fields": {
+    "phone_number": null, 
+    "tax_id": null, 
+    "name": "Target", 
+    "address": null
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.company", 
+  "fields": {
+    "phone_number": null, 
+    "tax_id": null, 
+    "name": "Walmart", 
+    "address": null
+  }
+},
+{
+  "pk": 5, 
+  "model": "core.company", 
+  "fields": {
+    "phone_number": null, 
+    "tax_id": null, 
+    "name": "Lawfirm", 
+    "address": null
+  }
+},
+{
+  "pk": 6, 
+  "model": "core.company", 
+  "fields": {
+    "phone_number": null, 
+    "tax_id": null, 
+    "name": "Excella", 
+    "address": null
+  }
+},
+{
+  "pk": 7, 
+  "model": "core.company", 
+  "fields": {
+    "phone_number": "345-456-7890", 
+    "tax_id": "1235677899", 
+    "name": "Kmart Inc", 
+    "address": null
+  }
+},
+{
+  "pk": 8, 
+  "model": "core.company", 
+  "fields": {
+    "phone_number": "", 
+    "tax_id": "", 
+    "name": "Hilton", 
+    "address": null
+  }
+},
+{
+  "pk": 9, 
+  "model": "core.company", 
+  "fields": {
+    "phone_number": "", 
+    "tax_id": "", 
+    "name": "Best Buy", 
+    "address": null
+  }
+},
+{
+  "pk": 10, 
+  "model": "core.company", 
+  "fields": {
+    "phone_number": "", 
+    "tax_id": "", 
+    "name": "Sears", 
+    "address": null
+  }
+},
+{
+  "pk": 15, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "12345677", 
+    "position": "HR", 
+    "company": 3, 
+    "is_activated": true, 
+    "user": 22
+  }
+},
+{
+  "pk": 16, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "12345678", 
+    "position": "HR", 
+    "company": 3, 
+    "is_activated": false, 
+    "user": 23
+  }
+},
+{
+  "pk": 18, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "123456788", 
+    "position": "HR", 
+    "company": 5, 
+    "is_activated": false, 
+    "user": 25
+  }
+},
+{
+  "pk": 19, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "bal", 
+    "position": "bla", 
+    "company": 3, 
+    "is_activated": false, 
+    "user": 26
+  }
+},
+{
+  "pk": 20, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "123456788", 
+    "position": "walmart hr", 
+    "company": 4, 
+    "is_activated": true, 
+    "user": 27
+  }
+},
+{
+  "pk": 21, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "123456", 
+    "position": "hr", 
+    "company": 5, 
+    "is_activated": false, 
+    "user": 28
+  }
+},
+{
+  "pk": 22, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "123456", 
+    "position": "hr", 
+    "company": 5, 
+    "is_activated": false, 
+    "user": 29
+  }
+},
+{
+  "pk": 23, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "123456", 
+    "position": "hr", 
+    "company": 5, 
+    "is_activated": false, 
+    "user": 30
+  }
+},
+{
+  "pk": 24, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "12345667", 
+    "position": "hr", 
+    "company": 5, 
+    "is_activated": false, 
+    "user": 31
+  }
+},
+{
+  "pk": 25, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "12334556", 
+    "position": "hr", 
+    "company": 5, 
+    "is_activated": false, 
+    "user": 33
+  }
+},
+{
+  "pk": 26, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "test", 
+    "position": "test", 
+    "company": 5, 
+    "is_activated": false, 
+    "user": 34
+  }
+},
+{
+  "pk": 27, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "5555555555", 
+    "position": "developer", 
+    "company": 6, 
+    "is_activated": true, 
+    "user": 35
+  }
+},
+{
+  "pk": 28, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "555-555-5555", 
+    "position": "manager", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 40
+  }
+},
+{
+  "pk": 29, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "555-555-5555", 
+    "position": "manager", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 41
+  }
+},
+{
+  "pk": 30, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "555-555-5555", 
+    "position": "manager", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 42
+  }
+},
+{
+  "pk": 31, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "555-555-5555", 
+    "position": "manager", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 43
+  }
+},
+{
+  "pk": 32, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "555-555-5555", 
+    "position": "manager", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 44
+  }
+},
+{
+  "pk": 33, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "555-555-5555", 
+    "position": "manager", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 45
+  }
+},
+{
+  "pk": 34, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "", 
+    "position": "m", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 46
+  }
+},
+{
+  "pk": 35, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "", 
+    "position": "m", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 47
+  }
+},
+{
+  "pk": 36, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "", 
+    "position": "m", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 48
+  }
+},
+{
+  "pk": 37, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "", 
+    "position": "m", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 49
+  }
+},
+{
+  "pk": 38, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "", 
+    "position": "m", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 50
+  }
+},
+{
+  "pk": 39, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "", 
+    "position": "m", 
+    "company": 6, 
+    "is_activated": false, 
+    "user": 51
+  }
+},
+{
+  "pk": 40, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "555-555-5555", 
+    "position": "software dev", 
+    "company": 6, 
+    "is_activated": true, 
+    "user": 52
+  }
+},
+{
+  "pk": 41, 
+  "model": "core.companyemployee", 
+  "fields": {
+    "phone_number": "555-555-5555", 
+    "position": "dev", 
+    "company": 6, 
+    "is_activated": true, 
+    "user": 53
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.spotlitstaff", 
+  "fields": {
+    "phone_number": "123456788", 
+    "is_activated": false, 
+    "user": 3
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.spotlitstaff", 
+  "fields": {
+    "phone_number": "23345667788", 
+    "is_activated": false, 
+    "user": 4
+  }
+}
+]

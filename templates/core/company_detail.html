@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block js %}
+<script type="text/javascript">
+$(document).ready(function() {
+     // This function must be customized
+        var onDelete = function(){
+           var stuff = this;
+        }
+
+        var changeCorpFormAccess = function() {
+            is_corp = $("#uniform-id_is_corporate").children().first().attr("class");
+            $.ajax({
+                    url: '/company_corporate_change/' + {{ company.id }} + '/' + is_corp.length,
+                    type: 'GET',
+                    success: function(data) {
+                        var $message = $('#corp-message');
+                        $message.text('');
+                        if (is_corp.length==7){
+                            $message.css({'color': 'green'});
+                        }
+                        else {
+                            $message.css({'color': 'red'});
+                        }
+                        $message.text(data);
+                    }
+            });
+        }
+        var changeIndividualFormAccess = function() {
+            is_individual = $("#uniform-id_is_individual").children().first().attr("class");
+            $.ajax({
+                    url: '/company_individual_change/' + {{ company.id }} + '/' + is_individual.length,
+                    type: 'GET',
+                    success: function(data) {
+                        var $message = $('#individual-message');
+                        $message.text('');
+                        if (is_individual.length==7){
+                            $message.css({'color': 'green'});
+                        }
+                        else {
+                            $message.css({'color': 'red'});
+                        }
+                        $message.text(data);
+                    }
+            });
+        }
+
+        $("#delete_e").click(onDelete);
+        $("#id_is_corporate").click(changeCorpFormAccess);
+        $("#id_is_individual").click(changeIndividualFormAccess);
+});
+</script>
+{% endblock %}
+
+{% block header_script_js %}
+        <script>
+            var changePublicPackageActivationStatus = function(event,company_id,package_id,status){
+                    const package_row = $(event).parent().parent()
+                    const package_activation_status = $(package_row).find(".package_activation_status")[0]
+                    const activation_text = $(event).find(".activation_text")[0]
+                    let new_activation_text=null;
+                    let new_package_activation_status=null;
+                    let new_onclick_status = null;
+                    $.ajax({
+                        url: '/company/' +company_id+ '/package/' + package_id,
+                        type: 'POST',
+                        data:JSON.stringify({status:status}),
+                        success: function(data) {
+                            new_activation_text = status === "enable" ? "Deactivate":"Activate"
+                            new_package_activation_status = status === "enable" ? "Active":"Inactive"
+                            new_onclick_status = status === "enable" ? "disable":"enable"
+                            $(activation_text).html(new_activation_text)
+                            $(package_activation_status).html(new_package_activation_status)
+                            $(event).attr("onclick","changePublicPackageActivationStatus(this,"+company_id+","+package_id+",'"+new_onclick_status+"')")
+                                }
+                        });
+
+
+                }
+        </script>
+
+{% endblock header_script_js %}
+
+{% block sidebar %}
+{% include 'core/_manager_sidebar.html'%}
+{% endblock %}
+
+{% block content %}
+<div class="page-content-wrapper">
+<div class="page-content" style="height:auto;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="portlet">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-building"></i>{{company.name}}
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-8 col-sm-12">
+                        <div class="portlet prescient-green box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Basic Information
+                                </div>
+                                <div class="tools">
+                                    <a class="link" style="color:white;" href="{% url 'update_company' company.id %}">Edit Company Profile</a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row static-info">
+                                    <div class="col-md-3 name">
+                                         Name:
+                                    </div>
+                                    <div class="col-md-9 value">
+                                         {{company.name}}
+                                    </div>
+                                </div>
+                                <div class="row static-info">
+                                    <div class="col-md-3 name">
+                                         Phone Number:
+                                    </div>
+                                    <div class="col-md-9 value">
+                                         {{company.phone_number}}
+                                    </div>
+                                </div>
+                                <div class="row static-info">
+                                    <div class="col-md-3 name">
+                                         Address:
+                                    </div>
+                                    <div class="col-md-9 value">
+                                        {% if company.address != None %}
+                                         {{company.address.street}} {{company.address.street2}}<br>
+                                        {{company.address.city}}, {{company.address.state}} {{company.address.zipcode}}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row static-info">
+                                    <div class="col-md-3 name">
+                                         Tax Id#:
+                                    </div>
+                                    <div class="col-md-9 value">
+                                         {{company.tax_id}}
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row static-info">
+                                    <div class="col-md-3 name">
+                                        Access to Corporate Entity Form:
+                                    </div>
+                                    <div class="col-md-6 value">
+                                        {% crispy corporateForm %}
+                                    </div>
+                                    <div class="col-md-3 name">
+                                        <span id="corp-message"></span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row static-info">
+                                    <div class="col-md-3 name">
+                                        Access to Individual Form:
+                                    </div>
+                                    <div class="col-md-6 value">
+                                        {% crispy individualForm %}
+                                    </div>
+                                    <div class="col-md-3 name">
+                                        <span id="individual-message"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="row">
+                    <div class="col-md-8 col-sm-12">
+                        <div class="portlet box prescient-grey">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Private Packages
+                                </div>
+                                <div class="tools">
+                                    <i class="fa fa-plus-circle"></i>
+                                    <a id="create_company_employee" style="color:white;" class="link" href="{% url 'add_dd_type' company.id %}">Create New Package</a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="panel-group accordion" id="accordion">
+                                    {% for type,value in types.items %}
+                                    <div class="panel panel-default">
+                                        <div id="{{type.id}}_panel" class="panel-heading" style="{% if type.is_active == True %} background-color: lightblue;{% endif %}">
+                                            <h5 class="panel-title">
+                                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-target="#type_{{type.id}}">{{type}}</a>
+                                            </h5>
+                                        </div>
+                                        <div id="type_{{type.id}}" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                {% if type.price %}
+                                                <h5><strong>Price:</strong></h5>
+                                                <div id="price_panel" class="panel-heading">
+                                                    <h5 class="panel-title">
+                                                        ${{ type.price }}
+                                                    </h5>
+                                                </div>
+                                                {% endif %}
+                                                <h5><strong>Services Selected:</strong></h5>
+                                                {% for service, value2 in value.items %}
+                                                <div id="{{service.id}}_panel" class="panel-heading">
+                                                    <h5 class="panel-title">
+                                                        {{ service.service.name }}
+                                                    </h5>
+                                                </div>
+                                                {% endfor %}
+                                                <a class="pull-right btn btn-primary" href="{% url 'update_dd_type' company.id type.id %}">Edit</a>&nbsp&nbsp
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-sm-12">
+                        <div class="portlet box prescient-grey">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Public Packages
+                                </div>
+
+                            </div>
+                            <div class="portlet-body">
+                                <table class="table">
+                                <tr>
+                                    <th>Package Name</th>
+                                    <th>Activation Status</th>
+                                    <th><th>
+                                </tr>
+                                {% for type,value in public_packages.items %}
+                                <tr class="package_row">
+                                    <td >{{ type }}</td>
+
+                                    {% if value %}
+                                    <td class="package_activation_status">Inactive</td>
+                                    <td class="package_activation_text">
+                                    <a class="pull-left" href="JavaScript:void(0)" onclick="changePublicPackageActivationStatus(this,{{company.id}},{{type.id}},'enable')"><font color="blue"><strong><u class="activation_text">Activate</u></strong></font></a>
+                                    </td>
+                                    {% else %}
+                                    <td class="package_activation_status">Active</td>
+                                    <td class="package_activation_text">
+                                    <a class="pull-left" href="JavaScript:void(0)" onclick="changePublicPackageActivationStatus(this,{{company.id}},{{type.id}},'disable')"><font color="blue"><strong><u class="activation_text">Deactivate</u>&nbsp;&nbsp;</strong></font></a>
+                                        </td>
+                                    {% endif %}
+
+                                </tr>
+
+                                {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-sm-12">
+                        <div class="portlet box prescient-grey">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Company Employees
+                                </div>
+                                <div class="tools">
+                                    <i class="fa fa-plus-circle"></i>
+                                    <a id="create_company_employee" style="color:white;" class="link" href="{% url 'employee_signup' company.id %}">Create Company Employee</a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <table class="table">
+                                <tr>
+                                    <th>Firstname</th>
+                                    <th>Lastname</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Supervisor</th>
+                                    <th><th>
+                                </tr>
+                                {% for employee in employees %}
+                                <tr>
+                                    <td >{{ employee.user.first_name }}</td>
+                                    <td >{{ employee.user.last_name }}</td>
+                                    <td >{{ employee.user.email }}</td>
+                                    <td >{{ employee.phone_number }}</td>
+                                    <td >{{ employee.supervisor }}</td>
+                                    <td>
+                                    {% if not employee.is_activated %}
+                                    <a class="pull-left" data-toggle="modal" href="#{{employee.id}}resend_email"><font color="blue"><strong><u>Resend Email</u></strong></font></a>
+                                    {% endif %}
+                                    <a class="pull-right" href="{% url 'employee_update' employee.id %}"><font color="blue"><strong><u>Edit</u>&nbsp;&nbsp;</strong></font></a>
+                                    </td>
+                                </tr>
+
+                                <div id="{{employee.id}}resend_email" class="modal fade" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                <h4 class="modal-title">Resend Sign Up Email Confirmation</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label>Are you sure you want to resend the sign up confirmation email to {{employee.user.first_name}} {{employee.user.last_name}}?</label>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn default" onClick="location.href='{% url 'resend_email' company.id employee.id %}'">Yes</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="row">
+                    <div class="col-md-8 col-sm-12">
+                        <div class="portlet box prescient-grey">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Custom Request Forms
+                                </div>
+                                <div class="tools">
+                                    <i class="fa fa-plus-circle"></i>
+                                    <a id="create_form" style="color:white;" class="link" href="{% url 'dynamic_request_form_create' company.id %}">Create Custom Request Form</a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <table class="table">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Enabled</th>
+                                    <th><th>
+                                </tr>
+                                {% for drf in dynamic_request_forms %}
+                                <tr>
+                                    <td >{{ drf.name }}</td>
+                                    <td >{{ drf.render_form }}</td>
+                                    <td>
+                                    <a class="pull-right" href="{% url 'dynamic_request_form_configure' drf.id %}"><font color="blue"><strong><u>Configure</u>&nbsp;&nbsp;</strong></font></a>
+                                    <a class="pull-right" href="{% url 'dynamic_request_form_update' drf.id %}"><font color="blue"><strong><u>Edit</u>&nbsp;&nbsp;</strong></font></a>
+                                    </td>
+                                </tr>
+
+                                {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

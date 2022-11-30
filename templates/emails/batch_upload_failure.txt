@@ -1,0 +1,6 @@
+Unfortunately your recent batch file upload was unsuccessful
+
+reason:
+{{reason}}
+
+Please attempt to make corrections and try again: {{ protocol}}://{{ domain }}{% url 'login' %}

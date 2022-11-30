@@ -1,0 +1,2 @@
+Your Recent Batch Upload Was a Success.
+Please login for more information: {{ protocol}}://{{ domain }}{% url 'login' %}

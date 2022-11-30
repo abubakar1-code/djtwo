@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load eztables %}
+{% block extra_css %}
+{% endblock extra_css %}
+{% datatables_js %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/data-tables/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript"
+            src="{{ STATIC_URL }}theme/global/plugins/data-tables/tabletools/js/dataTables.tableTools.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/all_table.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#completed_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                {% if restrict_attachments %}
+                "sAjaxSource": "{% url 'restricted_attachments_datatable' %}"
+                {% else %}
+                "sAjaxSource": "{% url 'employee_completed_requests_datatable' %}"
+                {% endif %}
+             });
+
+              $('#in_progress_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'employee_in_progress_requests_datatable' %}"
+             });
+
+
+        });
+    </script>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'core/_employee_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-content">
+        <h3 style="padding-top:10px;" class="page-title">Welcome</h3>
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a href="{% url 'redirect' %}">Home</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="#">Request Dashboard</a>
+                </li>
+            </ul>
+        </div>
+        <div class="clearfix">
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <a  href="{% url 'advanced_search_employee' %}">
+                    <div class="dashboard-stat grey">
+                        <div class="visual">
+                            <i class="fa fa-bar-chart-o"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number">
+                                 Reports
+                            </div>
+                            <div class="desc">
+                                 Search And Export
+                            </div>
+                        </div>
+                        <a class="more"  href="{% url 'advanced_search_employee' %}">
+                        View more <i class="m-icon-swapright m-icon-white"></i>
+                        </a>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="filter col-md-6" style="margin-bottom:50px">
+                <div class="panel-group accordion" id="accordion_in_progress">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled"
+                                   data-toggle="collapse" data-parent="#accordion_in_progress"
+                                   href="#collapse_in_progress_reports">
+                                    In Progress</a>
+                            </h4>
+                        </div>
+                        <div id="collapse_in_progress_reports" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="portlet-title">
+                                    <div class="dataTables_wrapper col-md-12" role="grid" style="margin-bottom:50px" id="in_progress">
+                                        <div class="table-responsive">
+                                            <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                            id="in_progress_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Status</th>
+                                                        <th>Date</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel-group accordion" id="accordion_completed">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled"
+                                   data-toggle="collapse" data-parent="#accordion_completed"
+                                   href="#collapse_completed_reports">
+                                    Completed</a>
+                            </h4>
+                        </div>
+                        <div id="collapse_completed_reports" class="panel-collapse collapse in">
+                            <div class="col-md-12">
+                                <a href="{% url 'bulk_archive' %}" class="">
+                                    Bulk Archive
+                                </a>
+                               
+                            </div>
+                            <br>
+                            <div class="panel-body">
+                                <div class="portlet-title">
+                                    <div class="table-responsive">
+                                        <div class="dataTables_wrapper col-md-12" role="grid" style="margin-bottom:50px" id="completed">
+                                            <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                            id="completed_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Date Completed</th>
+                                                        <th>Report</th>
+                                                        <th>Supporting Docs</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

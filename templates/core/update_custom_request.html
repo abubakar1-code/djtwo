@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+var selections = jQuery.parseJSON('{{ company_service_selections|escapejs }}');
+var type_services = jQuery.parseJSON('{{ type_services|escapejs }}');
+
+$(document).ready(function() {
+	hide_services();
+	handled_select_click();
+
+	$("#id_request_type").change(function() 
+    { 
+        handled_select_click();
+
+     });
+
+	function handled_select_click()
+	{
+		var type_id = $('#id_request_type').find('option:selected').val();
+        if(type_id != "")
+        {
+            show_services();
+            select_services(type_id);
+        }
+        else
+        {
+        	hide_services();
+        }
+	}
+
+	function show_labels(toShow, all)
+	{
+		for(index=0; index< all.length; ++index)
+		{
+			var service_id = all[index];
+			$("#label_" + service_id).css("font-weight","");  
+            $("#label_" + service_id).css("color", "grey"); 
+            $("#span_" + service_id).removeClass("checked"); 
+			if(toShow.indexOf(service_id) > -1)
+			{
+				$("#label_" + service_id).show();
+			}
+			else
+			{
+				$("#label_" + service_id).hide();
+			}
+		}
+	}
+
+	function select_services(selection_id)
+	{
+		var dd_type = "";
+
+		for (index = 0; index < this.selections.length; ++index) 
+		{
+			var dd_selection = this.selections[index];
+			var dd_selected_id = dd_selection.fields.dd_type[0];
+
+			if(dd_selected_id == selection_id)
+			{
+				dd_type = dd_selection.fields.dd_type[2];
+				break;
+			}
+		}
+
+		var to_show = []
+		var all = []
+		for(index2=0; index2 < this.type_services.length; ++index2)
+		{
+			var type_service = this.type_services[index2];
+			var dd_type_for_service = type_service.fields.due_diligence_type[1];
+			var service_id = type_service.fields.service;
+
+			if(dd_type_for_service == dd_type)
+			{
+				to_show.push(service_id);
+				
+			}
+
+			if(all.indexOf(service_id) == -1)
+			{
+				all.push(service_id);
+			}
+		}
+		show_labels(to_show, all);
+
+		for (index = 0; index < this.selections.length; ++index) 
+		{
+			var dd_selection = this.selections[index];
+			var service_id = dd_selection.fields.service;
+			var dd_selected_id = dd_selection.fields.dd_type[0];
+
+			if(dd_selected_id == selection_id)
+			{
+            	$("#span_" + service_id).addClass("checked");
+            	$("#label_" + service_id).css("font-weight","Bold");  
+            	$("#label_" + service_id).css("color", "green"); 
+            }
+       		//else
+        	//{
+            //	$("#span_" + service_id).removeClass("checked"); 
+        	//}
+		}
+	}
+
+	function show_services()
+    {
+        $('#services').show();
+    }
+
+	function hide_services()
+    {
+        $('#services').hide();
+    }
+
+});
+</script>
+{% endblock %}
+
+{% block sidebar %}
+{% if is_supervisor %}
+{% include 'core/_supervisor_sidebar.html'%}
+{% else %}
+{% include 'core/_employee_sidebar.html'%}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<link type="text/css" href="{{ STATIC_URL }}css/datepicker.css" rel="stylesheet"/>
+<div class="page-content-wrapper">
+<div class="page-content" style="min-height:1646px;">
+	<div class="row">
+	<div class="col-md-7" >
+	<div class="form-group">
+			<h4 class="page-title">Edit {{ dynamic_request_form.name }} Request:</h4>
+		{% crispy form %}
+	</div>
+	</div>
+	<div class="col-md-4" style="margin:30px;">
+		<div id="services" class="portlet box blue-hoki" style="display: none;">
+			<div class="portlet-title">
+				<label>Services to be performed:</label>
+			</div>
+			<div class="portlet-body form">
+				<form role="form">
+				<div class="checkbox-list form-group">
+					{% for service in services %}
+						<label id="label_{{service.id}}">
+							<div class="checker"><span id="span_{{service.id}}"><input type="checkbox" value="{{service.id}}"></span></div>
+							{{ service.name }}
+						</label>
+					{% endfor %}
+				</div>
+			</form>
+			</div>
+		</div>
+		<div id="additional-services-contact" class="portlet box blue-hoki">
+			<div class="portlet-title">
+				<label>Want more services? Let us know!</label>
+			</div>
+			<div class="portlet-body form">
+					<div style="padding-left:10px; font-weight:bold; font-size: 1.2em;"><a href="http://spotlit.com/contact/">Contact Us</a></p>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+</div>
+</div>
+</div>
+{% endblock %}

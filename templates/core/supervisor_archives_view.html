@@ -1,0 +1,107 @@
+{% extends 'base.html'  %}
+{% load staticfiles %}
+
+{% block css %}
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/bower_components/react/react.js' %}"></script>
+    <script src="{% static 'js/bower_components/react/react-dom.js' %}"></script>
+    <script src="{% static 'js/bower_components/babel/browser.js' %}"></script>
+    <script src="{% static 'js/bower_components/marked/marked.min.js' %}"></script>
+    <script src="{% static 'js/typed.min.js' %}" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#instruction1").typed({
+            strings: ["Your archives will appear below when they are ready.^1000","If this is your first time creating an archive it may take a few minutes.^1000"],
+            typeSpeed: 0,
+            startDelay: 1000
+        });
+    });
+</script>
+
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'core/_supervisor_sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+ <div class="page-content">
+    <h3 style="padding-top:10px;" class="page-title">Welcome</h3>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="{% url 'redirect' %}">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">Archives</a>
+            </li>
+        </ul>
+    </div>
+    <div class="clearfix">
+    </div>
+    <form class="horizontal-form">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <span id="instruction1" style="white-space:pre; font-size: larger"></span>
+
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-share font-black"></i>
+                            <span class="caption-subject font-black bold uppercase">Downloads</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="slimScrollDiv" style="position: relative; overflow: auto; width: auto; height: 300px;">
+                            <ul class="feeds">
+                                <div id="test"></div>
+                                <script src="{% static 'js/supervisor_archives_view_react.js' %}" type="text/babel"></script>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+ </div>
+
+
+
+{% endblock %}
+
+{% block extra_css %}
+<style type="text/css">
+    .typed-cursor{
+        opacity: 1;
+        -webkit-animation: blink 0.7s infinite;
+        -moz-animation: blink 0.7s infinite;
+        animation: blink 0.7s infinite;
+    }
+    @keyframes blink{
+        0% { opacity:1; }
+        50% { opacity:0; }
+        100% { opacity:1; }
+    }
+    @-webkit-keyframes blink{
+        0% { opacity:1; }
+        50% { opacity:0; }
+        100% { opacity:1; }
+    }
+    @-moz-keyframes blink{
+        0% { opacity:1; }
+        50% { opacity:0; }
+        100% { opacity:1; }
+    }
+
+</style>
+{% endblock %}
+
+

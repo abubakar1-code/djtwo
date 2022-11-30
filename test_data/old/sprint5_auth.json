@@ -1,0 +1,766 @@
+[
+{
+  "pk": 1, 
+  "model": "auth.group", 
+  "fields": {
+    "name": "CompanyEmployee", 
+    "permissions": []
+  }
+},
+{
+  "pk": 2, 
+  "model": "auth.group", 
+  "fields": {
+    "name": "SpotLitAnalyst", 
+    "permissions": []
+  }
+},
+{
+  "pk": 3, 
+  "model": "auth.group", 
+  "fields": {
+    "name": "SpotLitManager", 
+    "permissions": []
+  }
+},
+{
+  "pk": 1, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "admin", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": true, 
+    "is_staff": true, 
+    "last_login": "2014-06-17T11:08:49.342Z", 
+    "groups": [], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$5ggF10MlNLyX$6DQ/8CzOec+cS5HzbPtWkdxBKa7wNbq82lzI0l5OidI=", 
+    "email": "", 
+    "date_joined": "2014-05-22T14:23:16.538Z"
+  }
+},
+{
+  "pk": 2, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "employee1", 
+    "first_name": "Employee1", 
+    "last_name": "Employee1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-27T17:55:30.982Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$jEMmj53L04ap$q3Rll1uOrc2CuBCMc9+X2YEY95tceK6RUsmvxuGFKI8=", 
+    "email": "", 
+    "date_joined": "2014-05-22T16:37:58Z"
+  }
+},
+{
+  "pk": 3, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "manager", 
+    "first_name": "manager", 
+    "last_name": "manager", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-17T23:14:39.706Z", 
+    "groups": [
+      [
+        "SpotLitManager"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$MMzscMgJGSNR$qnFRGZw58X9UWaGpcN5SPFSiqUR1CH+ENFF5TWtceaQ=", 
+    "email": "spotlit.test@gmail.com", 
+    "date_joined": "2014-05-22T17:36:11Z"
+  }
+},
+{
+  "pk": 4, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "analyst1", 
+    "first_name": "analyst1", 
+    "last_name": "analyst1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-17T11:07:53Z", 
+    "groups": [
+      [
+        "SpotLitAnalyst"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$NFFoSPYxukfo$f13wmmRsmOJgBXthzamSBWZ6i7LoJoh9gbeAmKoruCQ=", 
+    "email": "spotlit.test@gmail.com", 
+    "date_joined": "2014-05-22T17:36:40Z"
+  }
+},
+{
+  "pk": 22, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "target1@target.com", 
+    "first_name": "Target Employee 1", 
+    "last_name": "Target Employee 1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-17T23:15:39.473Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$3EdhTANUTqPg$6Xn+X6KQEUT58TvkFsIrPuA0BGuezNZDOPoGaRT1qYo=", 
+    "email": "target1@target.com", 
+    "date_joined": "2014-05-28T01:27:57.984Z"
+  }
+},
+{
+  "pk": 23, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "target2@target.com", 
+    "first_name": "Target Employee 2", 
+    "last_name": "Target Employee 2", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-28T01:29:19.168Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$9d4JtMtoyekB$sI5hyVPOWNkPHlDPJQWgxNk+7i18Q0vobFuZ0aday/E=", 
+    "email": "target2@target.com", 
+    "date_joined": "2014-05-28T01:29:19.168Z"
+  }
+},
+{
+  "pk": 24, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "walmart1@walmart.com", 
+    "first_name": "Walmart Employee 1", 
+    "last_name": "Walmart Employee1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-28T01:42:00.299Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$SPxVhCCbR4E5$f+s1Mxumrx2OR8n1tccWyG8YDyIJc0EGWE5sRJGELow=", 
+    "email": "walmart1@walmart.com", 
+    "date_joined": "2014-05-28T01:42:00.299Z"
+  }
+},
+{
+  "pk": 25, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "lawfirm1@lawfirm.com", 
+    "first_name": "Lawfirm Employee 1", 
+    "last_name": "Lawfirm Employee1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-28T01:42:34.392Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$f548RrXOI7bx$Z8jLck5F7pxribPOPD2Ukey8HlfaSaN7dd4yOW5GYQQ=", 
+    "email": "lawfirm1@lawfirm.com", 
+    "date_joined": "2014-05-28T01:42:34.392Z"
+  }
+},
+{
+  "pk": 26, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "suzanne@test.com", 
+    "first_name": "blah", 
+    "last_name": "blah", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-29T18:15:59.731Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$mGyRl4MDW6by$5nAFliVjfpHtIJfLc0uejCTf91e6eSP16hGrERKnzgE=", 
+    "email": "suzanne@test.com", 
+    "date_joined": "2014-05-29T18:15:59.731Z"
+  }
+},
+{
+  "pk": 27, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "walmart2@walmart.com", 
+    "first_name": "", 
+    "last_name": "walmart 2", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-29T18:20:08.315Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$KLrKszgsVjyb$e2Y7Tf7QZG/mr2GpFqYHOtNMFfZodlAw/Py/l/GKjA8=", 
+    "email": "walmart2@walmart.com", 
+    "date_joined": "2014-05-29T18:19:58.870Z"
+  }
+},
+{
+  "pk": 28, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "lawfirm2@lawfirm.com", 
+    "first_name": "Lawfirm Employee 2", 
+    "last_name": "Lawfirm Employee2", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-29T18:31:15.457Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$fASMD5SbrHQx$aSOuWfWT3N1QtUeooB+9fXrjEjkEftfVgFDURhnVdds=", 
+    "email": "lawfirm2@lawfirm.com", 
+    "date_joined": "2014-05-29T18:31:15.457Z"
+  }
+},
+{
+  "pk": 29, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "lawfirm3@lawfirm.com", 
+    "first_name": "Lawfirm Employee 2", 
+    "last_name": "Lawfirm Employee2", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-29T18:32:13.731Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$Mp8qOzrZeyJ0$EIlUTNRv7doeyhjAIhwar7R6tP6iakp8Rjmpspk8SNU=", 
+    "email": "lawfirm3@lawfirm.com", 
+    "date_joined": "2014-05-29T18:32:13.731Z"
+  }
+},
+{
+  "pk": 30, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "lawfirm4@lawfirm.com", 
+    "first_name": "Lawfirm Employee 2", 
+    "last_name": "Lawfirm Employee2", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-29T18:33:47.595Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$LTSQioFlePW9$ms/SjMFOD2rU0IsHYJEBSLuqzACZDSP6PsAfQbNGrx8=", 
+    "email": "lawfirm4@lawfirm.com", 
+    "date_joined": "2014-05-29T18:33:47.596Z"
+  }
+},
+{
+  "pk": 31, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "lawfirm10@lawfirm.com", 
+    "first_name": "Lawfirm Employee 10", 
+    "last_name": "Lawfirm Employee10", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-29T18:45:31.134Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$CvtrXBdNOt0f$+dY0UoIh99EVbp4BbMc0BGS1D9OaHfJINM58TNdoJVk=", 
+    "email": "lawfirm10@lawfirm.com", 
+    "date_joined": "2014-05-29T18:45:31.134Z"
+  }
+},
+{
+  "pk": 32, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "lawfirm11@lawfirm.com", 
+    "first_name": "Lawfirm Employee 11", 
+    "last_name": "Lawfirm Employee11", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-29T18:47:31.829Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$a25xCVdtKPPF$rguMXusUmWVetEEL2DPhGVnjLHXz78sb8wj8WRD4btU=", 
+    "email": "lawfirm11@lawfirm.com", 
+    "date_joined": "2014-05-29T18:47:31.829Z"
+  }
+},
+{
+  "pk": 33, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "lawfirm12@lawfirm.com", 
+    "first_name": "Lawfirm Employee 11", 
+    "last_name": "Lawfirm Employee11", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-29T18:47:54.647Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$ov09PKePTmAw$UX9zKv9z17Huyp50vN5t4B8Mi7mkNrx2wdIcQLn06H4=", 
+    "email": "lawfirm12@lawfirm.com", 
+    "date_joined": "2014-05-29T18:47:54.647Z"
+  }
+},
+{
+  "pk": 34, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "lawfirm13@lawfirm.com", 
+    "first_name": "test", 
+    "last_name": "test", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-29T18:49:04.494Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$o08opBPe2TpF$XAhuBcSU+ygOjGoBWBusN0uw2D4ZtbA2mm/yIgQeXbg=", 
+    "email": "lawfirm13@lawfirm.com", 
+    "date_joined": "2014-05-29T18:49:04.494Z"
+  }
+},
+{
+  "pk": 35, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "suzanne.ohlhausen@excella.com", 
+    "first_name": "Suzanne", 
+    "last_name": "Collier", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-17T18:59:00.782Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$kE8QGJIlAYQu$5djMyT39wlCaNuCzadUULPG5k6Y4mSzIkQQd1AN/vsk=", 
+    "email": "suzanne.ohlhausen@excella.com", 
+    "date_joined": "2014-06-09T20:00:43Z"
+  }
+},
+{
+  "pk": 36, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T19:53:05.961Z", 
+    "groups": [], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$QTJg5xqfTn8S$5DtvJU5q3qWCJVmUVtI75Y2k5Fn8aLprj6DoP+c6p+4=", 
+    "email": "tisan@excella.com", 
+    "date_joined": "2014-06-12T19:53:05.961Z"
+  }
+},
+{
+  "pk": 40, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick@excella.com", 
+    "first_name": "Patrick", 
+    "last_name": "Rasche", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:03:02.889Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!9fz4cv6dgTTagDMrtRXxcvhx69rIbzCx7RXcsFaj", 
+    "email": "patrick@excella.com", 
+    "date_joined": "2014-06-12T20:03:02.889Z"
+  }
+},
+{
+  "pk": 41, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick2@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:03:47.747Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!sbrMkPpSoeN0bvbeCZd1a0Q5ybjZ2A1EMg5QYJL8", 
+    "email": "patrick2@excella.com", 
+    "date_joined": "2014-06-12T20:03:47.747Z"
+  }
+},
+{
+  "pk": 42, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick3@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:04:33.003Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!7Z6b5GOH2s7o2jbHy6ioJUy04ceefEYPHIZpUn5T", 
+    "email": "patrick3@excella.com", 
+    "date_joined": "2014-06-12T20:04:33.003Z"
+  }
+},
+{
+  "pk": 43, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick4@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:05:13.533Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!Pe718zeMZYeDFgKHLvImojxoB6LS5klovDr3U8LU", 
+    "email": "patrick4@excella.com", 
+    "date_joined": "2014-06-12T20:05:13.533Z"
+  }
+},
+{
+  "pk": 44, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick5@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:06:46.677Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!Ly2lVeg2bxMzavBPckkVtigpanL6TKcT3oUPDRNX", 
+    "email": "patrick5@excella.com", 
+    "date_joined": "2014-06-12T20:06:46.677Z"
+  }
+},
+{
+  "pk": 45, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick6@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:07:42.461Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!hRlHGqdxcEAygJFI8tBUcCYJAPZQRYHMIU42S7CB", 
+    "email": "patrick6@excella.com", 
+    "date_joined": "2014-06-12T20:07:42.461Z"
+  }
+},
+{
+  "pk": 46, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick7@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:08:15.986Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!alOlwT0ac5UM2AhauJXUC6xmLggfViOkm59W3JSd", 
+    "email": "patrick7@excella.com", 
+    "date_joined": "2014-06-12T20:08:15.986Z"
+  }
+},
+{
+  "pk": 47, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick8@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:09:08.920Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!FL1EzpQj4UvTqaVO3UeCmDRmLt3MU8AXY6q9ehE3", 
+    "email": "patrick8@excella.com", 
+    "date_joined": "2014-06-12T20:09:08.920Z"
+  }
+},
+{
+  "pk": 48, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick9@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:09:44.277Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!ZTNSjjuOPhQ2gl7zheVYGGKVTavIwFRLd1yaHS8f", 
+    "email": "patrick9@excella.com", 
+    "date_joined": "2014-06-12T20:09:44.277Z"
+  }
+},
+{
+  "pk": 49, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick10@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:10:24.698Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!uUQVSrKIq0oOhkAwOPCEMbQYjMsXivzGNkYZSHej", 
+    "email": "patrick10@excella.com", 
+    "date_joined": "2014-06-12T20:10:24.698Z"
+  }
+},
+{
+  "pk": 50, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick11@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:11:04.460Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!ooBImoOymZzcdyDCMbWXdnfYCB7MYTlpmmvP7ZdU", 
+    "email": "patrick11@excella.com", 
+    "date_joined": "2014-06-12T20:11:04.460Z"
+  }
+},
+{
+  "pk": 51, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "patrick12@excella.com", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:11:36.092Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "!jhDcsGzdxt268HQ5JKddJnFMsnArp0XdI1SeP8C0", 
+    "email": "patrick12@excella.com", 
+    "date_joined": "2014-06-12T20:11:36.092Z"
+  }
+},
+{
+  "pk": 52, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "suzanne2@excella.com", 
+    "first_name": "Suzanne", 
+    "last_name": "Ohlhausen", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:13:56.330Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$ucBetJunGAsB$bGh0lL60yjdxpPmzwULdQRVd+QC3NrNNLVWHpRuYjVE=", 
+    "email": "suzanne2@excella.com", 
+    "date_joined": "2014-06-12T20:13:15.405Z"
+  }
+},
+{
+  "pk": 53, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "suzanne3@excella.com", 
+    "first_name": "Suzanne", 
+    "last_name": "Ohlhausen", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-12T20:18:35.078Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$YxUlQaOOpU9k$TDgrZGSr5tgW+/0ah2rNDgWQBRY+NPMhqHx07E4TPiA=", 
+    "email": "suzanne3@excella.com", 
+    "date_joined": "2014-06-12T20:18:00.254Z"
+  }
+},
+{
+  "pk": 54, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "suzanne.ohlhausen@gmail.com", 
+    "first_name": "Suzanne", 
+    "last_name": "Ohlhausen", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-06-17T11:01:30.947Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$Nn8gc9vDohVS$B7nKykgzyVXXrMiE6FkoQu/V7Nz7C7DQMIHCsMEIgrM=", 
+    "email": "suzanne.ohlhausen@gmail.com", 
+    "date_joined": "2014-06-17T01:05:46.001Z"
+  }
+}
+]

@@ -1,0 +1,41 @@
+{% load staticfiles %}
+
+<div class="page-sidebar-wrapper">
+		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+	<div class="page-sidebar" style="overflow: hidden;">
+		<!-- BEGIN SIDEBAR MENU -->
+		<ul class="page-sidebar-menu" data-auto-scroll="false" data-auto-speed="200" style="overflow: hidden; width: auto; height: auto;">
+			<li class="start ">
+				<a id="requestsMenu" href="{% url 'analyst_dashboard' %}">
+				<i class="fa fa-dashboard"></i>
+				<span class="title" style="font-size: 15px">Request Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a id="companiesMenu" href="{% url 'company_dashboard' %}">
+				<i class="fa fa-users"></i>
+				<span class="title" style="font-size: 15px">Manage Companies</span>
+				</a>
+			</li>
+            <li>
+				<a id="archiveReportsMenu" href="{% url 'report_dashboard' %}">
+				<i class="fa fa-archive"></i>
+				<span class="title" style="font-size: 15px">Archived Reports</span>
+				</a>
+			</li>
+			<li>
+				<a id="packagesMenu" href="{% url 'package_dashboard' %}">
+				<i class="fa fa-gift"></i>
+				<span class="title" style="font-size: 15px">Manage Packages</span>
+				</a>
+			</li>
+        {% if user.is_authenticated and company_logo %}
+        	<li>
+	          	<img src="{% static 'img/powered-by.png' %}" alt="Powered by Voyint" class="img logo-powered">
+			</li>
+        {% endif %}
+		</ul>
+		<!-- END SIDEBAR MENU -->
+	</div>
+</div>

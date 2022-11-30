@@ -1,0 +1,218 @@
+
+{% block content %}
+{% load spotlit_extras %}
+	<div class="col-md-12">
+		<div class="portlet">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-file"></i>
+					<span class="hidden-480" style="font-size:15px;">Status: 
+						
+						{% if status == 1 or status == 8 %}
+						<span class="label label-primary"> 
+						{% elif status == 2 or status == 3 or status == 4 %}
+						<span class="label label-success">
+						{% elif status == 5 or status == 0 %}
+						<span class="label bg-green">  
+						{% elif status == 6 or status == 7 or status == 9 %}
+						<span class="label label-danger"> 
+						{% endif %}
+							{{real_status}} 
+						</span>
+
+						&nbsp&nbsp|&nbsp&nbspType: {{ request.request_type }}&nbsp &nbsp|&nbsp&nbsp 
+						Date & Time: {{submitted_date}}&nbsp &nbsp|&nbsp&nbspCreated By: {{ request.created_by }}
+					</span>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<!--<div class="row">-->
+					<!--<div class="col-md-12">-->
+						<div class="portlet prescient-green box">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-cogs"></i>Request Details
+								</div>
+								<div class="tools">
+                        			<a href="javascript:;" class="collapse"></a>
+                    			</div>
+							</div>
+							<div class="portlet-body">
+								<div class="row">
+								<div class="col-md-3">
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Request #:
+									</div>
+									<div class="col-md-7 value">
+										 {{request.display_id}} 
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Company Name:
+									</div>
+									<div class="col-md-7 value">
+										 {{request.company_name}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Name Variant:
+									</div>
+									<div class="col-md-7 value">
+										 {{request.name_variant}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Parent Company Name:
+									</div>
+									<div class="col-md-7 value">
+										 {{request.parent_company_name}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Website:
+									</div>
+									<div class="col-md-7 value">
+										 {{request.website}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Email:
+									</div>
+									<div class="col-md-7 value">
+										 {{request.email}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Phone Number:
+									</div>
+									<div class="col-md-7 value">
+										 {{request.phone_number}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Recipient:
+									</div>
+									<div class="col-md-7 value">
+										{{request.recipient}}
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-3">
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Street Address:
+									</div>
+									<div class="col-md-7 value">
+										{{request.street}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Dependent Locality:
+									</div>
+									<div class="col-md-7 value">
+										{{request.dependent_locality}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Locality:
+									</div>
+									<div class="col-md-7 value">
+										{{request.locality}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Postal Code:
+									</div>
+									<div class="col-md-7 value">
+										{{request.postal_code}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Country:
+									</div>
+									<div class="col-md-7 value">
+										{{request.country.name}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 DUNS Number:
+									</div>
+									<div class="col-md-7 value">
+										{{request.duns}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Registration Number:
+									</div>
+									<div class="col-md-7 value">
+										{{request.registration}}
+									</div>
+								</div>
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Attachments:
+									</div>
+									<div class="col-md-7 value">
+										  {% for attachment in client_attachments %}
+                                        <a href="
+                                        {{ MEDIA_URL }}{{attachment.attachment}}">{{attachment.attachment.name|get_file_base_name}}</a></br>
+                                        {% endfor %}
+									</div>
+								</div>
+								{% if request.due_date != "" and hide_due_date != True %}
+								<div class="row static-info">
+									<div class="col-md-5 name">
+										 Due Date:
+									</div>
+									<div class="col-md-7 value">
+										 {{request.due_date}}
+									</div>
+								</div>
+								{% endif %}
+							</div>
+							<div class="col-md-6">
+								<div class="row static-info">
+									<div class="col-md-12 value">
+										Client Comments
+										<div class="well">
+											<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 80px;">
+                           					 	<div class="scroller" style="overflow: auto; width: auto; height: 80px;" data-initialized="true">
+                           					 		{% if request.comments == "" %}
+                           					 			No request comments exist.
+                           					 		{% else %}
+											 			{{request.comments|linebreaks}}
+											 		{% endif %}
+											 	</div>
+				                            	<div class="slimScrollBar" style="width: 7px; position: absolute; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; top: 0px; height: 98.0392156862745px; display: none; opacity: 0.4; background: rgb(187, 187, 187);">
+				                            	</div>
+				                            	<div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);">
+				                            	</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				<!--</div>-->
+				<!--</div>-->
+			</div>
+		</div>
+	</div>
+{% endblock %}

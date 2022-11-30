@@ -1,0 +1,687 @@
+[
+  {
+    "pk": 1,
+    "model": "auth.group",
+    "fields": {
+      "name": "CompanyEmployee",
+      "permissions": []
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.group",
+    "fields": {
+      "name": "SpotLitAnalyst",
+      "permissions": []
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.group",
+    "fields": {
+      "name": "SpotLitManager",
+      "permissions": []
+    }
+  },
+  {
+    "pk": 1,
+    "model": "core.duediligencetype",
+    "fields": {
+      "name": "Human Resources"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "core.duediligencetype",
+    "fields": {
+      "name": "Third Party"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "core.duediligencetype",
+    "fields": {
+      "name": "Regulatory Compliance"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "core.duediligencetype",
+    "fields": {
+      "name": "Business Investment"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "core.service",
+    "fields": {
+      "display_order": 1,
+      "name": "Social Security Number Trace",
+      "description": "A search based on the social security number to extract and confirm identifying information, such as full name, aliases, variations of names, date of birth and jurisdictions."
+    }
+  },
+  {
+    "pk": 2,
+    "model": "core.service",
+    "fields": {
+      "display_order": 3,
+      "name": "Federal Criminal Records",
+      "description": "Multiple legal sources are accessed and reviewed that cover Federal Cases & Dockets, Agency Decisions, Verdicts, and Law Reviews. In addition, Public Records are reviewed which includes criminal records, Department of Correction records, Criminal Court records, and Arrest Records."
+    }
+  },
+  {
+    "pk": 3,
+    "model": "core.service",
+    "fields": {
+      "display_order": 4,
+      "name": "State Criminal Records",
+      "description": "Multiple legal sources are accessed and reviewed that cover State Cases & Dockets, Agency Decisions, Verdicts, and Law Reviews. In addition, Public Records are reviewed which includes criminal records, Department of Correction records, Criminal Court records, and Arrest Records."
+    }
+  },
+  {
+    "pk": 4,
+    "model": "core.service",
+    "fields": {
+      "display_order": 5,
+      "name": "County Criminal Case Search",
+      "description": "County records are accessed and reviewed, based on specific county information provided. Based on the jurisdiction, which may be assigned to a city or county name, information from local Superior, Municipal, and/or District court information is reviewed."
+    }
+  },
+  {
+    "pk": 5,
+    "model": "core.service",
+    "fields": {
+      "display_order": 30,
+      "name": "Motor Vehicle Search",
+      "description": "Driving records are reviewed to include minor traffic violations, misdemeanors, felonies, and DUI\u2019s.\r\n"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "core.service",
+    "fields": {
+      "display_order": 31,
+      "name": "Sexual Offenders Search",
+      "description": "A search is conducted against the Sex Offender Registry for 49 states (plus Washington DC) Per legislation, Nevada is excluded."
+    }
+  },
+  {
+    "pk": 8,
+    "model": "core.service",
+    "fields": {
+      "display_order": 25,
+      "name": "Professional Reference Check",
+      "description": "An interview is conducted with professional references, to verify and assess an applicant\u2019s ability. The questions and answers provided below are based specifically on your company\u2019s human resource guidance.\r\n"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "core.service",
+    "fields": {
+      "display_order": 29,
+      "name": "Education Verification",
+      "description": "A verification through public records data sources and/or direct verification from previous educational institutes is conducted."
+    }
+  },
+  {
+    "pk": 10,
+    "model": "core.service",
+    "fields": {
+      "display_order": 32,
+      "name": "I-9 Verification",
+      "description": "An applicants work eligibility is verified through DHS and SSA databases.\r\n"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "core.service",
+    "fields": {
+      "display_order": 33,
+      "name": "Drug Screening Service",
+      "description": "An oral (5-panel or 9-panel w/ oxycodone) or urinalysis (10-panel or 10-panel w/ alcohol) is conducted. The results are listed below. Note - some results may need to be sent in a separate correspondence due to laboratory time required.\r\n"
+    }
+  },
+  {
+    "pk": 13,
+    "model": "core.service",
+    "fields": {
+      "display_order": 17,
+      "name": "Global Media/Negative News Profile",
+      "description": "Individuals are screened against over 26,000 licensed news sources from international, national, and regional outlets. This includes newspapers, newswires, press releases, magazines, trade publications, broadcast transcripts and more. Searches are conducted against 100 variations of the following key words: Bribery, Corruption, Unethical, Criminal, Court, and Violation. Negative News is identified from these searches as potential \u201cred-flags\u201d that should be considered in the due diligence process.\r\n"
+    }
+  },
+  {
+    "pk": 14,
+    "model": "core.service",
+    "fields": {
+      "display_order": 20,
+      "name": "Open Source Review",
+      "description": "Individuals are cross-referenced against open source Internet searches based on a matrix of key words and variations of Bribery, Corruption, Unethical, Criminal, Court, and Violation.\r\n"
+    }
+  },
+  {
+    "pk": 15,
+    "model": "core.service",
+    "fields": {
+      "display_order": 18,
+      "name": "Politically Exposed Persons (PEP) Screen",
+      "description": "Individuals are screened against PEP lists of multiple providers in order to identify service to a public function or ties to such person, that by the virtue of their position and influence presents higher risk for potential corrupt activity, including bribery. Our access to PEP lists includes 1.4 million profiles, as well as family members and associates.\r\n"
+    }
+  },
+  {
+    "pk": 16,
+    "model": "core.service",
+    "fields": {
+      "display_order": 19,
+      "name": "Global Sanctions & Watch List Review",
+      "description": "Individuals being researched are screened against more than 800 sanctions and watchlists, that include (but are not limited to) \u2013 Office of Foreign Office (OFAC) list, Department of State, Directorate of Defense Trade Controls, Consolidated List of Debarred Parties, International Police Most Wanted and Red Alerts, FBI Most Wanted Lists, and many more.\r\n"
+    }
+  },
+  {
+    "pk": 17,
+    "model": "core.service",
+    "fields": {
+      "display_order": 21,
+      "name": "International, Federal, & State Legal Source Review",
+      "description": "Multiple legal sources are checked that cover Cases & Dockets, Agency Decisions, Verdicts, and Law Reviews. Cases include decided court cases \u2013 civil and criminal \u2013 from state, federal, and international courts. Dockets provide additional coverage of Federal and State courts, including pending matters.  Agency decisions combine opinions, orders, enforcement actions, no-action/interpretive/exemptive letters, decrees, judgments and rulings from various government agencies. Jury Verdicts & Settlements provide access to selected online verdict and settlement information for civil cases across the United States. Law Reviews help explain cases and the facts in dispute.\r\n"
+    }
+  },
+  {
+    "pk": 18,
+    "model": "core.service",
+    "fields": {
+      "display_order": 22,
+      "name": "Business Profile Review",
+      "description": "A review of Company Reports, including Dun & Bradstreet Global (D&B) Global Profiles, covering both public and private companies, and spanning 220 countries in developed and emerging markets. Corporate hierarchies and parent subsidiary structures are reviewed to identify individuals, past business, and/or current activity that may pose as a \u201cred flag\u201d within the organization.\r\n"
+    }
+  },
+  {
+    "pk": 19,
+    "model": "core.service",
+    "fields": {
+      "display_order": 23,
+      "name": "Biographical Source Review",
+      "description": "Biographical analysis is conducted to reveal key facts about an individual, which include (but are not limited to) \u2013 personal information, career history, educational background, participation in civic or philanthropic organizations, awards, and more. Sources include Standard & Poor\u2019s Corporate Register of Directors & Executives, U.S. Executive Compensation Database, Gale Biographies, Who\u2019s Who Biographies, and more.\r\n"
+    }
+  },
+  {
+    "pk": 20,
+    "model": "core.service",
+    "fields": {
+      "display_order": 26,
+      "name": "Personal Reference Check",
+      "description": "An interview is conducted with personal references, to verify and assess an applicant\u2019s ability. The questions and answers provided below are based specifically on your company\u2019s human resource guidance. \r\n"
+    }
+  },
+  {
+    "pk": 21,
+    "model": "core.service",
+    "fields": {
+      "display_order": 27,
+      "name": "Security Questionnaire",
+      "description": "A security questionnaire is conducted, to verify and assess an individual\u2019s background. The questions and answers provided below are based specifically on your company\u2019s compliance guidance.\r\n"
+    }
+  },
+  {
+    "pk": 23,
+    "model": "core.service",
+    "fields": {
+      "display_order": 2,
+      "name": "Address Verification",
+      "description": "A public records verification of all address history and dates associated with identifying information."
+    }
+  },
+  {
+    "pk": 24,
+    "model": "core.service",
+    "fields": {
+      "display_order": 6,
+      "name": "Bankruptcies, Judgments & Liens Search",
+      "description": "Bankruptcies, Judgments & Liens from all 50 states, D.C. and select territories is obtained and reviewed."
+    }
+  },
+  {
+    "pk": 25,
+    "model": "core.service",
+    "fields": {
+      "display_order": 27,
+      "name": "Employment Verification",
+      "description": "A verification through public records data sources and/or direct verification from previous employers is conducted."
+    }
+  },
+  {
+    "pk": 26,
+    "model": "core.service",
+    "fields": {
+      "display_order": 28,
+      "name": "Military/Federal Service Verification",
+      "description": "A verification through public records data sources and/or direct verification from previous military/federal service branches is conducted.  "
+    }
+  },
+  {
+    "pk": 27,
+    "model": "core.service",
+    "fields": {
+      "display_order": 24,
+      "name": "Comprehensive Public Records Check",
+      "description": "An all-in-one public records assessment is conducted to assess and/or verify background information such as individual identifiers (full name, aliases, SSN, DOB), current and historical addresses, criminal filings, bankruptcies, liens, judgments, business connections, property ownership, licenses and/or potential relatives."
+    }
+  },
+  {
+    "pk": 1,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 2
+    }
+  },
+  {
+    "pk": 3,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 3
+    }
+  },
+  {
+    "pk": 4,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 4
+    }
+  },
+  {
+    "pk": 5,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 5
+    }
+  },
+  {
+    "pk": 7,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 7
+    }
+  },
+  {
+    "pk": 8,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 8
+    }
+  },
+  {
+    "pk": 9,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 9
+    }
+  },
+  {
+    "pk": 10,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 10
+    }
+  },
+  {
+    "pk": 11,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 11
+    }
+  },
+  {
+    "pk": 13,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 13
+    }
+  },
+  {
+    "pk": 14,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 14
+    }
+  },
+  {
+    "pk": 15,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 15
+    }
+  },
+  {
+    "pk": 16,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 16
+    }
+  },
+  {
+    "pk": 17,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 17
+    }
+  },
+  {
+    "pk": 18,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 18
+    }
+  },
+  {
+    "pk": 19,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 19
+    }
+  },
+  {
+    "pk": 20,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 20
+    }
+  },
+  {
+    "pk": 21,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 21
+    }
+  },
+  {
+    "pk": 23,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 13
+    }
+  },
+  {
+    "pk": 24,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 14
+    }
+  },
+  {
+    "pk": 25,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 15
+    }
+  },
+  {
+    "pk": 26,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 16
+    }
+  },
+  {
+    "pk": 27,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 17
+    }
+  },
+  {
+    "pk": 28,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 18
+    }
+  },
+  {
+    "pk": 29,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 19
+    }
+  },
+  {
+    "pk": 30,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 20
+    }
+  },
+  {
+    "pk": 31,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 21
+    }
+  },
+  {
+    "pk": 33,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 13
+    }
+  },
+  {
+    "pk": 34,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 14
+    }
+  },
+  {
+    "pk": 35,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 15
+    }
+  },
+  {
+    "pk": 36,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 16
+    }
+  },
+  {
+    "pk": 37,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 17
+    }
+  },
+  {
+    "pk": 38,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 18
+    }
+  },
+  {
+    "pk": 39,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 19
+    }
+  },
+  {
+    "pk": 40,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 20
+    }
+  },
+  {
+    "pk": 41,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 21
+    }
+  },
+  {
+    "pk": 43,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 23
+    }
+  },
+  {
+    "pk": 44,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 24
+    }
+  },
+  {
+    "pk": 45,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 14
+    }
+  },
+  {
+    "pk": 46,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 20
+    }
+  },
+  {
+    "pk": 47,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 25
+    }
+  },
+  {
+    "pk": 48,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 1,
+      "service": 26
+    }
+  },
+  {
+    "pk": 49,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 27
+    }
+  },
+  {
+    "pk": 50,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 27
+    }
+  },
+  {
+    "pk": 51,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 27
+    }
+  },
+  {
+    "pk": 52,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 2,
+      "service": 8
+    }
+  },
+  {
+    "pk": 53,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 3,
+      "service": 8
+    }
+  },
+  {
+    "pk": 54,
+    "model": "core.duediligencetypeservices",
+    "fields": {
+      "due_diligence_type": 4,
+      "service": 8
+    }
+  },
+  {
+    "pk": 1,
+    "model": "core.requestformfieldtypes",
+    "fields": {"type": "Text"}
+  },
+    {
+    "pk": 2,
+    "model": "core.requestformfieldtypes",
+    "fields": {"type": "List"}
+  },
+    {
+    "pk": 3,
+    "model": "core.requestformfieldtypes",
+    "fields": {"type": "Text Area"}
+  },
+  {
+    "pk": 1,
+    "model": "core.layoutgroupsections",
+    "fields": {"group_name": "Request Information"}
+  },
+  {
+    "pk": 2,
+    "model": "core.layoutgroupsections",
+    "fields": {"group_name": "Contact Information"}
+  }
+]

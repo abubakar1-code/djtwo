@@ -1,0 +1,60 @@
+[
+{
+  "fields": {
+    "username": "manager", 
+    "date_joined": "2014-05-22T17:36:11Z", 
+    "groups": [
+      3
+    ], 
+    "password": "pbkdf2_sha256$12000$MMzscMgJGSNR$qnFRGZw58X9UWaGpcN5SPFSiqUR1CH+ENFF5TWtceaQ=", 
+    "last_name": "manager", 
+    "first_name": "manager", 
+    "is_superuser": false, 
+    "user_permissions": [], 
+    "is_staff": false, 
+    "last_login": "2014-06-30T18:54:09.856Z", 
+    "is_active": true, 
+    "email": "rpowell@prescientedge.com"
+  }, 
+  "pk": 2, 
+  "model": "auth.user"
+},
+{
+  "fields": {
+    "username": "analyst1", 
+    "date_joined": "2014-05-22T17:36:40Z", 
+    "groups": [
+      2
+    ], 
+    "password": "pbkdf2_sha256$12000$NFFoSPYxukfo$f13wmmRsmOJgBXthzamSBWZ6i7LoJoh9gbeAmKoruCQ=", 
+    "last_name": "analyst1", 
+    "first_name": "analyst1", 
+    "is_superuser": false, 
+    "user_permissions": [], 
+    "is_staff": false, 
+    "last_login": "2014-06-30T20:19:52.154Z", 
+    "is_active": true, 
+    "email": "jconolly@prescientedge.com"
+  }, 
+  "pk": 3, 
+  "model": "auth.user"
+},
+{
+  "fields": {
+    "user": 2, 
+    "phone_number": "123456788", 
+    "is_activated": false
+  }, 
+  "pk": 1, 
+  "model": "core.spotlitstaff"
+},
+{
+  "fields": {
+    "user": 3, 
+    "phone_number": "23345667788", 
+    "is_activated": false
+  }, 
+  "pk": 2, 
+  "model": "core.spotlitstaff"
+}
+]

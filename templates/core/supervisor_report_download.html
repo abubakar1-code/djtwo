@@ -1,0 +1,341 @@
+{% extends 'base.html' %}
+{% load eztables %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}theme/global/plugins/select2/select2.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}theme/global/plugins/data-tables/DT_bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/select2-bootstrap.min.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/data-tables/DT_bootstrap.js"></script>
+    <script type="text/javascript"
+            src="{{ STATIC_URL }}theme/global/plugins/data-tables/tabletools/js/dataTables.tableTools.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/all_table.js"></script>
+    <script src="{% static 'js/typed.min.js' %}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var visited = localStorage.getItem("ComplyVisited");
+
+
+            // Initializes datepicker for filtering
+             $('.datepicker').datepicker(
+                {
+                    format: 'yyyy-mm-dd',
+                    onSelect: function (d, i) {
+                        if (d !== i.lastVal) {
+                            $(this).change();
+                        }
+                    }
+                });
+
+
+            var clicked = false;
+            $('#all_table').dataTable({
+                "oLanguage": {
+                "sEmptyTable": "No requests loaded initially, please select filter criteria. "
+                        }
+            });
+
+            $("#filter-supervisor-button-custom").click(function(){
+            if (clicked == false) {
+                $("#all_table").dataTable().fnDestroy();
+                TableSelect.init("all_table", "{% url 'supervisor_report_download_datatable' %}","{{csrf_token}}");
+                clicked = true;
+                $("#filter-supervisor-button-custom").trigger("click");
+                $("#table_div").removeClass('hidden');
+            }
+            });
+
+
+            $('#custom-filter-10').on('change', function() {
+                var val = $("#custom-filter-10").val();
+                if(val != ""){
+                    $("#search_criteria").removeClass('hidden');
+                    $("#instruction2").removeClass('hidden');
+                    $(".typed-cursor").removeClass('hidden');
+                    if(visited !== "true") {
+                        $("#instruction2").typed({
+                            strings: ["Great!^1000", "Now enter in any search criteria you would like, and press the search button."],
+                            typeSpeed: 0,
+                            startDelay: 1000,
+                        });
+                    }
+
+
+                }else{
+                    $("#search_criteria").addClass('hidden');
+                    $("#instruction2").addClass('hidden');
+                    $(".typed-cursor").addClass('hidden');
+                    $("#all_table").dataTable().fnDestroy();
+                    $("#table_div").addClass('hidden');
+                    clicked = false;
+                }
+
+            });
+
+
+            $(function(){
+                if(visited !== "true") {
+
+                    $("#instruction1").typed({
+                        strings: ["Hello!^1000", "Welcome to the report export page.^1000", "To start first select a Request Type below."],
+                        typeSpeed: 0,
+                        startDelay: 1000
+                    });
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
+{% block sidebar %}
+    {% include 'core/_supervisor_sidebar.html' %}
+{% endblock %}
+{% block content %}
+    <div class="page-content">
+        <h3 style="padding-top:10px;" class="page-title">Welcome</h3>
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a href="{% url 'redirect' %}">Home</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="#">Create Archive</a>
+                </li>
+            </ul>
+        </div>
+        <div class="clearfix">
+        </div>
+        <form class="horizontal-form">
+        <div class="row">
+            <form>
+            <div class="filter col-md-12" style="margin-bottom:50px">
+                <span id="instruction1" style="white-space:pre; font-size: larger"></span>
+                    <div class="panel panel-info">
+                         <div class="panel-heading">
+                             <h4 class="panel-title">Select Request Type...</h4>
+                         </div>
+                         <div class="panel-body">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Request Type</label>
+                                        <select id="custom-filter-10" class="form-control select2me" data-placeholder="Select...">
+                                            <option value=""></option>
+                                            <option value ="request">Individual Request</option>
+                                            <option value ="corporaterequest">Corporate Request</option>
+                                            <option value ="customrequest">Custom Request</option>
+                                        </select>
+                                    </div>
+                                </div>
+                         </div>
+                    </div>
+                    <span id="instruction2" style="white-space:pre; font-size: larger"></span>
+                        <div id="search_criteria" class="panel-group hidden">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                            Search Criteria
+                                    </h4>
+                                </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Id</label>
+                                                    <input id="custom-filter-0" type="text"
+                                                           class="fill form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Name</label>
+                                                    <input id="custom-filter-1" type="text"
+                                                           class="fill form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Created By</label>
+                                                        <select id="custom-filter-2" class="form-control select2me" data-placeholder="Select...">
+                                                            <option value=""></option>
+                                                            {% for employee in company_employees %}
+                                                                <option value="{{employee.user.id}}">{{employee.user.first_name}} {{employee.user.last_name}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Status</label>
+                                                    <select id="custom-filter-3" class="form-control select2me" data-placeholder="Select...">
+                                                        <option value=""></option>
+                                                        {% for status in statuses %}
+                                                            <option value="{{ status.0 }}">{{ status.1 }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                             <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Type</label>
+                                                    <select id="custom-filter-4" class="form-control select2me" data-placeholder="Select...">
+                                                        <option value=""></option>
+                                                        {% for type in types %}
+                                                            <option value="{{ type.id }}">{{ type }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Start Date</label>
+                                                    <input id="custom-filter-5" type="text"
+                                                           class="fill form-control datepicker">
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">End Date</label>
+                                                    <input id="custom-filter-6" type="text"
+                                                           class="fill form-control datepicker">
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Custom Form Type</label>
+                                                    <select id="custom-filter-9" class="form-control select2me" data-placeholder="Select...">
+                                                        <option value=""></option>
+                                                        {% for form in dynamic_forms%}
+                                                        <option value="{{form.id}}">{{form.name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Custom Field</label>
+                                                    <select id="custom-filter-7" class="form-control select2me" data-placeholder="Select...">
+                                                        <option value=""></option>
+                                                        {% for field in fields %}
+                                                            <option value="{{ field.id }}">{{ field.dynamic_request_form.name }} - {{ field.label }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Custom Field Value</label>
+                                                    <input id="custom-filter-8" type="text"
+                                                           class="fill form-control">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a type="button" id="filter-supervisor-button-custom"
+                                                        class="btn btn-primary pull-right">Search
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-md-12">
+                    <div id="table_div" class="portlet-body hidden">
+
+                        <a type="button" id="check_all" class="btn btn-primary" style="margin-bottom: 5px">
+
+                            <i class="fa fa-level-down"></i>
+                            Select All</a>
+                        <label>Selected:<span id="selected_count" class="badge">0</span></label>
+
+
+                        <div class="row">
+                        <div class="table-responsive">
+                           <div class="dataTables_wrapper col-md-12" role="grid" id="all">
+                                    <table class="table table-condensed table-striped table-boardered table-hover dataTable" id="all_table">
+                                        <thead>
+                                            <tr>
+                                                <th> </th>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Date</th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                   <div class="row">
+                                        <div class="col-md-12">
+                                           <a type="button" id="download_button"
+                                                    class="btn btn-primary">Download
+                                            </a>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+            </div>
+
+{% endblock %}
+
+{% block extra_css %}
+<style type="text/css">
+    .typed-cursor{
+        opacity: 1;
+        -webkit-animation: blink 0.7s infinite;
+        -moz-animation: blink 0.7s infinite;
+        animation: blink 0.7s infinite;
+    }
+    @keyframes blink{
+        0% { opacity:1; }
+        50% { opacity:0; }
+        100% { opacity:1; }
+    }
+    @-webkit-keyframes blink{
+        0% { opacity:1; }
+        50% { opacity:0; }
+        100% { opacity:1; }
+    }
+    @-moz-keyframes blink{
+        0% { opacity:1; }
+        50% { opacity:0; }
+        100% { opacity:1; }
+    }
+
+</style>
+{% endblock %}
+

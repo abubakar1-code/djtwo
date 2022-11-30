@@ -1,0 +1,22 @@
+[
+{
+  "fields": {
+    "username": "employee", 
+    "date_joined": "2014-05-22T17:36:11Z", 
+    "groups": [
+      3
+    ], 
+    "password": "pbkdf2_sha256$12000$MMzscMgJGSNR$qnFRGZw58X9UWaGpcN5SPFSiqUR1CH+ENFF5TWtceaQ=", 
+    "last_name": "employee", 
+    "first_name": "employee", 
+    "is_superuser": false, 
+    "user_permissions": [], 
+    "is_staff": false, 
+    "last_login": "2014-06-30T18:54:09.856Z", 
+    "is_active": true, 
+    "email": "employee@excella.com"
+  }, 
+  "pk": 2, 
+  "model": "auth.user"
+}
+]

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="page-content-wrapper">
+<div class="page-content">
+<h3> Edit employee:</h3>
+<div class="form-group" style="max-width:50%">
+{% crispy form %}
+</div>
+</div>
+</div>
+{% endblock %}

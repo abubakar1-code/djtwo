@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+{% include 'core/_manager_sidebar.html'%}
+{% endblock %}
+
+{% block content %}
+<div class="page-content-wrapper">
+<div class="page-content">
+<div class="row" >
+ <div class="col-md-12">
+        <div class="portlet">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-building"></i>Companies
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet prescient-green box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-info-circle"></i>Company Profiles
+                                </div>
+                                <div class="tools">
+                                    <i class="fa fa-plus-circle"></i>
+                                    <a class="link" style="color:white;" href="{% url 'create_company' %}">Create Company Profile</a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                 <table class="table">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone Number</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>Terms Agreed</th>
+                                    </tr>
+                                {% for company in companies %}
+                                    <tr>   
+                                        <td ><a href="{% url 'company' company.id %}">{{ company.name }}</a></td>
+                                        <td>{{company.phone_number}}</td>
+                                        <td>{{company.address.city }}</td>
+                                        <td>{{company.address.state}}</td>
+                                        <td>{{company.terms_agreed|yesno:"Yes,No"}}</td>
+                                    </tr>
+                                {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+

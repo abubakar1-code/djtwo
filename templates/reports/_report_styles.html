@@ -1,0 +1,131 @@
+{% load spotlit_extras static %}
+
+<style type="text/css">
+	@page {
+        {% if page_bg %}
+        background-image: url({{ page_bg }});
+        {% endif %}
+		size: letter portrait;
+        @frame {
+            -pdf-frame-content: "logo";
+	    			top: 7.25cm;
+            left: center;
+            right: auto;
+        }
+        @frame {
+            -pdf-frame-content: "title";
+            top: 11.875cm;   {# 40% #}
+        }
+        @frame {
+            -pdf-frame-content: "prepared-for";
+            top: 14.85cm;    {# 50% #}
+        }
+        @frame {
+            -pdf-frame-content: "disclosure";
+            top: 17.8cm;    {# 60% #}
+            margin-left:2cm;
+            margin-right:2cm;
+        }
+        @frame {
+            -pdf-frame-content: "spotlit1";
+            top: 25.25cm;    {# 85% #}
+            margin-left:2cm;
+            margin-right:2cm;
+        }
+        @frame footer_frame {
+            -pdf-frame-content: footer_content;
+            top: 27.35cm;    {# 92.1% #}
+        }
+        @frame header_frame {
+            -pdf-frame-content: header_content;
+            top: 0;
+        }
+    }
+    @page main_content {
+        {% if page_bg %}
+        background-image: url({{ page_bg }});
+        {% endif %}
+        size: letter portrait;
+        margin: 2cm;
+        @frame footer {
+            -pdf-frame-content: pageNumber;
+            top: 26.5cm;    {# 95% #}
+            margin-left: 1cm;
+        }
+        @frame footer_frame {
+            -pdf-frame-content: footer_content2;
+            top: 27.35cm;    {# 97.9% #}
+        }
+        @frame header_frame {
+            -pdf-frame-content: header_content2;
+            top: 0;
+        }
+    }
+    @page last_page {
+        size: letter portrait;
+        background-image: url({{last_page}});
+    }
+
+    /* Normal */
+    @font-face {
+        font-family: OpenSans;
+        src: url({{font_url}}OpenSans-Regular.ttf);
+    }
+
+    /* Bold */
+    @font-face {
+       font-family: OpenSans;
+       src: url({{font_url}}OpenSans-Bold.ttf);
+       font-weight: bold;
+    }
+
+    /* Italic */
+    @font-face {
+       font-family: OpenSans;
+       src: url({{font_url}}OpenSans-Italic.ttf);
+       font-style: italic;
+    }
+
+    /* Bold and italic */
+    @font-face {
+        font-family: OpenSans;
+        src: url({{font_url}}OpenSans-BoldItalic.ttf);
+        font-weight: bold;
+        font-style: italic;
+    }
+    *, html {
+        font-family: "OpenSans";
+    }
+    ul{
+        list-style-image: url({{bullet}});
+    }
+    ul.flag {
+  	    list-style-image: url({{flag}});
+    }
+    li.yellow-flag{
+        list-style-image: url({{yellow_flag}});
+    }
+    li {
+        color: {% firstof li_color '#000' %}; /* bullet color */
+    }
+    li span {
+        color: black; /* text color */
+    }
+    ol > li {
+        list-style-image: url({{flag}});
+        color: red;
+    }
+    td {
+	border-color: #A0CD4F;
+    }
+
+    @page last_page {
+      background-image: url({{ voyint_last_page }});
+    }
+    ul {
+      list-style-image: url({{ voyint_bullet }});
+    }
+    td {
+      border-color: #019bdc!important;
+    }
+</style>

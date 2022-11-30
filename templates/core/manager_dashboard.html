@@ -1,0 +1,855 @@
+{% extends 'base.html' %}
+{% load eztables %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}theme/global/plugins/select2/select2.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}theme/global/plugins/data-tables/DT_bootstrap.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/data-tables/DT_bootstrap.js"></script>
+    <script type="text/javascript"
+            src="{{ STATIC_URL }}theme/global/plugins/data-tables/tabletools/js/dataTables.tableTools.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/all_table.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.datepicker').datepicker(
+                    {
+                        format: 'yyyy-mm-dd',
+                        onSelect: function (d, i) {
+                            if (d !== i.lastVal) {
+                                $(this).change();
+                            }
+                        }
+                    });
+
+            $('#new_custom_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'new_custom_table' %}"
+            });
+
+            $('#rejected_custom_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'rejected_custom_table' %}"
+            });
+
+            $('#completed_custom_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'completed_custom_table' %}"
+            });
+
+            $('#new_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'new_table' %}"
+            });
+
+            $('#completed_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'completed_table' %}"
+            });
+
+            $('#rejected_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'rejected_table' %}"
+            });
+
+            $('#new_corporate_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'new_corporate_table' %}"
+            });
+
+            $('#completed_corporate_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'completed_corporate_table' %}"
+            });
+
+            $('#rejected_corporate_table').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'rejected_corporate_table' %}"
+            });
+
+
+
+
+
+            TableAdvanced.init("all_custom_table", "{% url 'all_custom_table' %}", "{{ STATIC_URL }}theme/global/plugins/data-tables/tabletools/swf/copy_csv_xls_pdf.swf");
+            TableAdvanced.init("all_table", "{% url 'all_table' %}", "{{ STATIC_URL }}theme/global/plugins/data-tables/tabletools/swf/copy_csv_xls_pdf.swf");
+            TableAdvanced.init("all_corporate_table", "{% url 'all_corporate_table' %}", "{{ STATIC_URL }}theme/global/plugins/data-tables/tabletools/swf/copy_csv_xls_pdf.swf");
+
+        });
+    </script>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'core/_manager_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="page-content-wrapper">
+        <div class="page-content">
+
+            <div class="portlet box blue-hoki">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-user"></i>Individual Requests
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="tabbable-custom ">
+                        <ul class="nav nav-tabs ">
+                            <li class="active"><a data-toggle="tab" href="#new">New</a></li>
+                            <li class="">
+                                <a href="#completed" data-toggle="tab">
+                                    Completed
+                                    {% if num_completed > 0 %}
+                                        <span class="badge badge-success">{{ num_completed }}</span>
+                                    {% endif %}
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#rejected" data-toggle="tab">
+                                    Rejected
+                                    {% if num_rejected > 0 %}
+                                        <span class="badge badge-danger">{{ num_rejected }}</span>
+                                    {% endif %}
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="new">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                           id="new_table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Type</th>
+                                            <th>Company</th>
+                                            <th>Date/Time Received</th>
+                                        </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="completed">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                           id="completed_table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Type</th>
+                                            <th>Company</th>
+                                            <th>Assignment</th>
+                                            <th>Date Completed</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="rejected">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                           id="rejected_table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Type</th>
+                                            <th>Company</th>
+                                            <th>Assignment</th>
+                                            <th>Date Rejected</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end NEW/COMPLETED/REJECTED -->
+                    <!--start Individual FILTERS -->
+
+                    <div class="row">
+                        <div class="filter col-md-12" style="margin-bottom:50px">
+
+                            <div class="panel-group accordion" id="accordion1">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle accordion-toggle-styled collapsed"
+                                               data-toggle="collapse" data-parent="#accordion1" href="#collapse_filter">
+                                                Filter Criteria </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse_filter" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <form class="horizontal-form">
+                                                <div class="form-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Id</label>
+                                                                <input id="filter-0" type="text"
+                                                                       class="fill form-control">
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Company</label>
+                                                                <select id="filter-4" class="form-control">
+                                                                    <option value="">-------------</option>
+                                                                    {% for company in companies %}
+                                                                        <option value="{{ company.id }}">{{ company.name }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Assignment</label>
+                                                                <select id="filter-5" class="form-control">
+                                                                    <option value="">-------------</option>
+                                                                    {% for analyst in analysts %}
+                                                                        <option value="{{ analyst.id }}">{{ analyst.user.last_name }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <!--/row-->
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">First Name</label>
+                                                                <input id="filter-1" type="text"
+                                                                       class="fill form-control">
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Last Name</label>
+                                                                <input id="filter-2" type="text"
+                                                                       class="fill form-control">
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <!--/span-->
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Status</label>
+
+                                                                <select id="filter-6" class="form-control">
+                                                                    <option value="">-------------</option>
+                                                                    {% for status in statuses %}
+                                                                        <option value="{{ status.0 }}">{{ status.1 }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Type</label>
+                                                                <select id="filter-3" class="form-control">
+                                                                    <option value="">-------------</option>
+                                                                    {% for type in types %}
+                                                                        <option value="{{ type.id }}">{{ type }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Start Date</label>
+                                                                <input id="filter-7" type="text"
+                                                                       class="fill form-control datepicker">
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">End Date</label>
+                                                                <input id="filter-8" type="text"
+                                                                       class="fill form-control datepicker">
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <button type="button" id="filter-button1"
+                                                                    class="btn btn-primary pull-right">Filter
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dataTables_wrapper col-md-12" role="grid" id="all">
+                            <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                   id="all_table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Type</th>
+                                    <th>Company</th>
+                                    <th>Assignment</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!--end INDIVIDUAL -->
+            <!--start CUSTOM -->
+            {% for custom_table in cr_bank %}
+                <div class="portlet box red-sunglo">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-user"></i>Custom Requests
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portlet-body">
+                        <div class="tabbable-custom ">
+                            <ul class="nav nav-tabs ">
+                                <li class="active"><a data-toggle="tab" href="#new_custom">New</a></li>
+                                <li class="">
+                                    <a href="#completed_custom" data-toggle="tab">
+                                        Completed
+                                        {% if custom_table.num_completed_cust > 0 %}
+                                            <span class="badge badge-success">{{ custom_table.num_completed_cust }}</span>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#rejected_custom" data-toggle="tab">
+                                        Rejected
+                                        {% if custom_table.num_rejected_cust > 0 %}
+                                            <span class="badge badge-danger">{{ custom_table.num_rejected_cust }}</span>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="new_custom">
+                                    <div class="table-responsive">
+                                            <table class="table table-condensed table-striped table-boardered table-hover dataTable" id="new_custom_table">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Request Type</th>
+                                                    <th>Company</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="completed_custom">
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed table-striped table-boardered table-hover dataTable" id="completed_custom_table">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Request Type</th>
+                                                    <th>Company</th>
+                                                    <th>Assignment</th>
+                                                    <th>Date Completed</th>
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="rejected_custom">
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed table-striped table-boardered table-hover dataTable" id="rejected_custom_table">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Type</th>
+                                                    <th>Company</th>
+                                                    <th>Assignment</th>
+                                                    <th>Date Rejected</th>
+                                                </tr>
+                                                </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end NEW/COMPLETED/REJECTED -->
+                        <!--start CUSTOM FILTERS -->
+
+                        <div class="row">
+                            <div class="filter col-md-12" style="margin-bottom:50px">
+
+                                <div class="panel-group accordion" id="accordion_custom">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle accordion-toggle-styled collapsed"
+                                                   data-toggle="collapse" data-parent="#accordion_custom"
+                                                   href="#collapse_filter_custom">
+                                                    Filter Criteria </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse_filter_custom" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <form class="horizontal-form">
+                                                    <div class="form-body">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Id</label>
+                                                                    <input id="custom-filter-0" type="text"
+                                                                           class="fill form-control">
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Company</label>
+                                                                    <select id="custom-filter-1" class="form-control">
+                                                                        <option value="">-------------</option>
+                                                                        {% for company in companies %}
+                                                                            <option value="{{ company.id }}">{{ company.name }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Assignment</label>
+                                                                    <select id="custom-filter-2" class="form-control">
+                                                                        <option value="">-------------</option>
+                                                                        {% for analyst in analysts %}
+                                                                            <option value="{{ analyst.id }}">{{ analyst.user.last_name }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+                                                        <!--/row-->
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Name</label>
+                                                                    <input id="custom-filter-3" type="text"
+                                                                           class="fill form-control">
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <!--/span-->
+                                                            <!--/span-->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Status</label>
+
+                                                                    <select id="custom-filter-4" class="form-control">
+                                                                        <option value="">-------------</option>
+                                                                        {% for status in statuses %}
+                                                                            <option value="{{ status.0 }}">{{ status.1 }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Type</label>
+                                                                    <select id="custom-filter-5" class="form-control">
+                                                                        <option value="">-------------</option>
+                                                                        {% for type in types %}
+                                                                            <option value="{{ type.id }}">{{ type }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Start Date</label>
+                                                                    <input id="custom-filter-7" type="text"
+                                                                           class="fill form-control datepicker">
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">End Date</label>
+                                                                    <input id="custom-filter-8" type="text"
+                                                                           class="fill form-control datepicker">
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Custom Field</label>
+                                                                    <select id="custom-filter-9" class="form-control">
+                                                                        <option value="">-------------</option>
+                                                                        {% for field in custom_table.fields %}
+                                                                            <option value="{{ field.id }}">{{ field.label }} - {{ field.dynamic_request_form.name }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Custom Field Value</label>
+                                                                    <input id="custom-filter-10" type="text"
+                                                                           class="fill form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Custom Form Type</label>
+                                                                    <input id="custom-filter-11" type="text"
+                                                                           class="fill form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <button type="button" id="filter-button-custom" class="btn btn-primary pull-right">
+                                                                    Filter
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dataTables_wrapper col-md-12" role="grid" id="all">
+                                <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                       id="all_custom_table">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <th>Type</th>
+                                        <th>Assignment</th>
+                                        <th>Custom Form Type</th>
+                                        <th>Start Date</th>
+                                        <th>Status</th>
+                                        <th>Status Date</th>
+                                        <th style="display:none">endDate</th>
+                                        <th style="display:none">Custom Field</th>
+                                        <th style="display:none">Custom Field Value</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <!--end CUSTOM -->
+
+            <!--start CORPORATE -->
+
+            <div class="portlet box green-meadow">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-users"></i>Corporate Requests
+                    </div>
+                    <div class="tools">
+                        <a id="expandCorporate" href="javascript:;" class="expand">
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="tabbable-custom ">
+                        <ul class="nav nav-tabs ">
+                            <li class="active"><a data-toggle="tab" href="#new_corp">New</a></li>
+                            <li class="">
+                                <a href="#completed_corp" data-toggle="tab">
+                                    Completed
+                                    {% if num_completed_corp > 0 %}
+                                        <span class="badge badge-success">{{ num_completed_corp }}</span>
+                                    {% endif %}
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#rejected_corp" data-toggle="tab">
+                                    Rejected
+                                    {% if num_rejected_corp > 0 %}
+                                        <span class="badge badge-danger">{{ num_rejected_corp }}</span>
+                                    {% endif %}
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="new_corp">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                           id="new_corporate_table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Company Name</th>
+                                            <th>Type</th>
+                                            <th>Date/Time Received</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="completed_corp">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                           id="completed_corporate_table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Company Name</th>
+                                            <th>Type</th>
+                                            <th>Company</th>
+                                            <th>Assignment</th>
+                                            <th>Date Completed</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="rejected_corp">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                           id="rejected_corporate_table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Company Name</th>
+                                            <th>Type</th>
+                                            <th>Assignment</th>
+                                            <th>Date Rejected</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--end Corporate NEW/COMPLETED/REJECTED -->
+                    <!--start Corporate FILTERS -->
+
+                    <div class="row">
+                        <div class="filter col-md-12" style="margin-bottom:50px">
+
+                            <div class="panel-group accordion" id="accordion2">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle accordion-toggle-styled collapsed"
+                                               data-toggle="collapse" data-parent="#accordion2"
+                                               href="#collapse_filter_corporate">
+                                                Filter Criteria </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse_filter_corporate" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <form class="horizontal-form">
+                                                <div class="form-body">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Id</label>
+                                                                <input id="corporate-filter-0" type="text"
+                                                                       class="fill form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Entity Name</label>
+                                                                <input id="corporate-filter-1" type="text"
+                                                                       class="fill form-control">
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Company</label>
+                                                                <select id="corporate-filter-2" class="form-control">
+                                                                    <option value="">-------------</option>
+                                                                    {% for company in companies %}
+                                                                        <option value="{{ company.id }}">{{ company.name }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Assignment</label>
+                                                                <select id="corporate-filter-3" class="form-control">
+                                                                    <option value="">-------------</option>
+                                                                    {% for analyst in analysts %}
+                                                                        <option value="{{ analyst.id }}">{{ analyst.user.last_name }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <!--/row-->
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Status</label>
+
+                                                                <select id="corporate-filter-4" class="form-control">
+                                                                    <option value="">-------------</option>
+                                                                    {% for status in statuses %}
+                                                                        <option value="{{ status.0 }}">{{ status.1 }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Type</label>
+                                                                <select id="corporate-filter-5" class="form-control">
+                                                                    <option value="">-------------</option>
+                                                                    {% for type in types %}
+                                                                        <option value="{{ type.id }}">{{ type }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Start Date</label>
+                                                                <input id="corporate-filter-7" type="text"
+                                                                       class="fill form-control datepicker">
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label class="control-label">End Date</label>
+                                                                <input id="corporate-filter-8" type="text"
+                                                                       class="fill form-control datepicker">
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <button type="button" id="filter-button2"
+                                                                    class="btn green-meadow btn-primary pull-right">
+                                                                Filter
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dataTables_wrapper col-md-12" role="grid" id="all">
+                            <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                   id="all_corporate_table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Entity Name</th>
+                                    <th>Company</th>
+                                    <th>Assignment</th>
+                                    <th>Status</th>
+                                    <th>Type</th>
+                                    <th>Date</th>
+                                    <th style="display:none"></th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+{% endblock %}
+

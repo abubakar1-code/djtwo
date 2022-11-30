@@ -1,0 +1,8 @@
+{% if status_id == 1%}
+	Request {{request.id}}: {{request.last_name}}, {{request.first_name}}  was created by {{request.created_by.company.name}}.
+{% else %}
+	Request {{request.id}}: {{request.last_name}}, {{request.first_name}} is now {{status}}.
+{% endif %}
+
+
+Please login for more information: {{ protocol}}://{{ domain }}{% url 'login' %}

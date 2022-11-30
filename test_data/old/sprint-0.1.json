@@ -1,0 +1,658 @@
+[
+{
+  "pk": 1, 
+  "model": "sites.site", 
+  "fields": {
+    "domain": "example.com", 
+    "name": "example.com"
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.request", 
+  "fields": {
+    "phone_number": "4345678990", 
+    "first_name": "John", 
+    "last_name": "Smith", 
+    "middle_name": "David", 
+    "company": 2, 
+    "birthdate": "1900-10-29", 
+    "request_type": 1, 
+    "ssn": "223456789", 
+    "email": "smith@test.com"
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.request", 
+  "fields": {
+    "phone_number": "555555555", 
+    "first_name": "Peggy", 
+    "last_name": "Wilson", 
+    "middle_name": "Anne", 
+    "company": 2, 
+    "birthdate": "1976-04-15", 
+    "request_type": 1, 
+    "ssn": "345678094", 
+    "email": "peggy@testcompany.com"
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.request", 
+  "fields": {
+    "phone_number": "3456789023", 
+    "first_name": "George", 
+    "last_name": "Washington", 
+    "middle_name": "M.", 
+    "company": 3, 
+    "birthdate": "1776-07-04", 
+    "request_type": 1, 
+    "ssn": "111111111", 
+    "email": "washingtong@testcompany2.com"
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.request", 
+  "fields": {
+    "phone_number": "456789023", 
+    "first_name": "James", 
+    "last_name": "Bond", 
+    "middle_name": "G.", 
+    "company": 3, 
+    "birthdate": "0007-07-07", 
+    "request_type": 1, 
+    "ssn": "234567890", 
+    "email": "007@testcompany2.com"
+  }
+},
+{
+  "pk": 5, 
+  "model": "core.request", 
+  "fields": {
+    "phone_number": "3456789023", 
+    "first_name": "Sean", 
+    "last_name": "Bennett", 
+    "middle_name": "K", 
+    "company": 3, 
+    "birthdate": "1985-03-21", 
+    "request_type": 1, 
+    "ssn": "234567890", 
+    "email": "sean@company.com"
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.requesttype", 
+  "fields": {
+    "request_type": "HR"
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.address", 
+  "fields": {
+    "city": "McClean", 
+    "street2": "Apt 4", 
+    "street": "1000 Main St", 
+    "state": "VA", 
+    "zipcode": "22203"
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.company", 
+  "fields": {
+    "name": "Test Company"
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.company", 
+  "fields": {
+    "name": "Test Company 2"
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.statustype", 
+  "fields": {
+    "status": "New"
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.statustype", 
+  "fields": {
+    "status": "Assigned"
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.statustype", 
+  "fields": {
+    "status": "In Progress"
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.statustype", 
+  "fields": {
+    "status": "Completed"
+  }
+},
+{
+  "pk": 5, 
+  "model": "core.statustype", 
+  "fields": {
+    "status": "Submitted"
+  }
+},
+{
+  "pk": 6, 
+  "model": "core.statustype", 
+  "fields": {
+    "status": "Canceled"
+  }
+},
+{
+  "pk": 7, 
+  "model": "core.statustype", 
+  "fields": {
+    "status": "Not Approved"
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.check", 
+  "fields": {
+    "name": "Background Check", 
+    "description": "Full background check"
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.check", 
+  "fields": {
+    "name": "Social Media", 
+    "description": "Social Media Check"
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.check", 
+  "fields": {
+    "name": "Drug Screening", 
+    "description": "drug screening"
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.companycheck", 
+  "fields": {
+    "company": 2, 
+    "request_type": 1, 
+    "check": 1
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.companycheck", 
+  "fields": {
+    "company": 2, 
+    "request_type": 1, 
+    "check": 2
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.companycheck", 
+  "fields": {
+    "company": 3, 
+    "request_type": 1, 
+    "check": 1
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.companycheck", 
+  "fields": {
+    "company": 3, 
+    "request_type": 1, 
+    "check": 2
+  }
+},
+{
+  "pk": 5, 
+  "model": "core.companycheck", 
+  "fields": {
+    "company": 3, 
+    "request_type": 1, 
+    "check": 3
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 1, 
+    "request": 1, 
+    "datetime": "2014-05-15T14:33:04Z"
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 1, 
+    "request": 2, 
+    "datetime": "2014-05-17T14:33:26Z"
+  }
+},
+{
+  "pk": 5, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 2, 
+    "request": 2, 
+    "datetime": "2014-05-18T14:33:50Z"
+  }
+},
+{
+  "pk": 8, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 1, 
+    "request": 3, 
+    "datetime": "2014-05-10T11:49:06Z"
+  }
+},
+{
+  "pk": 9, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 2, 
+    "request": 3, 
+    "datetime": "2014-05-12T11:49:27Z"
+  }
+},
+{
+  "pk": 10, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 1, 
+    "request": 4, 
+    "datetime": "2014-05-01T11:49:42Z"
+  }
+},
+{
+  "pk": 11, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 3, 
+    "request": 3, 
+    "datetime": "2014-05-20T20:19:47Z"
+  }
+},
+{
+  "pk": 12, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 2, 
+    "request": 4, 
+    "datetime": "2014-05-02T20:20:13Z"
+  }
+},
+{
+  "pk": 13, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 3, 
+    "request": 4, 
+    "datetime": "2014-05-05T20:20:26Z"
+  }
+},
+{
+  "pk": 14, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 4, 
+    "request": 4, 
+    "datetime": "2014-05-10T20:20:44Z"
+  }
+},
+{
+  "pk": 15, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 1, 
+    "request": 5, 
+    "datetime": "2014-05-01T20:20:56Z"
+  }
+},
+{
+  "pk": 16, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 2, 
+    "request": 5, 
+    "datetime": "2014-05-02T20:21:09Z"
+  }
+},
+{
+  "pk": 17, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 3, 
+    "request": 5, 
+    "datetime": "2014-05-03T20:21:23Z"
+  }
+},
+{
+  "pk": 18, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 4, 
+    "request": 5, 
+    "datetime": "2014-05-04T20:21:41Z"
+  }
+},
+{
+  "pk": 19, 
+  "model": "core.requeststatus", 
+  "fields": {
+    "status": 5, 
+    "request": 5, 
+    "datetime": "2014-05-15T20:21:56Z"
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.requestassignment", 
+  "fields": {
+    "request": 2, 
+    "staff": 3
+  }
+},
+{
+  "pk": 5, 
+  "model": "core.requestassignment", 
+  "fields": {
+    "request": 3, 
+    "staff": 1
+  }
+},
+{
+  "pk": 6, 
+  "model": "core.requestassignment", 
+  "fields": {
+    "request": 4, 
+    "staff": 3
+  }
+},
+{
+  "pk": 7, 
+  "model": "core.requestassignment", 
+  "fields": {
+    "request": 5, 
+    "staff": 1
+  }
+},
+{
+  "pk": 1, 
+  "model": "auth.group", 
+  "fields": {
+    "name": "SpotListManager", 
+    "permissions": []
+  }
+},
+{
+  "pk": 2, 
+  "model": "auth.group", 
+  "fields": {
+    "name": "SpotListAnalyst", 
+    "permissions": []
+  }
+},
+{
+  "pk": 3, 
+  "model": "auth.group", 
+  "fields": {
+    "name": "Client", 
+    "permissions": []
+  }
+},
+{
+  "pk": 1, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "spotlit_admin", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": true, 
+    "is_staff": true, 
+    "last_login": "2014-05-20T20:13:36.946Z", 
+    "groups": [], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$RTu1abAzp6IS$RiJ/O4tIxjH8oca5htwtAKKDrpprpLwzUy63JW+1mK4=", 
+    "email": "spotlit_adin@spotlit.com", 
+    "date_joined": "2014-05-15T17:01:54Z"
+  }
+},
+{
+  "pk": 2, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "test", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-16T20:01:18.763Z", 
+    "groups": [], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$nxIXbsVj4D5u$lJCpqrhe6OFbKh8yTUG0kKVF3SsVx3jKZFOWdyr5O8k=", 
+    "email": "", 
+    "date_joined": "2014-05-15T19:41:47.364Z"
+  }
+},
+{
+  "pk": 3, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "analyst1", 
+    "first_name": "Analyst1", 
+    "last_name": "Analyst1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-20T20:33:57.184Z", 
+    "groups": [
+      [
+        "SpotListAnalyst"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$3sm2VLoAoQbS$s2ijKMU75iJNO6ZUCzYC6VqtlazGu7i3joBKAJV55g0=", 
+    "email": "analyst1@spotlit.com", 
+    "date_joined": "2014-05-16T16:51:01Z"
+  }
+},
+{
+  "pk": 4, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "manager", 
+    "first_name": "manager", 
+    "last_name": "manager", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-20T20:30:32.801Z", 
+    "groups": [
+      [
+        "SpotListManager"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$1wwYx3aUylcd$rBgC7afzan2mclY8Jc46HaL5k8RAUbW52ZFg38v4RQU=", 
+    "email": "manager@spotlit.com", 
+    "date_joined": "2014-05-16T16:52:34Z"
+  }
+},
+{
+  "pk": 5, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "client1", 
+    "first_name": "Client1", 
+    "last_name": "Client1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-20T19:18:56Z", 
+    "groups": [
+      [
+        "Client"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$9OEyAOVwCGhv$fy2fU8Q8I2kCSQE0MdfOYYEBpDpE8hBLsaqNJ0XCkQA=", 
+    "email": "client1@company.com", 
+    "date_joined": "2014-05-16T16:53:17Z"
+  }
+},
+{
+  "pk": 6, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "analyst2", 
+    "first_name": "Analyst2", 
+    "last_name": "Analyst2", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-20T20:35:21.572Z", 
+    "groups": [
+      [
+        "SpotListAnalyst"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$OJfbgf2rTAqb$clt/zHopLqNqNTEO7K9KpvRXn+rNlC5JlyBdubOh7FE=", 
+    "email": "", 
+    "date_joined": "2014-05-20T11:40:03Z"
+  }
+},
+{
+  "pk": 7, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "analyst3", 
+    "first_name": "Analyst3", 
+    "last_name": "Analyst3", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-20T19:08:04Z", 
+    "groups": [
+      [
+        "SpotListAnalyst"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$qTq4F5TiMRfM$kD4aOU3zQAJ6rayLZRP/b4Guw7QZLARwDY1kXyQjLoE=", 
+    "email": "", 
+    "date_joined": "2014-05-20T11:40:14Z"
+  }
+},
+{
+  "pk": 8, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "client2", 
+    "first_name": "Client2", 
+    "last_name": "Client2", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-20T11:42:45Z", 
+    "groups": [
+      [
+        "Client"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$Lum6uN53OJPz$4oeNbUWqVBxIyiTvupaYnX20sYHiAtKBOxACXPfhA4Y=", 
+    "email": "client2@company.com", 
+    "date_joined": "2014-05-20T11:42:45Z"
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.client", 
+  "fields": {
+    "phone_number": "55555555", 
+    "company": 2, 
+    "user": [
+      "client1"
+    ], 
+    "address": 1
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.client", 
+  "fields": {
+    "phone_number": "3457894567", 
+    "company": 3, 
+    "user": [
+      "client2"
+    ], 
+    "address": 1
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.staff", 
+  "fields": {
+    "phone_number": "5555555", 
+    "user": [
+      "analyst1"
+    ]
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.staff", 
+  "fields": {
+    "phone_number": "55555555", 
+    "user": [
+      "manager"
+    ]
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.staff", 
+  "fields": {
+    "phone_number": "6783456789", 
+    "user": [
+      "analyst2"
+    ]
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.staff", 
+  "fields": {
+    "phone_number": "234567890", 
+    "user": [
+      "analyst3"
+    ]
+  }
+}
+]

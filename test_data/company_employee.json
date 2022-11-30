@@ -1,0 +1,107 @@
+[
+{
+    "pk": 999,
+    "model": "core.company",
+    "fields": {
+      "phone_number": "",
+      "individual_template": null,
+      "name": "Selenium Company",
+      "corporate_template": null,
+      "is_corporate": true,
+      "address": null,
+      "logo": "",
+      "tax_id": ""
+    }
+  },
+  {
+    "pk": 998,
+    "model": "core.companyduediligencetypeselection",
+    "fields": {
+      "company": 999,
+      "level": 1,
+      "due_diligence_type": 1,
+      "comments": "",
+      "name": ""
+    }
+  },
+  {
+    "pk": 999,
+    "model": "core.companyduediligencetypeselection",
+    "fields": {
+      "company": 999,
+      "level": 2,
+      "due_diligence_type": 2,
+      "comments": "",
+      "name": ""
+    }
+  },
+  {
+    "pk": 10,
+    "model": "core.companyserviceselection",
+    "fields": {
+      "dd_type": 998,
+      "service": 1
+    }
+  },
+  {
+    "pk": 11,
+    "model": "core.companyserviceselection",
+    "fields": {
+      "dd_type": 998,
+      "service": 23
+    }
+  },
+  {
+    "pk": 12,
+    "model": "core.companyserviceselection",
+    "fields": {
+      "dd_type": 998,
+      "service": 2
+    }
+  },
+  {
+    "pk": 13,
+    "model": "core.companyserviceselection",
+    "fields": {
+      "dd_type": 999,
+      "service": 18
+    }
+  },
+  {
+    "pk": 14,
+    "model": "core.companyserviceselection",
+    "fields": {
+      "dd_type": 999,
+      "service": 19
+    }
+  },
+  {
+    "pk": 999,
+    "model": "auth.user",
+    "fields": {
+      "username": "test",
+      "first_name": "employee",
+      "last_name": "employee",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2015-05-21T13:44:18.088Z",
+      "groups": [1],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$dyXBT2P0mfaB$WO0kfBY//A8Z2J4Peef00jVEy7ZUCaK+UVfkZq1IFu8=",
+      "email": "test@seleniumtest.com",
+      "date_joined": "2015-05-21T13:43:37.700Z"
+    }
+  },
+  {
+    "pk": 999,
+    "model": "core.companyemployee",
+    "fields": {
+      "phone_number": "",
+      "position": "",
+      "company": 999,
+      "is_activated": true,
+      "user": 999
+    }
+  }
+]

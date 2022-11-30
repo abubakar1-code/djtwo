@@ -1,0 +1,255 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Voyint</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Pendo installation -->
+    <script>
+    (function(apiKey){
+        (function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=o._q||[];
+
+        v=['initialize','identify','updateOptions','pageLoad','track'];for(w=0,x=v.length;w<x;++w)(function(m){
+            o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
+            y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
+            z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
+
+            // Call this whenever information about your visitors becomes available
+            // Please use Strings, Numbers, or Bools for value types.
+            var isSuperUser = '{{request.user.is_superuser}}'
+            var userId = null;
+            var userEmail = null;
+            if(isSuperUser === "False"){
+              userId = '{{request.user.id}}';
+              userEmail ='{{request.user.email}}'
+            }
+            pendo.initialize({
+                visitor: {
+                    id:              userId,   // Required if user is logged in
+                    email:           userEmail // Recommended if using Pendo Feedback, or NPS Email
+                    // full_name:    // Recommended if using Pendo Feedback
+                    // role:         // Optional
+
+                    // You can add any additional visitor level key-values here,
+                    // as long as it's not one of the above reserved names.
+                },
+
+                account: {
+                    id:           'ACCOUNT-UNIQUE-ID' // Highly recommended
+                    // name:         // Optional
+                    // is_paying:    // Recommended if using Pendo Feedback
+                    // monthly_value:// Recommended if using Pendo Feedback
+                    // planLevel:    // Optional
+                    // planPrice:    // Optional
+                    // creationDate: // Optional
+
+                    // You can add any additional account level key-values here,
+                    // as long as it's not one of the above reserved names.
+                }
+            });
+    })('2ba1f306-646b-4dcd-7022-9ac3337dcd96');
+</script>
+<!--end pendo installation -->
+
+    <link rel="shortcut icon" href="">
+
+
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+
+     <!-- metronic theme -->
+
+     <!--global mandatory -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'theme/global/plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'theme/global/plugins/simple-line-icons/simple-line-icons.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'theme/global/plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'theme/global/plugins/uniform/css/uniform.default.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!-- theme styles -->
+    <link href="{% static 'theme/global/css/components.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'theme/global/css/plugins.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'theme/admin/layout/css/layout.css' %}" rel="stylesheet" type="text/css"/>
+    {# <link href="{% static 'theme/admin/layout/css/themes/grey.css' %}" rel="stylesheet" type="text/css" id="style_color"/> #}
+    <link href="{% static 'theme/admin/layout/css/custom.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!-- page specific -->
+    <link href="{% static 'theme/global/plugins/select2/select2.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'theme/global/plugins/data-tables/DT_bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+
+    <link href="{% static 'css/prescient_comply.css'%}" rel="stylesheet">
+    <link href="{% static 'css/voyint.css'%}" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+    <!-- Use this to quickly test CSS changes in a template,
+then move to {{ project_name }}.css -->
+    {% block extra_css %}{% endblock extra_css %}
+    {% block header_script_js %} {% endblock header_script_js %}
+    {{ analytics_code }}
+  </head>
+
+  <body class="page-header-fixed page-sidebar-fixed">
+
+    <!--BEGIN TOP NAVIGATION-->
+    <div id="logo" class="page-header navbar navbar-fixed-top" style="height:130px;">
+      <div class="page-header-inner" style="height: 100%">
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+          <a href="{% url 'redirect' %}">
+            {% if user.is_authenticated and company_logo_active %}
+                {% if company_logo %}
+                    <img src="{{company_logo.url}}" alt="{{user.company.name}}" class="img logo-default">
+                {% else %}
+                    <img src="{% static '/static/img/PrescientComply-270-121.png' %}" alt="COMPLY" class="img logo-default">
+                {% endif %}
+              <!-- to resize image in html uncomment this code and comment the line above it out.
+             {# <img src="{{company_logo.url}}" alt="{{user.company.name}}" class="img logo-default"> height="250" width="270"> #}
+              -->
+            {% else %}
+              <img src="{% static 'img/voyint-logo-notagline.png' %}" alt="VOYINT" class="img logo-default" style="width: 300px">
+            {% endif %}
+          </a>
+        </div>
+        <!-- END LOGO -->
+
+        <div class="top-menu">
+            <ul class="nav navbar-nav pull-right">
+              <!-- BEGIN USER LOGIN DROPDOWN -->
+            <!-- <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+					<i class="icon-bell"></i>
+					<span class="badge badge-default">
+					{{ total_notifications }} </span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<p>
+								 You have {{ total_notifications }} new notifications
+							</p>
+						</li>
+						<li>
+							<ul class="dropdown-menu-list scroller" style="height: 100px;">
+								<li>
+									<a href="#">
+									<span class="label label-sm label-icon label-success">
+									<i class="fa fa-check-square"></i>
+									</span>
+									{% if num_completed > 0 %}{{ num_completed }}{% endif %} Completed
+									</a>
+								</li>
+								<li>
+									<a href="#">
+									<span class="label label-sm label-icon label-danger">
+									<i class="fa fa-warning"></i>
+									</span>
+									{% if num_incomplete > 0 %}{{ num_incomplete }}{% endif %} Incomplete
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+        </li> -->
+        {% block dropdown %}
+        <li class="dropdown dropdown-user">
+          <a id="logoutDropdown" href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+          <span class="username">
+          {{user.first_name}} {{ user.last_name }} </span>
+          <i class="fa fa-angle-down" style="color: #888888"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a id="logout" href="{% url 'logout' %}">
+              <i class="fa fa-key"></i> Log Out </a>
+            </li>
+          </ul>
+        </li>
+        <!-- END USER LOGIN DROPDOWN -->
+        {% endblock dropdown %}
+            </ul>
+          </div>
+      </div>
+    </div>
+    <!-- END TOP NAVIGATION MENU -->
+     <div class="page-container">
+            <div class="page-sidebar-wrapper">
+                    {% block sidebar %}{% endblock %}
+            </div>
+            <div class="page-content-wrapper">
+                    {% block content %}{% endblock %}
+            </div>
+      </div>
+
+      {% block footer %}
+
+      <div class="page-footer">
+        <div class="page-footer-inner">
+            Pursuant to federal regulation (28 CFR 20) results from inquiries may be used only
+              for the stated purpose for which it was requested. Charges and dispositions as
+              coded herein reflect standardized uniform offense and disposition classifications
+              for computerized personnel history records. Furthermore, by submitting the above
+              search, you have agreed to such terms and our <a href="http://www.voyint.com/agreements/">User Agreement</a> and its terms.
+
+          <br />
+          <br />
+          <center>{% now 'Y' %} &copy; <a href="https://www.voyint.com">Voyint</a></center>
+          </div>
+      </div>
+
+      {% endblock %}
+
+
+    <!-- Le javascript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+  <!-- general javascript -->
+    <!-- <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-2.1.1.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script> -->
+
+
+<!-- metronic javacript -->
+<!-- core plugins -->
+  <script src="{% static 'theme/global/plugins/jquery-1.11.0.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'theme/global/plugins/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'theme/global/plugins/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'theme/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'theme/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'theme/global/plugins/jquery.blockui.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'theme/global/plugins/jquery.cokie.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'theme/global/plugins/uniform/jquery.uniform.min.js' %}" type="text/javascript"></script>
+
+
+  <script src="{% static 'theme/global/scripts/metronic.js' %}" type="text/javascript"></script>
+  <script src="{% static 'theme/admin/layout/scripts/layout.js' %}" type="text/javascript"></script>
+  <script src="{% static 'js/jquery.validate.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'js/additional-methods.min.js' %}" type="text/javascript"></script>
+
+
+  <!-- project specific Javascript -->
+  <script src="{% static 'js/prescient_comply.js' %}"></script>
+
+
+
+  <script>
+jQuery(document).ready(function() {
+   // initiate layout and plugins
+   Metronic.init(); // init metronic core components
+    Layout.init(); // init current layout
+});
+  </script>
+  {% block js %}
+  {% endblock %}
+
+
+  </body>
+</html>

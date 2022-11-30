@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<br><br><br><br><br>
+<div class="page-content-wrapper">
+<div class="page-content">
+<h3 class="page-title">Welcome, 
+	{%if user.is_authenticated %} 
+	    {{user.username}}!
+    {% else %}
+       please <a href={% url 'login' %}> sign in.</a>
+	{% endif %}</h3>
+	<br><br><br>
+</div>
+</div>
+{% endblock %}

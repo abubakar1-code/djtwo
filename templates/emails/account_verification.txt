@@ -1,0 +1,6 @@
+
+You have been registered for Voyint!
+
+Please click the following URL to verify your account: {{ protocol}}://{{ domain }}{% url 'verify_account' uidb64=uid token=token %}
+
+If clicking the URL above does not work, copy and paste the URL into a browser window.

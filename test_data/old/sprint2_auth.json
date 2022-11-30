@@ -1,0 +1,198 @@
+[
+{
+  "pk": 1, 
+  "model": "auth.group", 
+  "fields": {
+    "name": "CompanyEmployee", 
+    "permissions": []
+  }
+},
+{
+  "pk": 2, 
+  "model": "auth.group", 
+  "fields": {
+    "name": "SpotLitAnalyst", 
+    "permissions": []
+  }
+},
+{
+  "pk": 3, 
+  "model": "auth.group", 
+  "fields": {
+    "name": "SpotLitManager", 
+    "permissions": []
+  }
+},
+{
+  "pk": 1, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "admin", 
+    "first_name": "", 
+    "last_name": "", 
+    "is_active": true, 
+    "is_superuser": true, 
+    "is_staff": true, 
+    "last_login": "2014-05-28T01:46:25.303Z", 
+    "groups": [], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$5ggF10MlNLyX$6DQ/8CzOec+cS5HzbPtWkdxBKa7wNbq82lzI0l5OidI=", 
+    "email": "", 
+    "date_joined": "2014-05-22T14:23:16.538Z"
+  }
+},
+{
+  "pk": 2, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "employee1", 
+    "first_name": "Employee1", 
+    "last_name": "Employee1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-27T17:55:30.982Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$jEMmj53L04ap$q3Rll1uOrc2CuBCMc9+X2YEY95tceK6RUsmvxuGFKI8=", 
+    "email": "", 
+    "date_joined": "2014-05-22T16:37:58Z"
+  }
+},
+{
+  "pk": 3, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "manager", 
+    "first_name": "manager", 
+    "last_name": "manager", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-28T01:49:20.341Z", 
+    "groups": [
+      [
+        "SpotLitManager"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$MMzscMgJGSNR$qnFRGZw58X9UWaGpcN5SPFSiqUR1CH+ENFF5TWtceaQ=", 
+    "email": "", 
+    "date_joined": "2014-05-22T17:36:11Z"
+  }
+},
+{
+  "pk": 4, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "analyst1", 
+    "first_name": "analyst1", 
+    "last_name": "analyst1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-28T01:49:46.279Z", 
+    "groups": [
+      [
+        "SpotLitAnalyst"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$NFFoSPYxukfo$f13wmmRsmOJgBXthzamSBWZ6i7LoJoh9gbeAmKoruCQ=", 
+    "email": "", 
+    "date_joined": "2014-05-22T17:36:40Z"
+  }
+},
+{
+  "pk": 22, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "target1@target.com", 
+    "first_name": "Target Employee 1", 
+    "last_name": "Target Employee 1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-28T01:48:37.764Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$3EdhTANUTqPg$6Xn+X6KQEUT58TvkFsIrPuA0BGuezNZDOPoGaRT1qYo=", 
+    "email": "target1@target.com", 
+    "date_joined": "2014-05-28T01:27:57.984Z"
+  }
+},
+{
+  "pk": 23, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "target2@target.com", 
+    "first_name": "Target Employee 2", 
+    "last_name": "Target Employee 2", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-28T01:29:19.168Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$9d4JtMtoyekB$sI5hyVPOWNkPHlDPJQWgxNk+7i18Q0vobFuZ0aday/E=", 
+    "email": "target2@target.com", 
+    "date_joined": "2014-05-28T01:29:19.168Z"
+  }
+},
+{
+  "pk": 24, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "walmart1@walmart.com", 
+    "first_name": "Walmart Employee 1", 
+    "last_name": "Walmart Employee1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-28T01:42:00.299Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$SPxVhCCbR4E5$f+s1Mxumrx2OR8n1tccWyG8YDyIJc0EGWE5sRJGELow=", 
+    "email": "walmart1@walmart.com", 
+    "date_joined": "2014-05-28T01:42:00.299Z"
+  }
+},
+{
+  "pk": 25, 
+  "model": "auth.user", 
+  "fields": {
+    "username": "lawfirm1@lawfirm.com", 
+    "first_name": "Lawfirm Employee 1", 
+    "last_name": "Lawfirm Employee1", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "is_staff": false, 
+    "last_login": "2014-05-28T01:42:34.392Z", 
+    "groups": [
+      [
+        "CompanyEmployee"
+      ]
+    ], 
+    "user_permissions": [], 
+    "password": "pbkdf2_sha256$12000$f548RrXOI7bx$Z8jLck5F7pxribPOPD2Ukey8HlfaSaN7dd4yOW5GYQQ=", 
+    "email": "lawfirm1@lawfirm.com", 
+    "date_joined": "2014-05-28T01:42:34.392Z"
+  }
+}
+]

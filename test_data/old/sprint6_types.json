@@ -1,0 +1,572 @@
+[
+{
+  "pk": 1, 
+  "model": "core.duediligencetype", 
+  "fields": {
+    "name": "Human Resources"
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.duediligencetype", 
+  "fields": {
+    "name": "Third Party"
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.duediligencetype", 
+  "fields": {
+    "name": "Regulatory Compliance"
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.duediligencetype", 
+  "fields": {
+    "name": "Business Investment"
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 1, 
+    "name": "Social Security Number Trace", 
+    "description": "Social Security Number Trace"
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 2, 
+    "name": "Federal Criminal Records", 
+    "description": "Federal Criminal Records"
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 3, 
+    "name": "State Criminal Records", 
+    "description": "State Criminal Records"
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 4, 
+    "name": "County Criminal Case Search", 
+    "description": "County Criminal Case Search"
+  }
+},
+{
+  "pk": 5, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 5, 
+    "name": "Motor Vehicle Search", 
+    "description": "Motor Vehicle Search\r\n"
+  }
+},
+{
+  "pk": 6, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 6, 
+    "name": "Judgements & Liens Search", 
+    "description": "Judgements & Liens Search"
+  }
+},
+{
+  "pk": 7, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 7, 
+    "name": "Sexual Offenders Search", 
+    "description": "Sexual Offenders Search"
+  }
+},
+{
+  "pk":8, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 8, 
+    "name": "Professional/Personal Reference Check", 
+    "description": "Professional/Personal Reference Check\r\n"
+  }
+},
+{
+  "pk": 9, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 9, 
+    "name": "Education Verification", 
+    "description": "Education Verification\r\n"
+  }
+},
+{
+  "pk": 10, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 10, 
+    "name": "I-9 Verification", 
+    "description": "I-9 Verification\r\n"
+  }
+},
+{
+  "pk": 11, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 11, 
+    "name": "Drug Screening Service", 
+    "description": "Drug Screening Service\r\n"
+  }
+},
+{
+  "pk": 12, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 12, 
+    "name": "Federal Clearance Verification", 
+    "description": "Federal Clearance Verification\r\n"
+  }
+},
+{
+  "pk": 13, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 13, 
+    "name": "Global Media/Negatvie News Profile", 
+    "description": "Global Media/Negatvie News Profile\r\n"
+  }
+},
+{
+  "pk": 14, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 14, 
+    "name": "Open Source Search", 
+    "description": "Open Source Search\r\n"
+  }
+},
+{
+  "pk": 15, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 15, 
+    "name": "Politically Exposed Persons (PEP) Screen", 
+    "description": "Politically Exposed Persons (PEP) Screen\r\n"
+  }
+},
+{
+  "pk": 16, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 16, 
+    "name": "Global Sactions & Watch List Review", 
+    "description": "Global Sactions & Watch List Review\r\n"
+  }
+},
+{
+  "pk": 17, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 17, 
+    "name": "International, Federal, & State Legal Source Review", 
+    "description": "International, Federal, & State Legal Source Review\r\n"
+  }
+},
+{
+  "pk": 18, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 18, 
+    "name": "Business Profile Review", 
+    "description": "Business Profile Review\r\n"
+  }
+},
+{
+  "pk": 19, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 19, 
+    "name": "Biographical Source Review", 
+    "description": "Biographical Source Review\r\n"
+  }
+} ,
+{
+  "pk": 20, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 20, 
+    "name": "Professional/Personal References", 
+    "description": "Professional/Personal References\r\n"
+  }
+},
+{
+  "pk": 21, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 21, 
+    "name": "Security Questionnaire", 
+    "description": "Security Questionnaire\r\n"
+  }
+},
+{
+  "pk": 22, 
+  "model": "core.service", 
+  "fields": {
+    "display_order": 22, 
+    "name": "Formalized Report of Findings", 
+    "description": "Formalized Report of Findings\r\n"
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 22
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 1
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 2
+  }
+},
+{
+  "pk": 3, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 3
+  }
+},
+{
+  "pk": 4, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 4
+  }
+},
+{
+  "pk": 5, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 5
+  }
+},
+{
+  "pk": 6, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 6
+  }
+},
+{
+  "pk": 7, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 7
+  }
+},
+{
+  "pk": 8, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 8
+  }
+},
+{
+  "pk": 9, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 9
+  }
+},
+{
+  "pk": 10, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 10
+  }
+},
+{
+  "pk": 11, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 11
+  }
+},
+{
+  "pk": 12, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 1, 
+    "service": 12
+  }
+},
+{
+  "pk": 13, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 2, 
+    "service": 13
+  }
+},
+{
+  "pk": 14, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 2, 
+    "service": 14
+  }
+},
+{
+  "pk": 15, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 2, 
+    "service": 15
+  }
+},
+{
+  "pk": 16, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 2, 
+    "service": 16
+  }
+},
+{
+  "pk": 17, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 2, 
+    "service": 17
+  }
+},
+{
+  "pk": 18, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 2, 
+    "service": 18
+  }
+},
+{
+  "pk": 19, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 2, 
+    "service": 19
+  }
+},
+{
+  "pk": 20, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 2, 
+    "service": 20
+  }
+},
+{
+  "pk": 21, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 2, 
+    "service": 21
+  }
+},
+{
+  "pk": 22, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 2, 
+    "service": 22
+  }
+},
+{
+  "pk": 23, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 3, 
+    "service": 13
+  }
+},
+{
+  "pk": 24, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 3, 
+    "service": 14
+  }
+},
+{
+  "pk": 25, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 3, 
+    "service": 15
+  }
+},
+{
+  "pk": 26, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 3, 
+    "service": 16
+  }
+},
+{
+  "pk": 27, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 3, 
+    "service": 17
+  }
+},
+{
+  "pk": 28, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 3, 
+    "service": 18
+  }
+},
+{
+  "pk": 29, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 3, 
+    "service": 19
+  }
+},
+{
+  "pk": 30, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 3, 
+    "service": 20
+  }
+},
+{
+  "pk": 31, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 3, 
+    "service": 21
+  }
+},
+{
+  "pk": 32, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 3, 
+    "service": 22
+  }
+},
+{
+  "pk": 33, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 4, 
+    "service": 13
+  }
+},
+{
+  "pk": 34, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 4, 
+    "service": 14
+  }
+},
+{
+  "pk": 35, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 4, 
+    "service": 15
+  }
+},
+{
+  "pk": 36, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 4, 
+    "service": 16
+  }
+},
+{
+  "pk": 37, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 4, 
+    "service": 17
+  }
+},
+{
+  "pk": 38, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 4, 
+    "service": 18
+  }
+},
+{
+  "pk": 39, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 4, 
+    "service": 19
+  }
+},
+{
+  "pk": 40, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 4, 
+    "service": 20
+  }
+},
+{
+  "pk": 41, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 4, 
+    "service": 21
+  }
+},
+{
+  "pk": 42, 
+  "model": "core.duediligencetypeservices", 
+  "fields": {
+    "due_diligence_type": 4, 
+    "service": 22
+  }
+}
+]

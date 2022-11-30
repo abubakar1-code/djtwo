@@ -1,0 +1,4 @@
+Follow the link below to reset your Voyint account password:
+{{ protocol}}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+
+If clicking the URL above does not work, copy and paste the URL into a browser window.

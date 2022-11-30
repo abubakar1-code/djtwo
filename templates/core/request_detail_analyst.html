@@ -1,0 +1,505 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load spotlit_extras %}
+{% block js %}
+<script type="text/javascript">
+    window.CKEDITOR_BASEPATH = "{{STATIC_URL}}js/ckeditor/";
+</script>
+<script type="text/javascript" src="{% static 'js/ckeditor/ckeditor.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ckeditor/adapters/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ckeditor/plugins/lite/lite-interface.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ckeditor/plugins/lite/lite-includes.min.js' %}"></script>
+
+
+
+
+<script type="text/javascript">
+function detectIE() {
+    var ua = window.navigator.userAgent;
+
+    var msie = ua.indexOf('MSIE ');
+    if (msie > 0) {
+        // IE 10 or older => return version number
+        //return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+        return true;
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        //return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+        return true;
+    }
+
+    var edge = ua.indexOf('Edge/');
+    if (edge > 0) {
+       // IE 12 => return version number
+       //return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+       return true;
+    }
+
+    // other browser
+    return false;
+}
+
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+
+{% if status == 3  %}
+
+
+    $('#services').find('.textarea').ckeditor( function(element){
+        var editor = $("#"+element.id).ckeditorGet();
+        var lite = editor.plugins.lite;
+        lite.findPlugin(editor).setUserInfo({name: "{{user.first_name}} {{user.last_name}}", id : "{{user.id}}"});
+    });
+
+{% endif %}
+
+
+
+    hide_comment_boxes();
+    show_comment_boxes();
+
+
+    function hide_comment_boxes()
+    {
+        $('.hide-div').hide();
+    }
+
+    function show_comment_boxes()
+    {
+        $('.show-div').show()
+    }
+
+
+     $('#begin').on('click',function()
+    {
+        var data = { };
+        if ("{{is_corporate}}" == "True") {
+            var args = { type:"POST", url:"{% url 'corporate_begin' request.id %}", data:data, complete:complete };
+        }
+        else if ("{{is_custom}}" == "True") {
+            var args = { type:"POST", url:"{% url 'custom_begin' request.id %}", data:data, complete:complete };
+        }
+        else {
+            var args = { type:"POST", url:"{% url 'begin' request.id %}", data:data, complete:complete };
+        }
+        $.ajax(args);
+
+        return false;
+    });
+
+    $('#reject').on('click',function()
+    {
+
+        var comments = $("#rejection_comments").val();
+
+        if(comments != "")
+        {
+
+            $(this).attr("disabled", true);
+            $("#cancel-reject").attr("disabled", true)
+        var data = { "comments": comments};
+        if ("{{is_corporate}}" == "True") {
+            var args = { type:"POST", url:"{% url 'corporate_reject' request.id %}", data:data, complete:complete };
+        }
+        else if ("{{is_custom}}" == "True") {
+             var args = { type:"POST", url:"{% url 'custom_reject' request.id %}", data:data, complete:complete };
+        }
+        else {
+            var args = { type:"POST", url:"{% url 'reject' request.id %}", data:data, complete:complete };
+        }
+        $.ajax(args);
+        }
+        else{
+            //provide validation feedback to user here
+        }
+        return false;
+    });
+
+    var complete = function(res, status) {
+
+        if (status == "success") {
+            if ("{{is_corporate}}" == "True") {
+                window.location.href = "{% url 'request_analyst_for_corporate' request.id %}";
+            }
+            else if ("{{is_custom}}" == "True") {
+                window.location.href = "{% url 'request_analyst_for_custom' request.id %}";
+            }
+            else {
+                window.location.href = "{% url 'request_analyst' request.id %}";
+            }
+        }
+        else
+        {
+            alert(res.response_text)
+        }
+
+    }
+
+    $(".selection").click(function()
+    {
+        var selection = this.name;
+        var id_index = selection.indexOf("_");
+        var id = selection.substr(id_index+1);
+
+        var selection_val = $(this).val();
+
+        //if selection is Yes (1), show comment_box
+        var comment_box = document.getElementsByName("div_comment_" + id);
+        if(selection_val == 'True')
+        {
+            comment_box[0].classList.remove('hide-div');
+            comment_box[0].classList.add('show-div');
+            show_comment_boxes();
+        }
+        else
+        {
+            comment_box[0].classList.remove('show-div');
+            comment_box[0].classList.add('hide-div');
+            hide_comment_boxes();
+        }
+    });
+
+    var form_num = {{formset.total_form_count}}-1;
+    $('#add_more').click(function() {
+        form_num ++;
+        $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_num));
+        $("input[id='id_form-TOTAL_FORMS']").attr('value', form_num + 1);
+    });
+
+});
+</script>
+{% endblock %}
+
+{% block sidebar %}
+{% include 'core/_analyst_sidebar.html'%}
+{% endblock %}
+
+{% block content %}
+<div class="page-content-wrapper">
+<div class="page-content">
+<div class="row">
+{% if is_corporate %}
+    {% include 'core/_request_corporate_detail.html' with request=request real_status=real_status %}
+{% elif is_custom %}
+    {% include 'core/_request_custom_detail.html' with request=request real_status=real_status %}
+{% else %}
+    {% include 'core/_request_detail.html' with request=request real_status=real_status %}
+{% endif %}
+
+    <div class="col-md-12">
+        <div class="portlet">
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet prescient-grey box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>Request Actions
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row static-info">
+                                    <div class="col-md-3">
+                                        <div id="div-begin">
+                                            <button id="begin" class="btn btn-secondary {% if status != 2 and status != 8 %}disabled {% elif is_assigned == False %} disabled {% endif %}" type="button">Start Request</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div id="div-reject">
+                                            <a href="#reject_comments" class="btn btn-secondary {% if status != 2 and status != 3 and status != 8 %}disabled {% elif is_assigned == False %} disabled {% endif %}" data-toggle="modal">Reject Request</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                    </div>
+                                    <div class="col-md-3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--</div>-->
+
+<!--<div class="row">-->
+<form action="" method="POST" enctype="multipart/form-data">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="portlet prescient-green box">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>Request Report
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        {% if status != 1 and status != 2 %}
+                            {% if is_corporate %}
+                                <h5 style="margin-bottom:15px;">Click <a target="_blank" href="{% url 'corporate_report' request.report_url %}" class="btn btn-xs grey btn-editable">here</a> to view the full pdf report.</h5>
+                            {% elif is_custom %}
+                                <h5 style="margin-bottom:15px;">Click <a target="_blank" href="{% url 'custom_report' request.report_url %}" class="btn btn-xs grey btn-editable">here</a> to view the full pdf report.</h5>
+                            {% else %}
+                                <h5 style="margin-bottom:15px;">Click <a target="_blank" href="{% url 'report' request.report_url %}" class="btn btn-xs grey btn-editable">here</a> to view the full pdf report.</h5>
+                            {% endif %}
+                        {% endif %}
+                        {% if is_assigned == True %}
+
+                        <fieldset id="services" {% if status == 2 or status == 4 or status == 5 or status == 6 or status == 7 or status == 8%}disabled{% endif %}>
+                            {% crispy form %}
+                        </fieldset>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="portlet prescient-green box">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>Request Notes
+                        </div>
+                    </div>
+                    <div class="portlet-body" style="min-height:300px;max-height:500px;overflow:auto;">
+                       <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto;">
+                            <div class="scroller" style="overflow: auto; width: auto; height: auto;" data-initialized="true">
+                                {% if comments.count == 0%}
+                                        No request notes exist.
+                                {% else %}
+                                <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>
+                                         Comment
+                                    </th>
+                                    <th>
+                                         Request Status
+                                    </th>
+                                    <th>
+                                         Date
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for comment in comments %}
+                                    <tr>
+                                        <td>{{comment.comments|linebreaks}}</td>
+                                        <td>{{comment.get_status_display}}</td>
+                                        <td>{{comment.datetime}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                </table>
+                               {% endif %}
+
+                            </div>
+                            <div class="slimScrollBar" style="width: 7px; position: absolute; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; top: 0px; height: 98.0392156862745px; display: none; opacity: 0.4; background: rgb(187, 187, 187);">
+                            </div>
+                            <div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter col-md-5">
+                <div class="panel-group accordion" id="accordion_request_surcharges">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title surcharge-panel-title">
+                                <div class="surcharge-accordion-header caption accordion-toggle accordion-toggle-styled collapsed"
+                                   data-toggle="collapse" data-parent="#accordion_request_surcharges"
+                                   href="#collapse_request_surcharges">
+                                   <i class="fa fa-cogs surcharge-gear-icon"></i> Request Surcharges</div>
+                            </div>
+                        </div>
+                        <div id="collapse_request_surcharges" class="panel-collapse collapse in">
+                            <div class="panel-body" style="min-height:300px;max-height:500px;overflow:auto;padding-left: 10px !important;">
+                                    <fieldset id="surcharges" {% if status == 2 or status == 8 %} disabled {% endif %}>
+                                        {{ formset.management_form }}
+                                        {% for errors in formset.errors %}
+                                           {% for key, error in errors.items %}
+                                               <div class="form-group has-error">
+                                                   <label class="control-label  requiredField">
+                                                       <strong>{{ error |striptags}}</strong>
+                                                   </label>
+                                               </div>
+                                           {% endfor %}
+                                        {% endfor %}
+                                        <div id="form_set">
+                                            {% for form in formset.forms %}
+                                                <div id="{{ form.prefix }}-row" class="dynamic-form">
+                                                    {% for hidden in form.hidden_fields %}
+                                                            {{ hidden }}
+                                                    {% endfor %}
+                                                    <div>Reference #: {{ form.ref_number|add_class:"form-control" }}</div>
+                                                    <div>Charge Type: {{ form.charge_type|add_class:"form-control" }}</div>
+                                                    <div>Source: {{ form.source|add_class:"form-control" }}</div>
+                                                    <div>Order Number: {{ form.order_number|add_class:"form-control" }}</div>
+                                                    <label>Processing Fee:</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">$</span>
+                                                            <div>{{ form.processing_fee|add_class:"form-control" }}</div>
+                                                        </div>
+                                                    <label>Estimated Cost:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">$</span>
+                                                        <div>{{ form.estimated_cost|add_class:"form-control" }}</div>
+                                                    </div>
+                                                    <div>Delete?: {{ form.DELETE }}</div>
+                                                    <hr>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div id="empty_form" style="display:none">
+                                               <div id="{{ formset.empty_form.prefix }}-row" class="dynamic-form">
+                                                   {% for hidden in formset.empty_form.hidden_fields %}
+                                                        {{ hidden }}
+                                                   {% endfor %}
+                                                    <div>Reference #: {{ formset.empty_form.ref_number|add_class:"form-control" }}</div>
+                                                    <div>Charge Type: {{ formset.empty_form.charge_type|add_class:"form-control" }}</div>
+                                                    <div>Source: {{ formset.empty_form.source|add_class:"form-control" }}</div>
+                                                    <div>Order Number: {{ formset.empty_form.order_number|add_class:"form-control" }}</div>
+                                                    <label>Processing Fee:</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">$</span>
+                                                                <div>{{ formset.empty_form.processing_fee|add_class:"form-control" }}</div>
+                                                            </div>
+                                                    <label>Estimated Cost:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">$</span>
+                                                        <div>{{ formset.empty_form.estimated_cost|add_class:"form-control" }}</div>
+                                                    </div>
+                                                    <div>Delete?: {{ formset.empty_form.DELETE }}</div>
+                                                    <hr>
+                                               </div>
+                                        </div>
+                                        {% if status == 2 or status == 8 %}
+                                            You must start the request before adding surcharges.
+                                        {% else %}
+                                            <input class="btn btn-default {% if is_assigned == False %}disabled{% endif %}" type="button" value="Add Surcharge" id="add_more">
+                                        {% endif %}
+                                    </fieldset>
+                                <div class="slimScrollDiv"
+                                     style="position: relative; overflow: hidden; width: auto; height: auto;">
+                                    <div class="scroller" style="overflow: auto; width: auto; height: auto;"
+                                         data-initialized="true">
+
+                                    </div>
+                                    <div class="slimScrollBar"
+                                         style="width: 7px; position: absolute; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; top: 0px; height: 98.0392156862745px; display: none; opacity: 0.4; background: rgb(187, 187, 187);">
+                                    </div>
+                                    <div class="slimScrollRail"
+                                         style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if is_assigned == True %}
+            <div class="col-md-7">
+                <div class="portlet prescient-green box">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>Request Status
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+
+
+                        <fieldset id="analyst_notes">
+                            {% crispy analyst_request_detail_status_form %}
+                        </fieldset>
+
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="col-md-5">
+                <div class="portlet prescient-green box">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>Analyst Notes
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        {% if is_assigned == True %}
+
+                        <fieldset id="analyst_notes">
+                            {% crispy analyst_notes_form %}
+                        </fieldset>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="col-md-5">
+                <div class="portlet prescient-green box">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>Analyst Internal Doc
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        {% if status == 3 %}
+                        <fieldset id="analyst_internal_doc">
+                            {% crispy analyst_internal_doc_form %}
+                        </fieldset>
+                        {% else %}
+                            <div>
+                                Internal Document: 
+                                {% if request.analyst_internal_doc != None %}
+                                <a style="font-weight: bold; font-size: 14px" href="
+                                        {{ MEDIA_URL }}{{request.analyst_internal_doc}}">{{request.analyst_internal_doc.name|get_file_base_name}}</a></br>
+                                {% else %}
+                                    <b>None </b>
+                                        {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </div>
+    </div>
+</form>
+<!--</div>-->
+
+<div class="modal fade" id="reject_comments" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Rejection Comments</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Please provide comments and justification for rejection*:</label>
+                    <textarea class="form-control" rows="14" id="rejection_comments"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-reject" type="button" class="btn default" data-dismiss="modal">Cancel</button>
+                <button id="reject" type="button" class="btn btn-danger">Reject</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+</div>
+</div>
+{% endblock %}

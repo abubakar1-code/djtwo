@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+{% include 'core/_manager_sidebar.html'%}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="page-content-wrapper">
+<div class="page-content">
+<h4>Edit Company:</h4>
+<div class="form-group" style="max-width:50%">
+{% crispy form %}
+</div>
+</div>
+</div>
+{% endblock %}

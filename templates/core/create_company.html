@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block sidebar %}
+{% if is_user_manager %}
+{% include 'core/_manager_sidebar.html'%}
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="page-content-wrapper">
+<div class="page-content">
+<h4>Create New Company: </h4>
+<div class="form-group" style="max-width:50%">
+{% crispy form %}
+</div>
+</div>
+</div>
+{% endblock %}

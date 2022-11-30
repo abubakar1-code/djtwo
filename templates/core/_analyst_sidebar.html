@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<div class="page-sidebar-wrapper">
+		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+	<div class="page-sidebar">
+		<!--<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 105px;"-->
+		<!-- BEGIN SIDEBAR MENU -->
+		<ul class="page-sidebar-menu" data-auto-scroll="false" data-auto-speed="200">
+			<li class="start ">
+				<a href="{% url 'employee_dashboard' %}">
+				<i class="fa fa-dashboard"></i>
+				<span class="title" style="font-size: 15px">Request Dashboard</span>
+				</a>
+			</li>
+        {% if user.is_authenticated and company_logo %}
+        	<li>
+	          	<img src="{% static 'img/powered-by.png' %}" alt="Powered by Voyint" class="img logo-powered">
+			</li>
+        {% endif %}
+				<li>
+					<a href="{% url 'analyst_advanced_search' %}">
+					<i class="fa fa-bar-chart-o"></i>
+					<span class="title" style="font-size: 15px">Reports</span>
+					</a>
+				</li>
+		</ul>
+		<!--</div>-->
+		<!-- END SIDEBAR MENU -->
+	</div>
+</div>

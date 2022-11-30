@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+    var selections = jQuery.parseJSON('{{ company_service_selections|escapejs }}');
+    var type_services = jQuery.parseJSON('{{ type_services|escapejs }}');
+
+    $(document).ready(function () {
+        hide_services();
+        handled_select_click();
+
+        $("#id_request_type").change(function () {
+            handled_select_click();
+            add_checks();
+
+        });
+
+        $('input[name="docfile"]').change(function(){
+        var fileName = $(this).val();
+        $("#id_file_name").text(fileName);
+        });
+
+        function handled_select_click() {
+            var type_id = $('#id_request_type').find('option:selected').val();
+            $('#id_batch_custom_form_type').val(type_id);
+            if (type_id != "") {
+                show_services();
+                select_services(type_id);
+            }
+            else {
+                hide_services();
+            }
+        }
+
+        function show_labels(toShow, all) {
+            for (index = 0; index < all.length; ++index) {
+                var service_id = all[index];
+                $("#label_" + service_id).css("font-weight", "");
+                $("#label_" + service_id).css("color", "grey");
+                $("#span_" + service_id).removeClass("glyphicon glyphicon-ok");
+                if (toShow.indexOf(service_id) > -1) {
+                    $("#label_" + service_id).show();
+                }
+                else {
+                    $("#label_" + service_id).hide();
+                }
+            }
+        }
+
+        function select_services(selection_id) {
+            var dd_type = "";
+
+            for (index = 0; index < this.selections.length; ++index) {
+                var dd_selection = this.selections[index];
+                var dd_selected_id = dd_selection.fields.dd_type[0];
+
+                if (dd_selected_id == selection_id) {
+                    dd_type = dd_selection.fields.dd_type[2];
+                    break;
+                }
+            }
+
+            var to_show = []
+            var all = []
+            for (index2 = 0; index2 < this.type_services.length; ++index2) {
+                var type_service = this.type_services[index2];
+                var dd_type_for_service = type_service.fields.due_diligence_type[1];
+                var service_id = type_service.fields.service;
+
+                if (dd_type_for_service == dd_type) {
+                    to_show.push(service_id);
+
+                }
+
+                if (all.indexOf(service_id) == -1) {
+                    all.push(service_id);
+                }
+            }
+            show_labels(to_show, all);
+
+            for (index = 0; index < this.selections.length; ++index) {
+                var dd_selection = this.selections[index];
+                var service_id = dd_selection.fields.service;
+                var dd_selected_id = dd_selection.fields.dd_type[0];
+
+                if (dd_selected_id == selection_id) {
+                    $("#span_" + service_id).addClass("glyphicon glyphicon-ok");
+                    $("#label_" + service_id).css("font-weight", "Bold");
+                    $("#label_" + service_id).css("color", "green");
+                }
+            }
+        }
+
+        function show_services() {
+            $('#services').show();
+            $('#batch').show();
+            $('#no-services').hide();
+        }
+
+        function hide_services() {
+            $('#services').hide();
+            $('#batch').hide();
+            $('#no-services').show();
+        }
+
+        $('input[name="docfile"]').change(function(){
+            var fileName = $(this).val().replace("C:\\fakepath\\", "");
+            $("#id_file_name").text(fileName);
+        });
+
+        $("#batch_form").validate({
+
+            // Specify the validation rules
+            errorClass:'batch-error-class',
+            errorLabelContainer: '#errors',
+            rules: {
+                docfile: "required",
+                extension: "xls|csv"
+            },
+
+            // Specify the validation error messages
+            messages: {
+                docfile: "Please Select A File To Upload",
+
+            },
+
+            submitHandler: function(form) {
+                $('#file_upload').attr('disabled', 'disabled');
+                $('#myModal').modal('show');
+                $('#myModal').on('hidden.bs.modal', function () {
+                form.submit();
+                })
+
+            },
+
+        });
+
+
+    });
+</script>
+{% endblock %}
+
+{% block sidebar %}
+{% if is_supervisor %}
+{% include 'core/_supervisor_sidebar.html'%}
+{% else %}
+{% include 'core/_employee_sidebar.html'%}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<link type="text/css" href="{{ STATIC_URL }}css/datepicker.css" rel="stylesheet"/>
+<div class="page-content-wrapper">
+    <div class="page-content" style="min-height:1646px;">
+        <div class="row">
+            <div class="form-group col-md-7">
+                <h4 class="page-title">Create New {{ custom_request_form.name }}</h4>
+                {% crispy form %}
+            </div>
+            <div class="col-md-4" style="margin:30px;">
+                <div id="services" class="portlet box prescient-grey" style="display: none;">
+                    <div class="portlet-title">
+                        <label><i class="fa fa-gear"></i> Services to be performed:</label>
+                    </div>
+                    <div class="portlet-content" style="background-color:white;">
+                        <div class="portlet-content-container">
+                            <div class="portlet-body" style="padding:10px;">
+                                {% for service in services %}
+                                <label id="label_{{service.id}}" style="width:100%;">
+                                    <span id="span_{{service.id}}"></span>
+                                    {{ service.name }}
+                                </label>
+                                {% endfor %}
+
+                                <div class="well" style="padding:5px;">
+                                    <h4>Interested in additional services? <span class="label label-info">
+								<a href="http://spotlit.com/contact/">Contact Us</a> </span>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="no-services" class="portlet box prescient-grey" style="display: none;">
+                    <div class="portlet-title">
+                        <label><i class="fa fa-gear"></i> Services to be performed:</label>
+                    </div>
+                    <div class="portlet-content" style="background-color:white;">
+                        <div class="portlet-content-container">
+                            <div class="portlet-body" style="padding:10px;">
+                                <div class="note note-warning">
+                                    <p>Please Select a Due Diligence Type</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>{{user.}}
+                {% if is_supervisor and batch_upload_active %}
+
+                <form action="/batch_upload/{{ dynamic_request_pk }}/" id="batch_form" name="batch_form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div id="batch" class="portlet box blue-hoki">
+                        <div class="portlet-title">
+                            <label><i class="fa fa-upload"></i> Batch Upload</label>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Instructions</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <input type="hidden" name="batch_custom_form_type" id="id_batch_custom_form_type">
+                                    <ul>
+                                        <li>
+                                            File must be in <strong>XLSX or CSV format.</strong>
+                                        </li>
+                                        <li>
+                                            Column headers must match field names exactly.
+                                        </li>
+                                        <div id="errors"></div>
+                                        <p name="filename" id="id_file_name"></p>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <span class="btn green btn-file">
+                                <input type="file" name="docfile" id="id_docfile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, text/csv">
+                                <i class="fa fa-plus"></i>
+                                    <span>
+                                    Select File </span>
+                            </span>
+                            <button type="submit" class="btn blue start" name="file_upload" id="file_upload">
+                                <i class="fa fa-upload"></i>
+                                    <span>Start upload </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="content-modal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">File Submitted!</h4>
+        </div>
+        <div class="body-modal">
+          <p>Your file has been successfully submitted.</p>
+            <p>You will receive an email when the process is complete.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<style>
+
+    .body-modal {
+        position: relative;
+        padding: 20px;
+        min-width: 400px; /* SET THE WIDTH OF THE MODAL */
+    }
+
+    .content-modal {
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #999;
+        border: 1px solid rgba(0,0,0,0.2);
+        border-radius: 6px;
+        outline: 0;
+        -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+        box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+        background-clip: padding-box;
+        width: 400px; /* SET THE WIDTH OF THE MODAL */
+        margin: auto auto auto auto; /* CHANGE MARGINS TO ACCOMMODATE THE NEW WIDTH */
+    }
+
+</style>
+
+{% endblock %}

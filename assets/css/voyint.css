@@ -1,0 +1,65 @@
+/*
+ * voyint dark blue: #03349c rgb(1,155,220)
+ * voyint light blue: #019bdc rgb(3,52,156)
+*/
+.btn-primary,
+.green.btn {
+  background-color: #019bdc;
+}
+.green.btn:hover, .green.btn:focus, .green.btn:active, .green.btn.active {
+  background-color: #03349c;
+}
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active, .btn-secondary.active {
+  background-color: #019bdc!important;
+}
+.login .content .input-icon {
+  border-left-color: #019bdc!important;
+}
+.login .label-success {
+  background-color: #019bdc!important;
+}
+.modal .modal-header {
+  background-color: #019bdc;
+}
+.prescient-green {
+  background-color: #019bdc;
+}
+.portlet.box.prescient-green {
+  border-color: #019bdc;
+}
+.panel-heading.prescient-grey {
+  background-color: #019bdc;
+  border-color: #019bdc;
+}
+.panel-info {
+  border-color: #019bdc;
+}
+.panel-info > .panel-heading {
+  background-color: #019bdc;
+  border-color: #019bdc;
+}
+.panel-info > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #019bdc;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > i, .page-sidebar .page-sidebar-menu > li > a > i {
+  color: #019bdc;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li:hover > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.open > a, .page-sidebar .page-sidebar-menu > li:hover > a, .page-sidebar .page-sidebar-menu > li.open > a {
+  color: #019bdc;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a, .page-sidebar .page-sidebar-menu > li.active > a, .page-sidebar .page-sidebar-menu > li.active.open > a {
+  background: #019bdc;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > i[class^="icon-"], .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > i[class*="icon-"], .page-sidebar .page-sidebar-menu > li > a > i[class^="icon-"], .page-sidebar .page-sidebar-menu > li > a > i[class*="icon-"] {
+  color: #019bdc;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li > a > i[class^="icon-"], .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li > a > i[class*="icon-"], .page-sidebar .page-sidebar-menu .sub-menu > li > a > i[class^="icon-"], .page-sidebar .page-sidebar-menu .sub-menu > li > a > i[class*="icon-"] {
+  color: #019bdc;
+}
+.page-sidebar .page-sidebar-menu .sub-menu > li:hover > a {
+  color: #019bdc;
+}
+.select2-results .select2-highlighted {
+  background: #ccc;
+  color: #019bdc;
+}

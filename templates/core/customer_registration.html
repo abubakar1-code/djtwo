@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block dropdown %}
+  
+{% endblock dropdown %}
+
+{% block content %}
+<style>
+    .page-content {
+        margin-left:50px !important;
+    }
+</style>
+<div class="page-content-wrapper">
+<div class="page-content">
+
+<div class="col-md-12">
+    <div class="row">
+
+        <div class="col-md-6">
+
+              <h2 style="line-height: 1.3;"><strong>Create a Voyint Portal account today; <br />Submit a request when you’re ready.</strong></h2>
+              <p style="font-size: 18px; line-height: 1.3;">Getting started is easy -- simply create an account through our secure cloud-based portal. When you’re ready to request a background check, log-in to your account, upload the request details, and submit.</p>
+              <ul style="font-size: 14px;">
+                <li>Set-up an account at no cost or minimum obligation
+                <li>Our standard Tier I-III background check packages are immediately available for you to use
+                <li>Customized packages or additional services available
+                <li>When needed, creating a request takes just a few minutes
+                <li>No emails or unnecessary phone calls
+                <li>Average turnaround time of 3-5 business days
+                <li>We invoice only after services are completed and accepted
+              </ul>
+              <p style="font-size: 20px;">Questions? Email us at <a href="mailto:clientservices@voyint.com">clientservices@voyint.com</a>.</p>
+              <img src="{% static 'img/customer_registration.png' %}">
+        </div>
+        <div class="col-md-6">
+            <div class="portlet prescient-green box">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i>Register to become a Customer
+                    </div>
+                </div>
+                <div class="portlet-body">
+                  <div class="form-group">
+                  {% crispy form %}
+                  </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--</div>-->
+{% endblock %}

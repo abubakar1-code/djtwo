@@ -1,0 +1,8 @@
+We've received your request,  {{request.display_id}}.
+You can expect a response when your request is complete.
+
+If you need additional support, please contact us through www.spotlit.com, to talk with our highly trained, courteous support staff.
+
+Thanks,
+SpotLit Team
+

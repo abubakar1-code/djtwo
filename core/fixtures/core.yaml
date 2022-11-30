@@ -1,0 +1,76 @@
+-   fields: {birthdate: 1900-10-29, company: 2, email: smith@test.com, first_name: John,
+        last_name: Smith, middle_name: David, phone_number: '4345678990', request_type: 1,
+        ssn: '223456789'}
+    model: core.request
+    pk: 1
+-   fields: {birthdate: 1976-04-15, company: 2, email: peggy@testcompany.com, first_name: Peggy,
+        last_name: Wilson, middle_name: Anne, phone_number: '555555555', request_type: 1,
+        ssn: '345678094'}
+    model: core.request
+    pk: 2
+-   fields: {request_type: HR}
+    model: core.requesttype
+    pk: 1
+-   fields: {city: McClean, state: VA, street: 1000 Main St, street2: Apt 4, zipcode: '22203'}
+    model: core.address
+    pk: 1
+-   fields: {name: Test Company}
+    model: core.company
+    pk: 2
+-   fields: {address: 1, company: 2, phone_number: '55555555', user: 5}
+    model: core.client
+    pk: 1
+-   fields: {phone_number: '5555555', user: 3}
+    model: core.staff
+    pk: 1
+-   fields: {phone_number: '55555555', user: 4}
+    model: core.staff
+    pk: 2
+-   fields: {status: New}
+    model: core.statustype
+    pk: 1
+-   fields: {status: Assigned}
+    model: core.statustype
+    pk: 2
+-   fields: {status: In Progress}
+    model: core.statustype
+    pk: 3
+-   fields: {status: Completed}
+    model: core.statustype
+    pk: 4
+-   fields: {status: Submitted}
+    model: core.statustype
+    pk: 5
+-   fields: {status: Canceled}
+    model: core.statustype
+    pk: 6
+-   fields: {status: Not Approved}
+    model: core.statustype
+    pk: 7
+-   fields: {description: Full background check, name: Background Check}
+    model: core.check
+    pk: 1
+-   fields: {check: 1, company: 2, request_type: 1}
+    model: core.companycheck
+    pk: 1
+-   fields: {datetime: !!timestamp '2014-05-16 17:00:36+00:00', request: 1, status: 2}
+    model: core.requeststatus
+    pk: 2
+-   fields: {datetime: !!timestamp '2014-05-15 14:33:04+00:00', request: 1, status: 1}
+    model: core.requeststatus
+    pk: 3
+-   fields: {datetime: !!timestamp '2014-05-17 14:33:26+00:00', request: 2, status: 1}
+    model: core.requeststatus
+    pk: 4
+-   fields: {datetime: !!timestamp '2014-05-18 14:33:50+00:00', request: 2, status: 2}
+    model: core.requeststatus
+    pk: 5
+-   fields: {datetime: !!timestamp '2014-05-19 14:34:13+00:00', request: 2, status: 3}
+    model: core.requeststatus
+    pk: 6
+-   fields: {request: 1, staff: 1}
+    model: core.requestassignment
+    pk: 3
+-   fields: {request: 2, staff: 1}
+    model: core.requestassignment
+    pk: 4

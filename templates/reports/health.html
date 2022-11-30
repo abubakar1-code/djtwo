@@ -1,0 +1,277 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<style type="text/css">
+	@page {
+		size: letter portrait;
+
+        @frame {
+                    top: 15%;
+                    left: 23%;
+                    right: auto;
+        }
+        @frame {
+        -pdf-frame-content: "title";
+                    top: 40%;
+        }
+        @frame {
+        -pdf-frame-content: "prepared-for";
+                    top: 50%;
+        }
+        @frame {
+        -pdf-frame-content: "disclosure";
+                    top: 75%;
+                    margin-left:2cm;
+                    margin-right:2cm;
+        }
+        @frame {
+        -pdf-frame-content: "spotlit1";
+                    top: 85%;
+                    margin-left:2cm;
+                    margin-right:2cm;
+        }
+        @frame footer_frame {
+        -pdf-frame-content: footer_content;
+                    top: 92.1%;
+        }
+        @frame header_frame {  
+            -pdf-frame-content: header_content;
+            top:0%;
+        }
+    }
+    @page main_content {
+        size: letter portrait;
+        margin: 2cm;
+        @frame footer {
+        -pdf-frame-content: pageNumber;
+        top: 95%;
+        margin-left: 1cm;
+        }
+        @frame footer_frame {
+        -pdf-frame-content: footer_content2;
+                    top: 97.9%;
+        }
+        @frame header_frame {  
+            -pdf-frame-content: header_content2;
+            top:0%;
+        }
+    }
+    @page last_page {
+        size: letter portrait;
+        background-image: url({{last_page}});
+    }
+    /* Normal */
+@font-face {
+   font-family: OpenSans;
+   src: url({{font_url}}OpenSans-Regular.ttf);
+}
+
+/* Bold */
+@font-face {
+   font-family: OpenSans;
+   src: url({{font_url}}OpenSans-Bold.ttf);
+   font-weight: bold;
+}
+
+/* Italic */
+@font-face {
+   font-family: OpenSans;
+   src: url({{font_url}}OpenSans-Italic.ttf);
+   font-style: italic;
+}
+
+/* Bold and italic */
+@font-face {
+   font-family: OpenSans;
+   src: url({{font_url}}OpenSans-BoldItalic.ttf);
+   font-weight: bold;
+   font-style: italic;
+}
+*, html {
+    font-family: "OpenSans";
+}
+
+ul {
+    list-style-image: url({{bullet}});
+}
+
+li {
+	margin: 1px 0 1px 10px;
+}
+
+li.body {
+	margin: 3px 0 3px 10px;
+}
+
+ul.flag {
+  	list-style-image: url({{flag}});
+}
+
+li.flag {
+	color:#b90617; 
+}
+
+li span {
+	color: #b90617; /* text color */
+}
+ol > li {
+    list-style-image: url({{flag}});
+    color: red;
+}
+</style>
+</head>
+<body>
+<div id="header_content">
+    <img src="{{line}}" />
+</div>
+<div id="logo">
+     <img src="{{logo}}" />
+</div>
+<div id="title" >
+    <p style="font-size: 40px;margin-bottom:0px; text-align: center;"><b>Due Diligence Report</b></p>
+    <p style="font-size: 15px;margin-top:0px;text-align: center;">Confidential Information</p>
+</div>
+<div id="prepared-for" style="font-size: 15px; text-align: center;">
+    <p style="font-size: 15px;text-align: center;">Prepared For:<br>
+        {% if report_logo_active %}
+            {% if report_logo %}
+                <img src="{{report_logo}}" class="img logo-default">
+             {% else %}
+                {{request.created_by.company.name}}
+             {% endif %}
+            <!-- to resize image in html uncomment this code and comment the line above it out.
+            <img src="{{company_logo}}" class="img logo-default" height="250" width="270">
+            -->
+        {% else %}
+            {{request.created_by.company.name}}
+        {% endif %}
+    </p>
+</div>
+<div id="disclosure">
+    <p style="text-align: center;"><b>DISCLOSURE</b></p>
+    <p align="justify">
+The following confidential report is offered strictly for informational purposes. The report is not intended to serve as an analytical product and shall not be relied upon as such. Confidential reports and supporting documents are intended to supplement an existing due diligence process by the client. Any opinions, decisions, or conclusions about the information presented within this document shall be made by the client. Information contained may be presented in a "raw data" format. In several instances source material has not been altered to preserve context or sentiment and may contain source opinions and bias. Please contact Prescient Comply for analysis clarification.
+    </p>
+</div>
+<div id="spotlit1">
+    <hr />
+    <p style="font-size: 12px;">
+        <table><tr>
+        <td>
+        	<img src="{{prescient}}" />
+        </td>
+        <td align="right">
+         	<br />
+         	<b>Prescient Comply<br>
+        	info@prescientcomply.com | www.prescientcomply.com</b>
+        </td>
+        </tr></table>
+    </p>
+</div>
+<div id="footer_content">
+    <img src="{{line}}" />
+</div>
+<div>
+    <!-- switch page templates -->
+    <pdf:nexttemplate name="main_content" />
+    <pdf:nextpage />
+    <div id="header_content2">
+        <img src="{{line}}" />
+    </div>
+    <div id="demographics">
+        <p style="font-size:30px;color:black;">Request Details</p>
+        <table>
+        <tr>
+        <td style="vertical-align:top;margin-left:10px;width:26%;padding:0px;border-right:1px solid #A0CD4F">
+            <b>Request Id</b>: {{request.display_id}}<br>
+            {{request.created_by.company.name}}<br>
+            {% if request.created_by.company.address != None %}
+                {%if request.created_by.company.address.street|length > 30 %}
+                {{request.created_by.company.address.short_street}}
+                {% else %}
+                {{request.created_by.company.address.street}}
+                {% endif %}
+                {% if request.created_by.company.address.street2 != "" %}, 
+                {%if request.created_by.company.address.street2|length > 30 %}
+                {{request.created_by.company.address.short_street2}}
+                {% else %}
+                {{request.created_by.company.address.street2}}
+                {% endif %}
+                {% endif %}<br>
+                {{request.created_by.company.address.city}}, {{request.created_by.company.address.state}} {{request.created_by.company.address.zipcode}}
+            {% endif %}
+            {% for field in fields %}
+                <div class="row static-info">
+                    <b>{{ field.form_field.label }}</b>:{{ field.value }}
+                </div>
+            {% endfor %}
+        </td>
+        <td style="vertical-align:top;border-right:1px solid #A0CD4F;padding-left:15px;width:37%;">
+            <b>Requested by</b>: {{request.created_by.user.first_name}} {{request.created_by.user.last_name}} <br>
+            <b>Email</b>: {{request.created_by.user.email}}<br>
+            <b>Date Request Submitted</b>: {{start_date|date:"F d, Y"}}<br>
+            <b>Request Completion Date</b>: {{submit_date|date:"F d, Y"}}<br>
+            {{request.request_type}}
+        </td>
+        <td style="vertical-align:top;padding-left:10px;width:37%">
+            <b>Subject Name</b>:  {%if request.company_name != "" %}{{request.company_name}} {% endif %}  {{request.first_name}} {%if request.middle_name != "" %}{{request.middle_name}} {% endif %}
+            {{request.last_name}} {{request.name}}<br>
+            {%if request.birthdate != None %} <b>DOB</b>: {{request.birthdate|date:"SHORT_DATE_FORMAT"}}<br>{% endif %}
+             {%if request.citizenship_display != None %}<b>Citizenship</b>: {{request.get_citizenship_display}} {% endif %}
+        </td>
+        </tr>
+        </table>
+        <br><br><br><br>
+        <p style="font-size:30px;color:black;">Executive Summary</p>
+        <p>
+        Prescient Comply conducted investigative due diligence on  {%if request.company_name != "" %}{{request.company_name}} {% endif %}  {{request.first_name}} {%if request.middle_name != "" %}{{request.middle_name}} {% endif %}
+            {{request.last_name}} {{request.name}} on {{start_date|date:"F d, Y"}}. The following relevant information was found:
+        </p>
+        <p>
+            {{request.executive_summary|safe}}
+        </p>
+
+        <p style="page-break-after:always;"></p>
+        <div id="services">
+            <p style="font-size:30px;color:black;">Data Retrieved</p>
+            {% for service_status in service_statuses %}
+                <p>
+                <h3 style="margin-bottom:2px;background-color:#666A6D;color:#FFFFFF;text-align:center;padding-top:5px;">{{service_status.service.service.name}}</h3>
+                    <i>{{service_status.service.service.description}}</i>
+                </p>
+                <div style="margin-left:1cm;">
+                {% if service_status.results == True %}
+                    <p>
+                        {{service_status.comments|safe}}
+                    </p>
+                {% else %}
+                    <p>After an extensive search against the sources and databases within this section, no derogatory or negative information was discovered. </p>
+                {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="pageNumber">
+        <table>
+        <tr>
+        <td style="width=88%">Page <pdf:pagenumber> </td>
+        <td>Prescient Comply</td>
+        </tr>
+        </table>
+    </div>
+    <div id="footer_content2">
+        <img src="{{line}}" />
+    </div>
+</div>
+
+    <!-- switch page templates -->
+    <pdf:nexttemplate name="last_page" />
+    <pdf:nextpage />
+<div>
+<!--hack in order to get the last page to load-->
+<p style="color:#A0CD4F;">-</p>
+</div>
+</body>
+</html>

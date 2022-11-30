@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load eztables %}
+
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}theme/global/plugins/select2/select2.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}theme/global/plugins/data-tables/DT_bootstrap.css">
+{% endblock %}
+
+{% block js%}
+<script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}theme/global/plugins/data-tables/tabletools/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/all_table.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var clicked = false;
+
+    $('.datepicker').datepicker(
+    {
+        format: 'yyyy-mm-dd',
+        onSelect: function(d,i){
+          if(d !== i.lastVal){
+              $(this).change();
+          }
+        }
+    });
+
+    $('#archived_reports').dataTable({
+         "oLanguage": {
+                        "sEmptyTable": "No requests loaded initially, please select filter criteria. "
+                    }
+    });
+    $("#filter-button3").click(function(){
+        if (clicked == false) {
+            $("#archived_reports").dataTable().fnDestroy();
+            TableAdvanced.init("archived_reports", "{% url 'archived_reports' %}", "{{ STATIC_URL }}theme/global/plugins/data-tables/tabletools/swf/copy_csv_xls_pdf.swf");
+            clicked = true;
+            $("#filter-button3").trigger("click");
+        }
+    })
+    });
+</script>
+{% endblock%}
+
+{% block sidebar %}
+    {% include 'core/_manager_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-building"></i>Archived Reports
+                            </div>
+                        </div>
+
+                        <!----------     Filters     ---------->
+                        <div class="portlet-body">
+                        <div class="row">
+                            <div class="filter col-md-12" style="margin-bottom:50px">
+
+                                <div class="panel-group accordion" id="accordion1">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading prescient-grey">
+                                            <h4 class="panel-title" style="color: white">
+                                                <a class="accordion-toggle accordion-toggle-styled"
+                                                   data-toggle="collapse" data-parent="#accordion1"
+                                                   href="#collapse_filter">
+                                                    Filter Criteria </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse_filter" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                                <form class="horizontal-form" id="table_form">
+                                                    <div class="form-body">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Name</label>
+                                                                    <input id="filter-0" type="text"
+                                                                           class="fill form-control">
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Last Name</label>
+                                                                    <input id="filter-1" type="text"
+                                                                           class="fill form-control">
+                                                                </div>
+                                                            </div>
+                                                             <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Company</label>
+                                                                    <select id="filter-2" class="form-control">
+                                                                        <option value="">-------------</option>
+                                                                        {% for company in companies %}
+                                                                            <option value="{{ company.id }}">{{ company.name }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+                                                        <!--/row-->
+                                                        <div class="row">
+                                                            <!--/span-->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Request Type</label>
+                                                                    <input id="filter-3" type="text"
+                                                                           class="fill form-control">
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                     <label class="control-label">Start Date Range</label>
+                                                                   <input id="filter-4"  type="text" class="fill form-control datepicker">
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">End Date Range</label>
+                                                                   <input id="filter-5"  type="text" class="fill form-control datepicker">
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <button type="button" id="filter-button3"
+                                                                        class="btn btn-primary pull-right" style="background-color: grey">Search
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dataTables_wrapper col-md-12" role="grid" id="all">
+                                <table class="table table-condensed table-striped table-boardered table-hover dataTable"
+                                       id="archived_reports">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>Created By</th>
+                                        <th>Company</th>
+                                        <th>Request Type</th>
+                                        <th>Report Template</th>
+                                        <th>Submitted Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}
+

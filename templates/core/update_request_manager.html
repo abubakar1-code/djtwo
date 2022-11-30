@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+var selections = jQuery.parseJSON('{{ company_service_selections|escapejs }}');
+var type_services = jQuery.parseJSON('{{ type_services|escapejs }}');
+
+$(document).ready(function() {
+	hide_services();
+	handled_select_click();
+
+	$("#id_request_type").change(function() 
+    { 
+        handled_select_click();
+
+     });
+
+	function handled_select_click()
+	{
+		var type_id = $('#id_request_type').find('option:selected').val();
+        if(type_id != "")
+        {
+            show_services();
+            select_services(type_id);
+        }
+        else
+        {
+        	hide_services();
+        }
+	}
+
+	function show_labels(toShow, all)
+	{
+		for(index=0; index< all.length; ++index)
+		{
+			var service_id = all[index];
+			$("#label_" + service_id).css("font-weight","");  
+            $("#label_" + service_id).css("color", "grey"); 
+            $("#span_" + service_id).removeClass("checked"); 
+			if(toShow.indexOf(service_id) > -1)
+			{
+				$("#label_" + service_id).show();
+			}
+			else
+			{
+				$("#label_" + service_id).hide();
+			}
+		}
+	}
+
+	function select_services(selection_id)
+	{
+		var dd_type = "";
+
+		for (index = 0; index < this.selections.length; ++index) 
+		{
+			var dd_selection = this.selections[index];
+			var dd_selected_id = dd_selection.fields.dd_type[0];
+
+			if(dd_selected_id == selection_id)
+			{
+				dd_type = dd_selection.fields.dd_type[2];
+				break;
+			}
+		}
+
+		var to_show = []
+		var all = []
+		for(index2=0; index2 < this.type_services.length; ++index2)
+		{
+			var type_service = this.type_services[index2];
+			var dd_type_for_service = type_service.fields.due_diligence_type[1];
+			var service_id = type_service.fields.service;
+
+			if(dd_type_for_service == dd_type)
+			{
+				to_show.push(service_id);
+				
+			}
+
+			if(all.indexOf(service_id) == -1)
+			{
+				all.push(service_id);
+			}
+		}
+		show_labels(to_show, all);
+
+		for (index = 0; index < this.selections.length; ++index) 
+		{
+			var dd_selection = this.selections[index];
+			var service_id = dd_selection.fields.service;
+			var dd_selected_id = dd_selection.fields.dd_type[0];
+
+			if(dd_selected_id == selection_id)
+			{
+            	$("#span_" + service_id).addClass("checked");
+            	$("#label_" + service_id).css("font-weight","Bold");  
+            	$("#label_" + service_id).css("color", "green"); 
+            }
+       		//else
+        	//{
+            //	$("#span_" + service_id).removeClass("checked"); 
+        	//}
+		}
+	}
+
+	function show_services()
+    {
+        $('#services').show();
+    }
+
+	function hide_services()
+    {
+        $('#services').hide();
+    }
+
+});
+</script>
+{% endblock %}
+
+{% block sidebar %}
+{% include 'core/_manager_sidebar.html'%}
+{% endblock %}
+
+{% block content %}
+<link type="text/css" href="{{ STATIC_URL }}css/datepicker.css" rel="stylesheet"/>
+<div class="page-content-wrapper">
+<div class="page-content" style="min-height:1646px;">
+	<div class="row">
+	<div class="col-md-7" >
+	<div class="form-group">
+			<h4 class="page-title">Edit Request Attachment:</h4>
+		{% crispy form %}
+	</div>
+	</div>
+	
+</div>
+</div>
+</div>
+{% endblock %}

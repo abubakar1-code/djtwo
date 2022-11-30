@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="page-content-wrapper">
+    <div class="page-content">
+    <h1>Welcome {{username}} to VoyInt</h1>
+    {% if is_unverified == True %}
+    <p>
+        Verification email has been sent to {{request.user.email}}
+    </p>
+        <p class="text-danger">
+            Please verify you account to create a company. 
+            Click <a href="{% url 'resend_verification_email' %}" class="font-weight-bold">here</a> to Resend Verification Email
+        </p>
+    {% else %}
+        <h4>Proceed to creating your company</h4>
+        <a href="{% url 'create_company' %}" class="btn btn-primary btn-sm">Create Company</a>
+    {% endif %}
+    
+</div>
+</div>
+{% endblock %}

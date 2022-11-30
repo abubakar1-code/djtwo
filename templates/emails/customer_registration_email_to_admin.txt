@@ -1,0 +1,3 @@
+Name: {{ fullname }}
+
+Email Address: {{ email }}

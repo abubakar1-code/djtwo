@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+{% include 'core/_manager_sidebar.html'%}
+{% endblock %}
+
+{% block content %}
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="row" >
+            <div class="col-md-12">
+                   <div class="portlet">
+                       <div class="portlet-title">
+                           <div class="caption">
+                               <i class="fa fa-building"></i>Packages
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8 col-sm-12">
+                            <div class="portlet box prescient-grey">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-search"></i>Public Packages
+                                    </div>
+                                    <div class="tools">
+                                        <i class="fa fa-plus-circle"></i>
+                                        <a id="create_company_employee" style="color:white;" class="link" href="{% url 'add_package' %}">Add A Public Package</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="panel-group accordion" id="accordion">
+                                        {% for type,value in types.items %}
+                                        <div class="panel panel-default">
+                                            <div id="{{type.id}}_panel" class="panel-heading">
+                                                <h5 class="panel-title {% if type.is_active %} prescient-green {% endif %}">
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-target="#type_{{type.id}}">{{type}}</a>
+                                                </h5>
+                                            </div>
+                                            <div id="type_{{type.id}}" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    {% if type.price %}
+                                                    <h5><strong>Price:</strong></h5>
+                                                    <div id="price_panel" class="panel-heading">
+                                                        <h5 class="panel-title">
+                                                            ${{ type.price }}
+                                                        </h5>
+                                                    </div>
+                                                    {% endif %}
+                                                    <h5><strong>Services Selected:</strong></h5>
+                                                    {% for service, value2 in value.items %}
+                                                    <div id="{{service.id}}_panel" class="panel-heading">
+                                                        <h5 class="panel-title">
+                                                            {{ service.service.name }}
+                                                        </h5>
+                                                    </div>
+                                                    {% endfor %}
+                                                    <a class="pull-right btn btn-primary" href="{% url 'update_package' type.id %}">Edit</a>&nbsp&nbsp
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}

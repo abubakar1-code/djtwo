@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block sidebar %}
+{% include 'core/_manager_sidebar.html'%}
+{% endblock %}
+
+{% block content %}
+<div class="page-content-wrapper">
+<div class="page-content">
+<h3> Create new Custom Request Form:</h3>
+<div class="form-group" style="max-width:50%">
+{% crispy form %}
+</div>
+</div>
+</div>
+{% endblock %}

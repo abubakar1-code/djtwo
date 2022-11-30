@@ -1,0 +1,168 @@
+{% load staticfiles %}
+
+<div class="page-sidebar-wrapper">
+		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+	<div class="page-sidebar" style="top: 0px;">
+		<!-- BEGIN SIDEBAR MENU -->
+		<ul class="page-sidebar-menu" data-auto-scroll="false" data-auto-speed="200">
+			{% url 'supervisor_dashboard' as employee_url %}
+			{% if request.get_full_path == employee_url %}
+			<li class="start active open">
+			{% else %}
+			<li>
+			{% endif %}
+				<a href="{% url 'analyst_dashboard' %}">
+				<i class="icon-home"></i>
+				<span class="title" style="font-size: 15px">Request Dashboard</span>
+				</a>
+			</li>
+
+
+			{% url 'create_individual_request' as create_url %}
+			{% url 'create_corporate_request' as corporate_url %}
+            {% url 'create_custom_request' as custom_url%}
+
+			{% if request.get_full_path == create_url %}
+			    <li class="start active open">
+			{% elif request.get_full_path == corporate_url %}
+			    <li class="start active open">
+            {% elif custom_url in request.get_full_path %}
+			    <li class="start active open">
+			{% else %}
+			{% endif %}
+			    <li>
+					<a id="createRequest" href="javascript:;">
+					<i class="icon-plus"></i>
+					<span class="title">Create Request</span>
+					<span class="arrow"></span>
+					</a>
+					<ul class="sub-menu">
+					{% if is_individual %}
+						<li>
+							<a id="individualRequest" href="{% url 'create_individual_request' %}">
+							<i class="icon-user"></i>
+							Individual Request</a>
+						</li>
+					{% endif %}
+
+                    {% if is_custom_sidebar %}
+                        {% for dynamic_request_form in custom_requests %}
+                            {% if dynamic_request_form.render_form %}
+                            <li>
+                                <a id="dynamic_request_form_{{ dynamic_request_form.id }}" href="{% url 'create_custom_request' dynamic_request_form.id%}">
+                                <i class="icon-doc"></i> {{ dynamic_request_form.name }}</a>
+                            </li>
+                            {% endif %}
+						{% endfor %}
+					{% endif %}
+
+						{% if is_corporate_sidebar %}
+						<li>
+							<a id="CorporateEntity" href="{% url 'create_corporate_request' %}">
+							<i class="icon-users"></i>
+							Corporate Entity</a>
+						</li>
+						{% endif %}
+
+					</ul>
+				</li>
+					<li>
+						<a href="{% url 'advanced_search_supervisor' %}">
+							<i class="fa fa-search"></i>
+							<span class="title" style="font-size: 15px">Advanced Search</span>
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'bulk_archive' %}">
+							<i class="fa fa-archive"></i>
+							<span class="title" style="font-size: 15px">Bulk Archive</span>
+						</a>
+					</li>
+
+
+
+					<!-- <li>
+						<a href="javascript:;">
+							<i class="fa fa-bar-chart-o"></i>
+							<span class="title">Reporting</span>
+							<span class="arrow"></span>
+							</a>
+							<ul class="sub-menu">
+								<li>
+									<a href="{% url 'supervisor_report_download' %}">
+										<i class="fa fa-bar-chart-o"></i>
+										<span class="title" style="font-size: 15px">Request Archive</span>
+									</a>
+								</li>
+								<li>
+									<a href="{% url 'supervisor_archives_view' %}">
+										<i class="fa fa-download"></i>
+										<span class="title" style="font-size: 15px">Archive Download</span>
+									</a>
+								</li>
+
+							</ul>
+					</li> -->
+				</li>
+
+
+				<li>
+					<a href="javascript:;">
+					<i class="icon-docs"></i>
+					<span class="title">Resources</span>
+					<span class="arrow"></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="http://www.voyint.com/">
+							<i class="icon-bulb"></i>
+							About Voyint</a>
+						</li>
+						<li>
+							<a href="mailto:accounting@voyint.com">
+							<i class="icon-basket"></i>
+							Billing</a>
+						</li>
+						<li>
+							<a href="http://www.voyint.com/agreements/">
+							<i class="icon-user"></i>
+							User Agreement</a>
+						</li>
+						<li>
+							<a href="http://www.voyint.com/contact/">
+							<i class="icon-envelope"></i>
+							Contact Us</a>
+						</li>
+					</ul>
+				</li>
+
+				<li>
+					<a href="javascript:;">
+					<i class="icon-book-open"></i>
+					<span class="title">Forms</span>
+					<span class="arrow"></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="https://3d375d46-8239-4e2d-adbf-4f6f4b964c2c.usrfiles.com/ugd/3d375d_a5f2253935e045a780954f59c9fb52a3.pdf" target="_blank">
+							Data and Consent Form</a>
+						</li>
+						<li>
+							<a href="https://3d375d46-8239-4e2d-adbf-4f6f4b964c2c.usrfiles.com/ugd/3d375d_371b556633be4081846077f3083713bb.pdf" target="_blank">
+							Consent Form (only)</a>
+						</li>
+					</ul>
+				</li>
+
+				<li>
+						<a href="mailto:customersupport@voyint.com">
+						<i class="fa fa-comment-o"></i>
+						<span class="title" style="font-size: 15px">Feedback</span>
+						</a>
+				</li>
+
+		</ul>
+		<!-- END SIDEBAR MENU -->
+	</div>
+</div>

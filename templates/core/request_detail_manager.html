@@ -1,0 +1,1150 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load spotlit_extras %}
+
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            hide_comment_boxes();
+            show_comment_boxes();
+
+            function hide_comment_boxes() {
+                $('.hide-div').hide();
+            }
+
+            function show_comment_boxes() {
+                $('.show-div').show()
+            }
+
+
+            $('#assign').on('click', function () {
+                var analyst_id = $('#analysts').find('option:selected').val();
+                var reviewer_id = $('#reviewers').find('option:selected').val();
+                var comments = $("#assigned_comments")[0].value;
+                var due_date = $("#due_date")[0].value;
+                if(!due_date){
+                    alert("Please select a due date");
+                    return
+                }
+                if (analyst_id != "" && reviewer_id !="" && due_date) {
+                    $(this).attr("disabled", true);
+                    $("#cancel-assign").attr("disabled", true)
+                    var data = {analyst: analyst_id, reviewer:reviewer_id, "comments": comments,"due_date":due_date};
+
+                    if ("{{is_corporate}}" == "True") {
+                        var args = {
+                            type: "POST",
+                            url: "{% url 'corporate_assign' request.id %}",
+                            data: data,
+                            complete: complete
+                        };
+                    }
+                    else if ("{{is_custom}}" == "True") {
+                        var args = {
+                            type: "POST",
+                            url: "{% url 'custom_assign' request.id %}",
+                            data: data,
+                            complete: complete
+                        };
+                    }
+                    else {
+                        var args = {type: "POST", url: "{% url 'assign' request.id %}", data: data, complete: complete};
+                    }
+                    $.ajax(args);
+                }
+                else {
+                    //send validation to user here
+                }
+                return false;
+            });
+
+
+            $('#incomplete').on('click', function () {
+                var comments = $("#incomp_comments")[0].value;
+
+                if (comments != "") {
+                    $(this).attr("disabled", true);
+                    $("#cancel-incomplete").attr("disabled", true)
+                    var data = {"comments": comments};
+                    if ("{{is_corporate}}" == "True") {
+                        var args = {
+                            type: "POST",
+                            url: "{% url 'corporate_incomplete' request.id %}",
+                            data: data,
+                            complete: complete
+                        };
+                    }
+                    else if ("{{is_custom}}" == "True") {
+                        var args = {
+                            type: "POST",
+                            url: "{% url 'custom_incomplete' request.id %}",
+                            data: data,
+                            complete: complete
+                        };
+                    }
+                    else {
+                        var args = {
+                            type: "POST",
+                            url: "{% url 'incomplete' request.id %}",
+                            data: data,
+                            complete: complete
+                        };
+                    }
+                    $.ajax(args);
+                }
+                else {
+                    //send validation to user here
+                }
+                return false;
+            });
+            $('#submit').on('click', function () {
+                $(this).attr("disabled", true);
+                $("#cancel-submit").attr("disabled", true)
+                var comments = $("#submitted_comments")[0].value;
+                var supervisors = $("#supervisor-dropdown").val() ?? [];
+                var data = {"comments": comments, "supervisors":JSON.stringify(supervisors)};
+                if ($("#id_reporting_period").length) {
+                    var reporting_period = $("#id_reporting_period")[0].value;
+                    data = {"comments": comments, "reporting_period":reporting_period};
+                }
+                if ("{{is_corporate}}" == "True") {
+                    var args = {
+                        type: "POST",
+                        url: "{% url 'corporate_submit' request.id %}",
+                        data: data,
+                        complete: complete
+                    };
+                }
+                else if ("{{is_custom}}" == "True") {
+                    var args = {
+                        type: "POST",
+                        url: "{% url 'custom_submit' request.id %}",
+                        data: data,
+                        complete: complete
+                    };
+                }
+                else {
+                    var args = {type: "POST", url: "{% url 'submit' request.id %}", data: data, complete: complete};
+                }
+                $.ajax(args);
+
+                return false;
+            });
+
+            $('#return_analyst').on('click', function () {
+                var comments = $("#returned_comments")[0].value;
+                if (comments != "") {
+                    $(this).attr("disabled", true);
+                    $("#cancel-return").attr("disabled", true)
+                    var data = {"comments": comments};
+                    if ("{{is_corporate}}" == "True") {
+                        var args = {
+                            type: "POST",
+                            url: "{% url 'corporate_return' request.id %}",
+                            data: data,
+                            complete: complete
+                        };
+                    }
+                    else if ("{{is_custom}}" == "True") {
+                        var args = {
+                            type: "POST",
+                            url: "{% url 'custom_return' request.id %}",
+                            data: data,
+                            complete: complete
+                        };
+                    }
+                    else {
+                        var args = {type: "POST", url: "{% url 'return' request.id %}", data: data, complete: complete};
+                    }
+                    $.ajax(args);
+                }
+                else {
+                    //send validation to user here
+                }
+
+                return false;
+            });
+
+            $('#return_reviewer').on('click', function () {
+                var comments = $("#returned_comments_reviewer")[0].value;
+                if (comments != "") {
+                    $(this).attr("disabled", true);
+                    $("#cancel_return_reviewer").attr("disabled", true)
+                    var data = {"comments": comments};
+                    if ("{{is_corporate}}" == "True") {
+                        var args = {
+                            type: "POST",
+                            url: "{% url 'corporate_return_reviewer' request.id %}",
+                            data: data,
+                            complete: complete
+                        };
+                    }
+                    else if ("{{is_custom}}" == "True") {
+                        var args = {
+                            type: "POST",
+                            url: "{% url 'custom_return_reviewer' request.id %}",
+                            data: data,
+                            complete: complete
+                        };
+                    }
+                    else {
+                        var args = {type: "POST", url: "{% url 'return_reviewer' request.id %}", data: data, complete: complete};
+                    }
+                    $.ajax(args);
+                }
+                else {
+                    //send validation to user here
+                }
+
+                return false;
+            });
+
+
+
+            var complete = function (res, status) {
+                console.log("COMPLETE")
+                if (status == "success") {
+                    if ("{{is_corporate}}" == "True") {
+                        window.location.href = "{% url 'corporate_request_manager' request.id %}";
+                    }
+                    else if ("{{is_custom}}" == "True") {
+                        window.location.href = "{% url 'custom_request_manager' request.id %}";
+                    }
+                    else {
+                        window.location.href = "{% url 'request_manager' request.id %}";
+                    }
+                }
+                else {
+                    $("#submit").prop('disabled', false);
+                    $("#cancel-submit").prop('disabled', false);
+                    alert("Internal server error")
+                }
+
+            }
+
+            $(".selection").click(function () {
+                var selection = this.name;
+                var id_index = selection.indexOf("_");
+                var id = selection.substr(id_index + 1);
+
+                var selection_val = $(this).val();
+
+                //if selection is Yes (1), show comment_box
+                var comment_box = document.getElementsByName("div_comment_" + id);
+                if (selection_val == 'True') {
+                    comment_box[0].classList.remove('hide-div');
+                    comment_box[0].classList.add('show-div');
+                    show_comment_boxes();
+                }
+                else {
+                    comment_box[0].classList.remove('show-div');
+                    comment_box[0].classList.add('hide-div');
+                    hide_comment_boxes();
+                }
+            });
+
+
+            $('#edit_analyst_submit').click(function (event) { // catch the form's submit event
+                var analyst = document.getElementsByName('analyst_dropdown')[0].value;
+                var reassigned_analyst_comments = $('#reassigned_analyst_comments')[0].value;
+                var due_date = document.getElementById("edit_due_date").value;
+                if(!due_date){
+                    alert("Please select a due date");
+                    return
+                }
+                event.preventDefault();
+                $.post('/ajax_edit_analyst/', {
+                            analyst: analyst,
+                            notes:reassigned_analyst_comments,
+                            due_date: due_date,
+                            requestID: {{ request.id }}
+                        },
+                        function (data) {
+                            $('#edit_analyst').modal('hide');
+
+                        }
+                )
+            });
+
+            $('#edit_corporate_analyst_submit').click(function (event) { // catch the form's submit event
+                var analyst = document.getElementsByName('analyst_dropdown')[0].value;
+                var reassigned_analyst_comments = $('#reassigned_analyst_comments')[0].value;
+                var due_date = document.getElementById("edit_due_date").value;
+                if(!due_date){
+                    alert("Please select a due date");
+                    return
+                }
+                event.preventDefault();
+                $.post('/ajax_edit_analyst_corporate/', {
+                            analyst: analyst,
+                            notes:reassigned_analyst_comments,
+                            due_date: due_date,
+                            requestID: {{ request.id }}
+                        },
+                        function (data) {
+                            $('#edit_analyst').modal('hide');
+
+                        }
+                )
+            });
+
+            $('#edit_custom_analyst_submit').click(function (event) { // catch the form's submit event
+                var analyst = document.getElementsByName('analyst_dropdown')[0].value;
+                var reassigned_analyst_comments = $('#reassigned_analyst_comments')[0].value;
+                var due_date = document.getElementById("edit_due_date").value;
+                if(!due_date){
+                    alert("Please select a due date");
+                    return
+                }
+                event.preventDefault();
+                $.post('/ajax_edit_analyst_custom/', {
+                            analyst: analyst,
+                            notes:reassigned_analyst_comments,
+                            due_date: due_date,
+                            requestID: {{ request.id }}
+                        },
+                        function (data) {
+                            $('#edit_analyst').modal('hide');
+
+                        }
+                )
+            });
+
+
+
+            // changes the reviewer for a custom request
+            $('#edit_custom_reviewer_submit').click(function (event) { // catch the form's submit event
+                var reviewer = document.getElementsByName('reviewer_dropdown')[0].value;
+                var reassigned_reviewer_comments = $('#reassigned_reviewer_comments')[0].value;
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "ajax_edit_reviewer_custom"%}',
+                    data: {
+                        csrfmiddlewaretoken:'{{csrf_token}}',
+                        reviewer: reviewer,
+                        notes:reassigned_reviewer_comments,
+                        requestID: "{{ request.id }}"
+                    },
+                    beforeSend: function () {
+
+                    },
+                    success: function () {
+                        $('#edit_reviewer').modal('hide');
+
+                    },
+                    error: function () {
+                        alert("Edit Reviewer Failed");
+                    }
+                });
+            });
+
+            //changes the reviewer for an individual request
+            $('#edit_reviewer_submit').click(function (event) { // catch the form's submit event
+                var reviewer = document.getElementsByName('reviewer_dropdown')[0].value;
+                var reassigned_reviewer_comments = $('#reassigned_reviewer_comments')[0].value;
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "ajax_edit_reviewer" %}',
+                    data: {
+                        csrfmiddlewaretoken:'{{csrf_token}}',
+                        reviewer: reviewer,
+                        notes:reassigned_reviewer_comments,
+                        requestID: "{{ request.id }}"
+                    },
+                    beforeSend: function () {
+
+                    },
+                    success: function () {
+                        $('#edit_reviewer').modal('hide');
+
+                    },
+                    error: function () {
+                        alert("Edit Reviewer Failed");
+                    }
+                });
+            });
+
+            //changes the reviewer for a corporate request
+            $('#edit_corporate_reviewer_submit').click(function (event) { // catch the form's submit event
+                var reviewer = document.getElementsByName('reviewer_dropdown')[0].value;
+                var reassigned_reviewer_comments = $('#reassigned_reviewer_comments')[0].value;
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "ajax_edit_reviewer_corporate"%}',
+                    data: {
+                        csrfmiddlewaretoken:'{{csrf_token}}',
+                        reviewer: reviewer,
+                        notes:reassigned_reviewer_comments,
+                        requestID: "{{ request.id }}"
+                    },
+                    beforeSend: function () {
+
+                    },
+                    success: function () {
+                        $('#edit_reviewer').modal('hide');
+
+                    },
+                    error: function () {
+                        alert("Edit Reviewer Failed");
+                    }
+                });
+            });
+
+
+        function renderRecallButton(){
+            var analyst = $("#recall_analyst_dropdown").val();
+            if (analyst != 0){
+                $('#recall').hide();
+                {% if is_corporate %}
+                     $('#recall_reassign').html('<a href=\"/recall_reassign_corporate_request/{{ request.id }}/' + analyst + '\" class=\"btn btn-danger\">Recall & Reassign</a>');
+                {% elif is_custom %}
+                     $('#recall_reassign').html('<a href=\"/recall_reassign_custom_request/{{ request.id }}/' + analyst + '\" class=\"btn btn-danger\">Recall & Reassign</a>');
+                {% else %}
+                     $('#recall_reassign').html('<a href=\"/recall_reassign_request/{{ request.id }}/' + analyst + '\" class=\"btn btn-danger\">Recall & Reassign</a>');
+                {% endif %}
+            }
+            else{
+                $('#recall_reassign').html('');
+                $('#recall').show();
+            }
+        }
+
+        });
+
+    </script>
+{% endblock %}
+
+{% block header_script_js %}
+        <script>
+            var sendFormData = function(event, request_id, is_individual, is_corporate, is_custom){
+                let bcc_requestor = $('#bcc_requestor').is(':checked');
+                let url;
+                if(is_individual === 'True'){
+                    url= '/request/send_data_form/' +request_id
+                }
+                else if(is_corporate === 'True'){
+                    url= '/corporate_request/send_data_form/' +request_id
+                }
+                else if(is_custom === 'True'){
+                    url= '/custom_request/send_data_form/' +request_id
+                }
+                $.ajax({
+                        url,
+                        type: 'POST',
+                        data: JSON.stringify({"bcc_requestor": bcc_requestor}),
+                        success: function(data) {
+                            console.log(data)
+                            window.location.reload()
+                                }
+                        });
+
+                }
+        </script>
+
+{% endblock header_script_js %}
+
+{% block sidebar %}
+    {% include 'core/_manager_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="row">
+            {% if is_corporate %}
+                {% include 'core/_request_corporate_detail.html' with request=request real_status=real_status %}
+            {% elif is_custom %}
+                {% include 'core/_request_custom_detail.html' with request=request real_status=real_status %}
+            {% else %}
+                {% include 'core/_request_detail.html' with request=request real_status=real_status %}
+            {% endif %}
+
+            <div class="col-md-12">
+                <div class="portlet">
+                    <div class="portlet-body">
+                        <div class="row static-info">
+                            <div class="col-md-4">
+                                {% if is_corporate %}
+                                <a href="{% url 'update_corporate_request_manager' request.pk %}" 
+                                class="btn btn-danger"
+                                >Edit Attachment</a>
+                                {% elif is_custom %}
+                                <a href="{% url 'update_custom_request_manager' request.pk %}" 
+                                class="btn btn-danger"
+                                >Edit Attachment</a>
+                                {% else %}
+                                <a href="{% url 'update_request_manager' request.pk %}" 
+                                class="btn btn-danger"
+                                >Edit Attachment</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if is_custom == True and request.email or is_custom == False %}
+
+                        {% if status == 1 or status == 10 %}
+                        <div class="row static-info">
+                            <div class="col-md-2">
+                                <a href="JavaScript:void(0)" onclick="sendFormData(this,{{request.id}}, '{{is_individual}}' ,'{{is_corporate}}','{{is_custom}}')" class="btn btn-primary"
+                                    >
+                                    {% if status == 1 %}
+                                    Send Data Form
+                                    {% elif status == 10 %}
+                                    Resend Data Form
+                                    {% endif %}
+                                </a>
+                            </div>
+                                <span>
+                                    <input type="checkbox" {% if request.id %} checked {% endif %} name="bcc_requestor" id="bcc_requestor">
+                                    <label for="bcc_requestor">Bcc Requestor</label>
+                                </span>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="portlet prescient-grey box">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="fa fa-cogs"></i>Assignment Options
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="row static-info">
+                                                <div class="col-md-4">
+                                                    {% if status == 1 or status == 10 %}
+                                                        <a id="assignAnalyst" href="#assign_comments" class="btn btn-secondary"
+                                                        data-toggle="modal">Assign</a>
+                                                    {% else %}
+                                                    
+                                                    <div class="btn-group ">
+                                                        <a href="" class="btn btn-secondary {% if status != 4 and status != 6 %}disabled{% endif %}" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                                            Return To
+                                                            <span class="fa fa-angle-down"> </span>
+                                                        </a>
+                                                        <ul class="dropdown-menu pull-right">
+                                                            <li>
+                                                                <a href="#return_comments" data-toggle="modal"> Analyst </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#return_reviewer_comments" data-toggle="modal"> Reviewer </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    
+                                                    <div class="btn-group">
+                                                        <a href="" class="btn btn-secondary{% if status == 1 %} disabled {% endif %}" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                                            Edit Assignment
+                                                            <span class="fa fa-angle-down"> </span>
+                                                        </a>
+                                                        <ul class="dropdown-menu pull-right">
+                                                            <li>
+                                                                <a href="#edit_analyst" data-toggle="modal"> Analyst </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#edit_reviewer" data-toggle="modal"> Reviewer </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if status == 5 %}
+                                <div class="col-md-2">
+                                    <div class="portlet prescient-grey box">
+                                        <div class="portlet-title">
+                                            <div class="caption">
+                                                <i class="fa fa-cogs"></i>Status Options
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body">
+                                            <div class="row static-info">
+                                                <div class="col-md-2">
+                                                    <div id="div-status">
+                                                        <a id="editStatus" href="#edit_status" class="btn btn-secondary"
+                                                           data-toggle="modal">Edit Request Status</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="col-md-4">
+                                <div class="portlet box prescient-grey">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="fa fa-cogs"></i>Client Options
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="row static-info">
+                                            <div class="col-md-3">
+                                                <div id="div-submit">
+                                                    <a id="completeRequest" href="#submit_comments"
+                                                       class="btn btn-secondary {% if status != 4 %}disabled{% endif %}"
+                                                       data-toggle="modal">Submit Request</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div id="div-incomplete">
+                                                    <a href="#incomplete_comments"
+                                                       class="btn btn-secondary {% if status == 5 or status == 7 or status == 9 %}disabled{% endif %}"
+                                                       data-toggle="modal">Mark Request Incomplete</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+        <form action="" method="POST" enctype="multipart/form-data">
+            <!--<div class="row">-->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="portlet prescient-green box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>Request Report
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                {% if status != 1 and status != 2 %}
+                                    {% if is_corporate %}
+                                        <h5 style="margin-bottom:15px;">Click <a target="_blank"
+                                                                                 href="{% url 'corporate_report' request.report_url %}"
+                                                                                 class="btn btn-xs grey btn-editable">here</a>
+                                            to view pdf report.</h5>
+                                    {% elif is_custom %}
+                                        <h5 style="margin-bottom:15px;">Click <a target="_blank"
+                                                                                 href="{% url 'custom_report' request.report_url %}"
+                                                                                 class="btn btn-xs grey btn-editable">here</a>
+                                            to view pdf report.</h5>
+                                    {% else %}
+                                        <h5 style="margin-bottom:15px;">Click <a target="_blank"
+                                                                                 href="{% url 'report' request.report_url %}"
+                                                                                 class="btn btn-xs grey btn-editable">here</a>
+                                            to view pdf report.</h5>
+                                    {% endif %}
+                                {% endif %}
+                                <fieldset disabled>
+                                    {% crispy form %}
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="portlet prescient-green box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>Request Notes
+                                </div>
+                            </div>
+                            <div class="portlet-body" style="min-height:300px;max-height:500px;overflow:auto;">
+                                <div class="slimScrollDiv"
+                                     style="position: relative; overflow: hidden; width: auto; height: auto;">
+                                    <div class="scroller" style="overflow: auto; width: auto; height: auto;"
+                                         data-initialized="true">
+                                        {% if comments.count == 0 %}
+                                            No request notes exist.
+                                        {% else %}
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        Comment
+                                                    </th>
+                                                    <th>
+                                                        Request Status
+                                                    </th>
+                                                    <th>
+                                                        Date
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for comment in comments %}
+                                                    <tr>
+                                                        <td>{{ comment.comments|linebreaks }}</td>
+                                                        <td>{{ comment.get_status_display }}</td>
+                                                        <td>{{ comment.datetime }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="slimScrollBar"
+                                         style="width: 7px; position: absolute; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; top: 0px; height: 98.0392156862745px; display: none; opacity: 0.4; background: rgb(187, 187, 187);">
+                                    </div>
+                                    <div class="slimScrollRail"
+                                         style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter col-md-5">
+                        <div class="panel-group accordion" id="accordion_request_surcharges">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div class="panel-title surcharge-panel-title">
+                                        <div class="surcharge-accordion-header caption accordion-toggle accordion-toggle-styled collapsed"
+                                           data-toggle="collapse" data-parent="#accordion_request_surcharges"
+                                           href="#collapse_request_surcharges">
+                                           <i class="fa fa-cogs surcharge-gear-icon"></i> Request Surcharges</div>
+                                    </div>
+                                </div>
+                                <div id="collapse_request_surcharges" class="panel-collapse collapse in">
+                                    <div class="panel-body" style="min-height:300px;max-height:500px;overflow:auto;padding-left: 10px !important;">
+                                            <fieldset id="surcharges" disabled>
+                                                {{ formset.management_form }}
+                                                {% for errors in formset.errors %}
+                                                   {% for key, error in errors.items %}
+                                                       <div class="form-group has-error">
+                                                           <label class="control-label  requiredField">
+                                                               <strong>{{ error |striptags}}</strong>
+                                                           </label>
+                                                       </div>
+                                                   {% endfor %}
+                                                {% endfor %}
+                                                <div id="form_set">
+                                                    {% if formset.forms %}
+                                                        {% for form in formset.forms %}
+                                                            <div id="{{ form.prefix }}-row" class="dynamic-form">
+                                                                {% for hidden in form.hidden_fields %}
+                                                                        {{ hidden }}
+                                                                {% endfor %}
+                                                                <div>Reference #: {{ form.ref_number|add_class:"form-control" }}</div>
+                                                                <div>Charge Type: {{ form.charge_type|add_class:"form-control" }}</div>
+                                                                <div>Source: {{ form.source|add_class:"form-control" }}</div>
+                                                                <div>Order Number: {{ form.order_number|add_class:"form-control" }}</div>
+                                                                <label>Processing Fee:</label>
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">$</span>
+                                                                    <div>{{ form.processing_fee|add_class:"form-control" }}</div>
+                                                                </div>
+                                                                <label>Estimated Cost:</label>
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">$</span>
+                                                                    <div>{{ form.estimated_cost|add_class:"form-control" }}</div>
+                                                                </div>
+                                                                <div>Delete?: {{ form.DELETE }}</div>
+                                                                <hr>
+                                                            </div>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        No Surcharges.
+                                                    {% endif %}
+                                                </div>
+                                                <div id="empty_form" style="display:none">
+                                                       <div id="{{ formset.empty_form.prefix }}-row" class="dynamic-form">
+                                                           {% for hidden in formset.empty_form.hidden_fields %}
+                                                                {{ hidden }}
+                                                           {% endfor %}
+                                                            <div>Reference #: {{ formset.empty_form.ref_number|add_class:"form-control" }}</div>
+                                                            <div>Charge Type: {{ formset.empty_form.charge_type|add_class:"form-control" }}</div>
+                                                            <div>Source: {{ formset.empty_form.source|add_class:"form-control" }}</div>
+                                                            <div>Order Number: {{ formset.empty_form.order_number|add_class:"form-control" }}</div>
+                                                            <label>Processing Fee:</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">$</span>
+                                                                <div>{{ formset.empty_form.processing_fee|add_class:"form-control" }}</div>
+                                                            </div>
+                                                            <label>Estimated Cost:</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">$</span>
+                                                                <div>{{ formset.empty_form.estimated_cost|add_class:"form-control" }}</div>
+                                                            </div>
+                                                            <div>Delete?: {{ formset.empty_form.DELETE }}</div>
+                                                            <hr>
+                                                       </div>
+                                                </div>
+                                            </fieldset>
+                                        <div class="slimScrollDiv"
+                                             style="position: relative; overflow: hidden; width: auto; height: auto;">
+                                            <div class="scroller" style="overflow: auto; width: auto; height: auto;"
+                                                 data-initialized="true">
+
+                                            </div>
+                                            <div class="slimScrollBar"
+                                                 style="width: 7px; position: absolute; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; top: 0px; height: 98.0392156862745px; display: none; opacity: 0.4; background: rgb(187, 187, 187);">
+                                            </div>
+                                            <div class="slimScrollRail"
+                                                 style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="portlet prescient-green box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>Analyst Internal Doc
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                    <div>
+                                        Internal Document: 
+                                        {% if request.analyst_internal_doc != None %}
+                                        <a style="font-weight: bold; font-size: 14px" href="
+                                                {{ MEDIA_URL }}{{request.analyst_internal_doc}}">{{request.analyst_internal_doc.name|get_file_base_name}}</a></br>
+                                        {% else %}
+                                            <b>None </b>
+                                                {% endif %}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+        </form>
+
+            <div class="modal fade" id="return_comments" tabindex="-1" role="basic" aria-hidden="true"
+                 style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Return Comments</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Please provide comments and justification for returning to analyst*:</label>
+                                <textarea class="form-control" rows="14" id="returned_comments"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cancel-return" type="button" class="btn btn-primary" data-dismiss="modal">Cancel
+                            </button>
+                            <button id="return_analyst" type="button" class="btn btn-secondary">Return</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+            <div class="modal fade" id="return_reviewer_comments" tabindex="-1" role="basic" aria-hidden="true"
+                 style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Return Comments</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Please provide comments and justification for returning to reviewer*:</label>
+                                <textarea class="form-control" rows="14" id="returned_comments_reviewer"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cancel_return_reviewer" type="button" class="btn btn-primary" data-dismiss="modal">Cancel
+                            </button>
+                            <button id="return_reviewer" type="button" class="btn btn-secondary">Return</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+
+            <div class="modal fade" id="incomplete_comments" tabindex="-1" role="basic" aria-hidden="true"
+                 style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Incomplete Comments</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Please provide comments and justification for marking incomplete and returning to
+                                    company*:</label>
+                                <textarea class="form-control" rows="14" id="incomp_comments"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cancel-incomplete" type="button" class="btn btn-secondary" data-dismiss="modal">
+                                Cancel
+                            </button>
+                            <button id="incomplete" type="button" class="btn btn-danger">Mark Incomplete</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+            <div class="modal fade" id="assign_comments" tabindex="-1" role="basic" aria-hidden="true"
+                 style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Request Assignment</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Select analyst*:</label>
+                                <select id="analysts" class="form-control">
+                                    <option value="">----------------</option>
+                                    {% for analyst in analysts %}
+                                        <option value="{{ analyst.id }}">{{ analyst }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>Select Reviewers*:</label>
+                                <select id="reviewers" class="form-control">
+                                    <option value="">----------------</option>
+                                    {% for reviewer in reviewers %}
+                                        <option value="{{ reviewer.id }}">{{ reviewer }}</option>
+                                    {% endfor %}
+                                </select><br><br>
+                                <label>Please provide comments about assignment:</label>
+                                <textarea class="form-control" rows="4" id="assigned_comments"></textarea>
+                                <br>
+                                <label for="due_date">Due Date*:</label>
+                                <input type="date" id="due_date" class="form-control" required/>
+
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cancel-assign" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                            </button>
+                            <button id="assign" type="button" class="btn btn-secondary">Assign</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+
+            <div class="modal fade" id="submit_comments" tabindex="-1" role="basic" aria-hidden="true"
+                 style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Submission Comments</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Select the Supervisor from the dropdown box </label>
+                                <select class="form-control" id="supervisor-dropdown" name="supervisor_dropdown"
+                                            title="selection" multiple="multiple">
+                                        <!-- <option value="0">-----------------</option> -->
+                                        {% for supervisor in supervisors %}
+                                            <option value="{{ supervisor.id }}">{{ supervisor }}</option>
+                                        {% endfor %}
+                                    </select>
+                                <br><br>
+                                <label>PLEASE NOTE - you are submitting this completed request to the company
+                                    employee.</label>
+                                <label>Please provide comments about request submission:</label>
+                                <textarea class="form-control" rows="5" id="submitted_comments"></textarea>
+                            </div>
+                            {% if request.created_by.company.name == "E*TRADE" and is_custom  %}
+                            <label>
+                                This custom request was submitted by E*TRADE and requires you to fill in Reporting Period
+                            </label>
+
+                            {{etrade_reporting_period_form.reporting_period}}
+
+                            {% endif %}
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cancel-submit" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                            </button>
+                            <button id="submit" type="button" class="btn btn-secondary">Submit</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+
+
+
+
+
+            <div class="modal fade" id="edit_analyst" tabindex="-1" role="basic" aria-hidden="true"
+                 style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Edit Analyst</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Select the Analyst from the drop down box: </label>
+
+                                <form id="editAnalyst">
+                                    <select class="form-control" id="analyst-dropdown" name="analyst_dropdown"
+                                            title="selection">
+                                        <option value="0">-----------------</option>
+                                        {% for analyst in analysts %}
+                                            <option value="{{ analyst.id }}">{{ analyst }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <br><br>
+                                    <label>Please provide comments about re-assignment of analyst:</label>
+                                    <textarea class="form-control" rows="4" id="reassigned_analyst_comments"></textarea>
+                                    <br>
+                                    <label for="edit_due_date">Due Date* :</label>
+                                    <input type="date" id="edit_due_date" class="form-control" value="{{ request.due_date|date:"Y-m-d" }}" />
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            {% if is_corporate %}
+                                <button id="edit_corporate_analyst_submit" type="button" class="btn btn-secondary">Save
+                                </button>
+                            {% elif is_custom %}
+                                <button id="edit_custom_analyst_submit" type="button" class="btn btn-secondary">Save
+                                </button>
+                            {% else %}
+                                <button id="edit_analyst_submit" type="button" class="btn btn-secondary">Save</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+
+
+
+
+            <div class="modal fade" id="edit_reviewer" tabindex="-1" role="basic" aria-hidden="true"
+                 style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Edit Reviewer</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Select the Reviewer from the drop down box: </label>
+
+                                <form id="editReviewer">
+                                    <select class="form-control" id="reviewer-dropdown" name="reviewer_dropdown"
+                                            title="selection">
+                                        <option value="0">-----------------</option>
+                                        {% for reviewer in reviewers %}
+                                            <option value="{{ reviewer.id }}">{{ reviewer }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <br><br>
+                                    <label>Please provide comments about re-assignment of reviewer:</label>
+                                    <textarea class="form-control" rows="4" id="reassigned_reviewer_comments"></textarea>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            {% if is_corporate %}
+                                <button id="edit_corporate_reviewer_submit" type="button" class="btn btn-secondary">Save
+                                </button>
+                            {% elif is_custom %}
+                                <button id="edit_custom_reviewer_submit" type="button" class="btn btn-secondary">Save
+                                </button>
+                            {% else %}
+                                <button id="edit_reviewer_submit" type="button" class="btn btn-secondary">Save</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+
+
+
+
+            <div class="modal fade" id="edit_status" tabindex="-1" role="basic" aria-hidden="true"
+                 style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width: 60%;height:50%">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Recall Request</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group text-center">
+                                <form id="editStatus">
+                                    <select class="form-control" id="recall_analyst_dropdown"
+                                            title="selection" onchange="renderRecallButton()" style="width=100px;">
+                                        <option value="0">-----------------</option>
+                                        {% for analyst in analysts %}
+                                            <option value="{{ analyst.id }}">{{ analyst }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    </br></br>
+                                    {% if is_corporate %}
+                                        <a id="recall" href="{% url 'recall_corporate_request' request.id %}"
+                                                                                 class="btn btn-secondary">Recall</a>
+                                    {% elif is_custom %}
+                                        <a id="recall" href="{% url 'recall_custom_request' request.id %}"
+                                                                                 class="btn btn-secondary">Recall</a>
+                                    {% else %}
+                                        <a id="recall" href="{% url 'recall_request' request.id %}"
+                                                                                 class="btn btn-secondary">Recall</a>
+                                    {% endif %}
+                                    <div id="recall_reassign"></div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

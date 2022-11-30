@@ -1,0 +1,5 @@
+
+Request {{request.id}}: has been reassigned to you. It's current status is {{request_status}}
+
+
+Please login for more information: {{ protocol}}://{{ domain }}{% url 'login' %}
